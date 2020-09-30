@@ -146,7 +146,8 @@ clickSet[1].onClick(); // 1
 ```
 
 - 두 번째 방법으로는 `let`을 사용하여 작성하면 코드를 어수선하게 만들지 않고도 같은 결과를 얻을 수 있다.
-
+- `let`은 블록 유효 범위를 따르므로, 블록 내에서 선언한 변수는 해달 블록에서만 유효하다.
+- 따라서 반복되어 값이 변경되더라도, 이전에 선언한 함수의 값은 변경되지 않는다.
 ```javascript
 function addClick(items){
     for(let i = 0; i < items.length; i++){
@@ -161,3 +162,26 @@ const clickSet = addClick(example);
 clickSet[0].onClick(); // 0
 clickSet[1].onClick(); // 1
 ```
+
+### 🎯 템플릿 리터럴로 변수를 읽을 수 있는 문자열로 변환하라.
+- 변수를 연결하지 않고 새로운 문자열을 만드는 방법
+- 기존에 사용하던 방법
+
+```javascript
+function generateLink(image, width){
+    const widthInt = parseInt(width, 10);
+    return 'https://' + getProvider() + '/' + image + '?width=' + widthInt;
+}
+```
+
+- **템플릿 리터럴**을 사용하면 복잡도를 줄일 수 있다.
+- 텦플릿 리터럴은 자바스클립트 표현식을 사용해서 문자열을 연결하고 새로운 문자열을 생성하는 간단한 문법이다.
+
+```javascript
+function generateLink(image, width){
+    return `https://${getProvider()}/${image}?width=${parseInt(width, 10)}`;
+}
+```
+- 템플릿 리터럴을 사용할 때 가급적이면 중괄호 내부에서 많은 것을 하지 않는 것이 좋다.
+- 코드가 필요 이상으로 어수선해지기 때문이다.
+- 대규모 데이터 변환이 필요한 경우에는 템플릿 리터럴 외부에서 처리하고 결괏값을 변수에 할당해 사용한다.
