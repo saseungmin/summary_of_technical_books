@@ -2,7 +2,7 @@
 
 ### 🎯 배열로 유연한 컬렉션을 생성하라.
 - 데이터 컬렉션을 다루는 구조로 `Map`, `Set`, `WeakMap`, 객체, 배열을 사용할 수 있다.
-- 배열은 여기저기 어디에나 등장하는데, 배열에 **이터러블(iterable)**이 내장되어 있기 때문이다. ([`Iterator`와 `Generator`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Iterators_and_Generators))
+- 배열은 여기저기 어디에나 등장하는데, 배열에 **이터러블(iterable)** 이 내장되어 있기 때문이다. ([`Iterator`와 `Generator`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Iterators_and_Generators))
 - `iterable`은 간단히 말해 컬렉션의 현재 위치를 알고 있는 상태에서 컬렉션의 항목을 한 번에 하나씩 처리하는 방법이다.
 - `String`, `Array`, `TypedArray`, `Map` 및 `Set`은 모두 내장 반복가능 객체이다. 그들의 프로토타입 객체가 모두 [`Symbol.iterator`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator) 메서드가 있기 때문이다.
 - 컬렉션 개념의 거의 대부분을 배열 형태로 표현할 수 있다. 즉, 배열을 특별한 컬렉션으로 쉽게 변환하거나 다시 배열로 만들 수 있다.
@@ -101,4 +101,135 @@ function formatBook(title, author, price){
 formatBook(book[0], book[1], book[2]);
 // 펼침 연산자 사용
 formatBook(...book);
+```
+
+### 🎯 push() 메서드 대신 펼침 연산자로 원본 변경을 피해라.
+- 펼침 연산자로 새로운 배열을 생성해 배열에 대한 조작을 피하자.
+- `push()` 메서드는 새로운 항목을 배열 뒤에 추가해 원본 배열을 변경하기 때문에 좋지 못하다.
+
+```javascript
+const reward = {
+    name: 'The Little Prince',
+    discount: true,
+    price: 0,
+}
+
+function addFreeGift(cart){
+    if(cart.length > 2){
+        cart.push(reward);
+        return cart;
+    }
+    return cart;
+}
+
+function summarizeCart(cart){
+    const discountable = cart.filter(item => item.discount);
+    if(discountable.length > 1){
+        return {
+            error: '할인 상품은 하나만 주문할 수 있습니다.',
+        };
+    }
+    const cartWithReward = addFreeGift(cart);
+    return {
+        discount: discountable.length,
+        items: cartWithReward.length,
+        cart: cartWithReward,
+    };
+}
+```
+
+- 함수를 호출할 때는 함수에 전달한 값을 변경하지 않을 것이라는 신뢰가 필요한데 부수 효과가 없는 함수를 [**순수 함수(pure function)**](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)라고한다.
+- 위 코드에서 다른 개발자가 다룰 때 원본 값이 변경되었을 것이라고 생각하지 못할 것이다. 그렇기 때문에 펼침 연산자를 사용한다.
+
+```javascript
+// ...
+function addFreeGift(cart){
+    if(cart.length > 2){
+        return [...cart, reward];
+    }
+    return cart;
+}
+// ...
+```
+
+- 추가적으로 펼침 연산자로 배열에 항목을 추가하고 사본을 만드는 방법
+  
+```javascript
+// shift를 사용한 원본 조작
+const titles = ['Little Prince', 'Javascript'];
+titles.shift('React');
+// 펼침 연산자
+const titles = ['Little Prince', 'Javascript'];
+const addTitles = ['React', ...titles];
+
+// slice를 사용한 복사
+const toCopy = ['Little Prince', 'Javascript'];
+const copied = toCopy.slice();
+// 펼침 연산자를 사용한 복사
+const toCopy = ['Little Prince', 'Javascript'];
+const copied = [...toCopy];
+```
+
+### 🎯 펼침 연산자로 정렬에 의한 혼란을 피하라.
+- 펼침 연산자를 사용하여 배열을 정렬하면 여러 번 정렬해도 항상 같은 결과가 나오게 할 수 있다.
+- 아래의 객체가 담긴 배열을 정렬해보자.
+
+```javascript
+const family = [
+    { name: 'Joe', years: 10 },
+    { name: 'Theo', years: 5 },
+    { name: 'Dyan', years: 10 },
+];
+```
+- [`sort()`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 메서드를 사용해 숫자 정렬과 문자 정렬을 위해 함수를 생성하자.
+  
+```javascript
+function sortByYears(a, b){
+    if(a.years === b.years){
+        return 0;
+    }
+    return a.years - b.years;
+}
+
+const sortByName = (a, b) => {
+    if(a.name === b.name){
+        return 0;
+    }
+    return a.name > b.name ? 1 : -1;
+};
+```
+- 나이 순으로 정렬을 아래와 같다.
+  
+```javascript
+family.sort(sortByYears);
+// {name: "Theo", years: 5}
+// {name: "Joe", years: 10}
+// {name: "Dyan", years: 10}
+```
+- 정렬 된 `family`를 이름 순으로 정렬해보자.
+
+```javascript
+family.sort(sortByName);
+// {name: "Dyan", years: 10}
+// {name: "Joe", years: 10}
+// {name: "Theo", years: 5}
+```
+
+- 다시 정렬 된 `family`를 나이 순으로 정렬해보면 처음 나이 순으로 정렬한 결과와 전혀 다른 결과가 나오게 된다.
+
+```javascript
+family.sort(sortByYears);
+// {name: "Theo", years: 5}
+// {name: "Dyan", years: 10}
+// {name: "Joe", years: 10}
+```
+
+- 이렇듯 매번 순서가 바뀐다면 사용자는 애플리케이션을 신뢰하지 못할 것이고 우리가 원한 결과도 아니다.
+- 이런 경우 **원본 데이터를 조작하지 않고 사본을 사용해 조작**하면 해결할 수 있다.
+
+```javascript
+[...family].sort(sortByYears);
+// {name: "Theo", years: 5}
+// {name: "Joe", years: 10}
+// {name: "Dyan", years: 10}
 ```
