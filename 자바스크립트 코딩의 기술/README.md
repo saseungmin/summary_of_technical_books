@@ -23,6 +23,6 @@
 16. 세트를 이용해 고윳값을 관리하라.
 
 ### ✌ [Chapter 4: 조건문을 깔끔하게 작성하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%204)
-11. 거짓 값이 있는 조건문을 축약하라.
-12. 삼항 연산자로 빠르게 데이터를 확인하라.
-13. 단락 평가를 이용해 효율성을 극대화하라.
+17. 거짓 값이 있는 조건문을 축약하라.
+18. 삼항 연산자로 빠르게 데이터를 확인하라.
+19. 단락 평가를 이용해 효율성을 극대화하라.
