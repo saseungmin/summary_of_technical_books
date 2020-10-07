@@ -42,3 +42,6 @@
 29. 해체 할당으로 객체 속성에 접근하라
 30. 키-값 할당을 단순화하라
 31. 나머지 매개변수로 여러 개의 인수를 변수로 전달하라
+
+### ✌ [Chapter 7: 유연한 함수를 만들어라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207)
+32. 테스트하기 쉬운 함수를 작성하라
