@@ -45,3 +45,7 @@
 
 ### ✌ [Chapter 7: 유연한 함수를 만들어라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207)
 32. 테스트하기 쉬운 함수를 작성하라
+33. 화살표 함수로 복잡도를 낮춰라
+34. 부분 적용 함수로 단일 책임 매개변수를 관리하라
+35. 커링과 배열 메서드를 조합한 부분 적용 함수를 사용하라
+36. 화살표 함수로 문맥 혼동을 피하라
