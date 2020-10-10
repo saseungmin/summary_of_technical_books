@@ -49,3 +49,9 @@
 34. 부분 적용 함수로 단일 책임 매개변수를 관리하라
 35. 커링과 배열 메서드를 조합한 부분 적용 함수를 사용하라
 36. 화살표 함수로 문맥 혼동을 피하라
+
+### ✌ [Chapter 8: 클래스로 인터페이스를 간결하게 유지하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%208)
+37. 읽기 쉬운 클래스를 만들어라
+38. 상속으로 메서드를 공유하라
+39. 클래스로 기존의 프로토타입을 확장하라
+40. `get`과 `set`으로 인터페이스를 단순하게 만들어라
