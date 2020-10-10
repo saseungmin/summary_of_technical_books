@@ -320,3 +320,271 @@ coupon.priceText; // $10
 - 단점은 이와 함께 우리의 의도까지 가려진다는 점이다.
 - `getter`와 `setter`는 때때로 디버깅하기가 매우 어렵고 테스트하기도 어렵다.
 - 그렇기 때문에 주의해서 사용하고 충분한 테스트와 문서화를 통해 의도를 명확하게 전달해야 한다.
+
+### 🎯 제너레이터로 이터러블 속성을 생성하라.
+
+- 제너레이터(Generator)라는 함수를 이용하면 데이터를 한 번에 하니씩 반환할 수 있다.
+- 이를 통해 깊게 중첩된 객체를 단순한 구조로 변환할 수 있다.
+- 제너레이터는 클래스에만 국한되지 않고 특화된 함수이다.
+- 제너레이터는 ([MDN 참고](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/function*)) 함수가 호출되었을 때 **그 즉시 끝까지 실행하지 않고 중간에 빠져나갔다가 다시 돌아올 수 있는 함수**이다.
+- 제너레이터는 함수 몸체의 **실행을 즉시 끝내지 않는** 하나의 함수이다.
+- 즉, 제너레이터는 다음 단계 전까지 **기본적으로 일시 정지하는 중단점이 있는 함수**이다.
+- 제너레이터를 생성하려면 `function` 키워드 뒤에 별표(`*`)를 추가한다.
+- 이렇게 하면 함수의 일부를 반환하는 `next()`라는 메서드에 접근할 수 있다.
+- 함수 몸체 안에서는 `yield` 키워드를 이용해 정보를 반환한다.
+- 함수를 실행할 때는 `next()` 메서드를 이용해서 함수가 내보낸 정보를 가져올 수 있다.
+- `next()`를 호출하면 두 개의 키 `value`와 `done`이 있는 객체를 가져온다.
+- 여기서 `yield`로 선언한 항목이 `value`이고, `done`은 남은 항목이 없다는 것을 알려준다.
+
+```javascript
+function* getCairoTrilogy() {
+  yield '궁전 샛길';
+  yield '욕망의 궁전';
+  yield '설탕 거리';
+}
+
+const trilogy = getCairoTrilogy();
+trilogy.next(); // {value: "궁전 샛길", done: false}
+trilogy.next(); // {value: "욕망의 궁전", done: false}
+trilogy.next(); // {value: "설탕 거리", done: false}
+trilogy.next(); // {value: undefined, done: true}
+```
+- 함수를 **단계별**로 조각조각 실행할 수 있다.
+- 정보의 일부만 꺼내고 다음 조각을 다른 곳에서 사용하기 위해 제너레이터를 전달해줄 수도 있다. 또한, 고차 함수의 경우처럼 다른 곳에 사용할 수 있다.
+- **제너테이러가 함수를 이터러블로 바꿔줄 수 있게되었다.**
+- 데이터를 한 번에 하나씩 접근하기 때문에 쉽게 이터러블을 만들 수 있다.
+- 제너레이터를 이터러블로 사용할 때 반드시 `next()` 메서드를 사용해야 하는 것은 아니다.
+- 이터러블이 필요한 작업은 무엇이든 가능하다.
+- 아래 코드 처럼 배열에 담을려면 간단하게 펼침 연산자를 사용하면 된다.
+
+```javascript
+[...getCairoTrilogy()];
+// ["궁전 샛길", "욕망의 궁전", "설탕 거리"]
+```
+- 아래 예제처럼 `for...of`문을 사용하여 객체에 정보를 담을 수 있다.
+
+```javascript
+const readingList = {
+  '깡패단의 방문': true,
+  '맨해튼 비치': false,
+};
+for(const book of getCairoTrilogy()) {
+  readingList[book] = false;
+}
+readingList;
+// {
+//   궁전 샛길: false,
+//   깡패단의 방문: true,
+//   맨해튼 비치: false,
+//   설탕 거리: false,
+//   욕망의 궁전: false,
+// }
+```
+
+- 제너레이터는 클래스에서도 사용된다.
+- 제너레이터는 `getter`와 `setter`처럼 클래스에 단순한 인터페이스를 제공할 수 있다.
+- 제너레이터를 사용하면 복잡한 데이터 구조를 다루는 클래스를 만들 때, 다른 개발자들이 단순한 배열을 다루는 것처럼 데이터에 접근할 수 있게 설계할 수 있다.
+- 아래는 제너레이터를 사용하기 전 빈 배열을 생성하고 `family`를 담아 반환하는 메서드를 만들어야 한다.
+
+```javascript
+class FamilyTree {
+  constructor() {
+    this.family = {
+      name: 'Seung',
+      child: {
+        name: 'Harang',
+        child: {
+          name: 'Sa',
+          child: {
+            name: 'In',
+          },
+        },
+      },
+    };
+  }
+  getMembers() {
+    const family = [];
+    let node = this.family;
+    while(node) {
+      family.push(node.name);
+      node = node.child;
+    }
+    return family;
+  }
+}
+const family = new FamilyTree();
+family.getMembers();
+// ["Seung", "Harang", "Sa", "In"]
+```
+
+- 제너레이터를 사용하면 배열에 담지 않고 데이터를 바로 반환할 수 있다.
+- 게다가 사용자가 메서드 이름을 찾아볼 필요도 없으며, 가계도를 담고 있는 속성을 마치 배열인 것처럼 다룰 수 있다.
+- 먼저 메서드 이름을 `getMembers()` 대신 `*` `[Symbol.iterator]()`로 바꾼다.
+- `*`는 제너레이털르 생성한다는 것을 표시하고, `Symbol.iterator`는 클래스의 **이터러블에 제너레이터를 연결한다.** (맵 객체가 맵이터레이터를 가지고 있는 것과 비슷)
+- 앞서 살펴본 `getCairoTrilogy()` 제너레이터와 다른 점은 **특정한 값을 명시적으로 반환하지 않는 부분이다.** 대신에 반복문의 매 회마다 `yield`로 값을 넘겨주고 반환할 것이 남아있는 한 제너레이터가 계속 진행된다.
+- `family.push(node.name);`을 실행하는 대신에 우리가 해야 할 일은 결괏값을 `yield node.name`으로 넘겨주는 것뿐이다.
+- 즉, 중간 단계의 배열을 사용할 필요가 없어졌다.
+- 아래 코드처럼 펼침 연산자나 `for...of` 문처럼 이터러블이 필요한 작업이 있다면 클래스 인스턴스에 바로 호출해 사용할 수 있다.
+
+```javascript
+class FamilyTree {
+  constructor() {
+    this.family = {
+      name: 'Seung',
+      child: {
+        name: 'Harang',
+        child: {
+          name: 'Sa',
+          child: {
+            name: 'In',
+          },
+        },
+      },
+    };
+  }
+  * [Symbol.iterator]() {
+    let node = this.family;
+    while(node) {
+      yield node.name;
+      node = node.child;
+    }
+  }
+}
+const family = new FamilyTree();
+[...family];
+// ["Seung", "Harang", "Sa", "In"]
+```
+- 제너레이터를 사용할 때의 이점은 다른 개발자들이 **클래스의 세부 구현 내용을 알 필요가 없다는 것이다.**
+
+### 🎯 bind()로 문맥 문제를 해결하라.
+
+- 문맥을 변경하는 것은 혼란을 일으실 수 있는데, `this` 키워드를 콜백이나 배열 메서드에서 사용할 떄 특히 더 문제가 될 수 있다.
+- 이 문제는 클래스를 사용해도 문제가 사라지지 않는다. (첫 번째 해결 방법: [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC))
+- 여기서 살펴볼 기법들은 객체 리터럴과 클래스에 사용할 수 있지만 클래스 문법과 사용하는 것이 좀 더 일반적이다.
+- 다음은 예제를 살펴보자.
+
+```javascript
+class Validator {
+  constructor() {
+    this.message = '가 유효하지 않습니다.';
+  }
+  setInvalidMessage(field) {
+    return `${field}${this.message}`;
+  }
+  setInvalidMessages(...fields) {
+    return fields.map(this.setInvalidMessage);
+  }
+}
+```
+- `setInvalidMessages()` 메서드를 호출하면 함수는 클래스에 대한 `this` 바인딩을 생성한다.
+- `setInvalidMessages()` 메서드를 살펴보면, 배열에 `map()`을 호출하면서 콜백에 `setInvalidMessage()` 메서드를 전달한다.
+- 그리고 `map()` 메서드가 `setInvalidMessage()` 를 실행하면, 이때 `this`는 **클래스가 아니라 배열 메서드의 문맥(context)으로 새로운 연결을 생성한다.**
+
+```javascript
+const validator = new Validator();
+validator.setInvalidMessages('도시');
+// Uncaught TypeError: Cannot read property 'message' of undefined
+```
+- 문맥 문제는 리액트 커뮤니티에서도 쉽게 찾을 수 있는데 리액트에서 발생하는 문맥 문제를 해결하는 서로 다른 여러 가지 방법 [참고](https://www.freecodecamp.org/news/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56/)
+- 첫 번째 해결책은 [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC)에서 제안한 방법과 동일하다. 메서드를 화살표 함수로 바꾸면 화살표 함수는 **새로운 `this` 연결을 생성하지 않기 때문에** 오류가 발생하지 않는다.
+- 이 방법의 유일한 단점은 클래스 문법을 사용할 때 함수를 메서드가 아니라 속성으로 옮겨야 한다는 것이다.
+
+```javascript
+class Validator {
+  constructor() {
+    this.message = '가 유효하지 않습니다.';
+    this.setInvalidMessage = field => `${field}${this.message}`;
+  }
+  setInvalidMessages(...fields) {
+    return fields.map(this.setInvalidMessage);
+  }
+}
+
+const validator = new Validator();
+validator.setInvalidMessages('도시');
+// ["도시가 유효하지 않습니다."]
+```
+- 메서드를 생성자의 속성으로 옮기면 문맥 문제는 해결할 수 있지만 다른 문제가 발생하게 되는데 **메서드가 여기저기 정의된다는 것이다.**
+- 또한, 이런 식으로 메서드를 많이 작성하다 보면 생성자가 빠르게 비대해진다.
+- 더 나은 해결책은 `bind()` 메서드를 이용하는 것이다.
+- 모든 함수에 사용할 수 있는 **`bind()` 메서드를 이용하면 문맥을 명시적으로 정할 수 있다.**
+- 함수에서 `this`로 연결할 곳을 명시적으로 정하기 때문에 `this`로 참조된 곳을 항상 알 수 있다.
+
+```javascript
+function sayMessage() {
+  return this.message;
+}
+const alert = {
+  message: '위험해!',
+};
+
+const sayAlert = sayMessage.bind(alert);
+sayAlert();
+// "위험해!"
+```
+- 함수가 `this`를 사용할 때마다 우리가 연결한 객체로 연결될 것이다. 
+- 이런 것을 **명시적 연결**이라고 부르는데, 문맥이 런타임에 자바스크립트 엔진에 의해 설정되지 않도록 우리가 직접 문맥을 선언하기 때문이다. ([참고](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/this%20%26%20object%20prototypes/ch2.md#explicit-binding))
+- 이제 함수를 `this`에 연결해서 기존의 문맥에 연결할 수도 있다.
+
+```javascript
+class Validator {
+  constructor() {
+    this.message = '가 유효하지 않습니다.';
+  }
+  setInvalidMessage(field) {
+    return `${field}${this.message}`;
+  }
+  setInvalidMessages(...fields) {
+    return fields.map(this.setInvalidMessage.bind(this));
+  }
+}
+
+const validator = new Validator();
+validator.setInvalidMessages('도시');
+// ["도시가 유효하지 않습니다."]
+```
+
+- 이 방법의 유일한 단점은 다른 메서드에서 함수를 사용하면 `bind()`로 연결해야 한다는 것이다.
+- 아래 방법을 사용할 수 있다.
+- 이 방법의 장점은 메서드를 원래의 위치에 그대로 유지할 수 있다는 것이다.
+- 단지 생성자에서 `this`에 연결할 뿐이다.
+- 이제 모든 메서드를 클래스의 몸체 한 곳에 선언할 수 있게 되었고, 속성은 생성자에서 선언하고, 문맥도 속성과 마찬가지로 생성자에서만 설정한다.
+
+```javascript
+class Validator {
+  constructor() {
+    this.message = '가 유효하지 않습니다.';
+    this.setInvalidMessage = this.setInvalidMessage.bind(this);
+  }
+  setInvalidMessage(field) {
+    return `${field}${this.message}`;
+  }
+  setInvalidMessages(...fields) {
+    return fields.map(this.setInvalidMessage);
+  }
+}
+
+const validator = new Validator();
+validator.setInvalidMessages('도시');
+// ["도시가 유효하지 않습니다."]
+```
+- 화살표 함수를 사용한 방식과 함수를 `this`에 연결하는 방식 모드 현재의 명세에서 잘 작동한다.
+- 추후에는 **생성자 밖에서 클래스 속성을 설정할 수 있는 명세**가 도입될 것이다.
+- 새로운 명세를 적용하면 **다른 메서드 옆에 화살표 함수를 속성으로 할당할 수 있게 된다.**
+
+```javascript
+class Validator {
+  message = '가 유효하지 않습니다.';
+  setMessage = field => `${field}${this.message}`;
+  setInvalidMessages(...fields) {
+    return fields.map(this.setMessage);
+  }
+}
+
+const validator = new Validator();
+validator.setInvalidMessages('도시');
+// ["도시가 유효하지 않습니다."]
+```
+
+- 바벨은 7.0부터 클래스 속성을 지원한다. 공개 클래스 속성은 크롬 72, 비공개 클래스 속성은 크롬 74부터 지원하고, Mode.js는 버전 12부터 클래스 속성을 지원하므로 해당 버전부터는 REPL에서도 사용 가능하다.
+- 문맥 연결은 비용이 클 수 있으므로 특정한 문제를 풀어야 하는 경우에만 사용하는 것이 좋다.
