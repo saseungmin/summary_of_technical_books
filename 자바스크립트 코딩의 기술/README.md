@@ -56,4 +56,10 @@
 39. 클래스로 기존의 프로토타입을 확장하라
 40. `get`과 `set`으로 인터페이스를 단순하게 만들어라
 41. 제너레이터로 이터러블 속성을 생성하라
-42. bind()로 문맥을 해결하라
+42. `bind()`로 문맥을 해결하라
+
+### ✌ [Chapter 9: 외부 데이터에 접근하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%209)
+43. 프라미스를 이용해 비동기적으로 데이터를 가져오라
+44. `async/await`로 함수를 명료하게 생성하라
+45. `fetch`로 간단한 AJAX 호출을 처리하라
+46. `localStorage`로 상태를 장기간 유지하라
