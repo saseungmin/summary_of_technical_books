@@ -67,3 +67,4 @@
 ### ✌ [Chapter 10: 컴포넌트 아키텍처를 이용해 관련 파일을 모아라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%2010)
 47. 가져오기와 내보내기로 기능을 분리하라
 48. npm으로 커뮤니티 코드를 끌어와라
+49. 컴포넌트 아키텍처를 이용해 애플리케이션을 만들어라

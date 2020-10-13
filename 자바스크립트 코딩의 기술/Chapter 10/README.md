@@ -305,3 +305,99 @@ export function objectToMap(object) {
 ```
 
 - 이제 개별 프로젝트가 필요로 하는 의존성을 정리할 수 있을 뿐만아니라, 다른 개발자들이 빌드 과정, 의존성, 패키지 정보를 하나의 파일에서 확인할 수 있게 되었다.
+
+### 🎯 컴포넌트 아키텍처를 이용해 애플리케이션을 만들어라.
+
+- **컴포넌트 아키텍처(component architecture)** 로 흩어져 있는 HTML, 자바스크립트, CSS를 모으는 방법을 살펴보자.
+- 오랫동안 개발자들은 파링 형식에 따라 분류하곤 했다. (최상위 디렉터리에 css, js, img 디렉터리를 만들고 분류)
+- 그렇지만 개발자 도구가 발전하면서 새로운 패턴이 나왔는데 바로 컴포넌트 아키텍처라는 패턴이다.
+- **컴포넌트는 관련 있는 모든 코드를 조합해 하나의 디렉터리에 담은 것이다.**
+- 이렇게 하면 조각을 하나씩 추가하는 방법으로 웹 페이지나 애플리케이션을 만들 수 있다.
+- 컴포넌트의 문제도 있는데 가장 큰 문제는 **빌드 도구에 의존한다는 점**이며, 그보다 덜하기는 하지만 **프레임워크에 의존한다는 문제**도 있다.
+- 다음 예제는 리액트를 사용한 컴포넌트 아키텍처이다.
+- 컴포넌트 아키텍처를 이요하면 간단한 패키지 하나에 모든 것을 결합할 수 있다.
+
+```jsx
+import React from 'react';
+import './Copyright.css';
+
+export default function CopyrightStatement() {
+  const year = new Date().getFullYear();
+  return (
+    <div className="copyright">
+      Copyright {year}
+    </div>
+  );
+}
+```
+- `return` 문에 마크업이 있고, CSS 클래스는 `className`에 작성되어 있다.
+- 위 코드는 리액트 프레임워크의 일부인 **`JSX`라고 부르는 특별한 마크업**이다.
+- 컴포넌트의 경로는 `src/components` 디렉터리에 담겨있다.
+- 또한, 결과적으로 컴파일된 코드가 담기는 `public` 디렉터리도 있다.
+- 브라우저가 컴포넌트를 다룰 수 없기 때문에 모든 것은 결국 더 간단한 컴포넌트로 결합된다.
+- `components` 디렉터리는 다뤄야할 모든 컴포넌트를 담고 있다.
+- 각 컴포넌트는 개별 디렉터리에 나눠져 있다.
+- **디렉터리 이름이 대문자로 시작하는 것은 리액트에서 사용하는 컨벤션이다.**
+- 이렇게 불필요한 컴포넌트를 삭제하거나 옮기고 싶을때, 디렉터리 전체를 삭제할 수 있고, 불필요한 CSS가 어딘가 남아있는 것을 걱정하지 않아도 된다.
+- 컴포넌트를 재사용할 수 있도록 만들어야 한다. 즉, 최대한 하드 코딩하는 설정이 없어야한다.
+- 클릭할 때 어떤 동작이 필요한지는 명시적으로 작성하지 않는다.
+- **대신 클릭할 때 동작을 컴포넌트에 주입한다.**
+- 동작이나 자원을 컴포넌트에 전달하는 것은 다른 형태의 의존성 주입이다. (의존성 주입은 [TIP 32 테스트하기 쉬운 함수를 작성하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%ED%95%A8%EC%88%98%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%9D%BC) 참고)
+
+```jsx
+import React from 'react';
+import './IdeaButton.css';
+import idea from './idea.svg';
+
+export default function IdeaButton({ handleClick, message }) {
+  return (
+    <button className="idea-button" onClick={handleClick}>
+      <img className="idea-button_icon" src={idea} alt="idea icon" />
+      {message}
+    </button>
+  );
+}
+```
+
+- 리액트에서는 주입된 의존성을 함수의 인자를 통해 접근할 수 있다.
+- 또한, 해체 할당을 이용해서 꺼내올 수 있다.
+- 버튼의 메시지는 주입된 값에 따라 다르게 표시된다.
+- 중괄호는 템플릿 문법이고, 변수 정보를 감싸고 있다. 
+- 아래 예제는 페이지를 만드는 코드로 이 경우 페이지도 **다른 컴포넌트이다.**
+
+```jsx
+import React from 'react';
+
+import './App.css';
+import IdeaButton from './components/IdeaButton/IdeaButton';
+import Copyright from './components/Copyright/Copyright';
+
+function logIdea() {
+  console.log('안녕하세요! 승민입니다!');
+}
+export default function App() {
+  return (
+    <div className="main">
+      <div className="app">
+        <IdeaButton
+          message="나한테 좋은 생각이 있어!"
+          handleClick={logIdea}
+          />
+      </div>
+      <footer>
+        <Copyright/>
+        <IdeaButton
+          message="저도 좋은 생각이 있어요!"
+          handleClick={logIdea}
+        >
+      </footer>
+    </div>
+  );
+}
+```
+
+- 코드를 가져오고 다른 모든 조각을 포함하며 모든 것을 결합한다.
+- 하나의 논리적인 장소에 모든 것이 모여 있을 때 컴포넌트를 다루는 것이 정말 간단하다.
+- 이처럼 컴포넌트 아키텍처는 직관적으로 이해하기 쉽다.
+- 관련된 파일을 한곳에 모으는 것이다.
+- 유일한 어려움은 모든 것을 연결하기가 쉽지 않다는 점이다.
