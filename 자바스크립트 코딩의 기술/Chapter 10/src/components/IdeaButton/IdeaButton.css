@@ -1,0 +1,18 @@
+.idea-button {
+  background: #ffffff;
+  border: black solid 1px;
+  border-radius: 3px;
+  min-width: 280px;
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.idea-button:hover {
+  cursor: pointer;
+}
+
+.idea-button__icon {
+  width: 40px;
+  height: 40px;
+  float: left;
+}
