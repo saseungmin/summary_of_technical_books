@@ -1,0 +1,31 @@
+.main {
+  width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.menu.display {
+  transform: translateX(0);
+  transition-property: transform;
+  transition-duration: 600ms;
+  transition-timing-function: linear;
+}
+button {
+  border: black solid 1px;
+  background: #ffffff;
+}
+
+.menu {
+  width: 300px;
+  padding: 0 2em;
+  float: right;
+  border: black solid 1px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: calc(100% - 2px);
+  background: #ffffff;
+  transform: translateX(calc(300px + 4em + 2px));
+  transition: all 600ms linear;
+}
