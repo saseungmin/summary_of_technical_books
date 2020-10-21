@@ -2,3 +2,4 @@
 
 ### 🌈 [Part 1 타입과 문법](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1)
 #### ✌️ [Chapter 1: 타입](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%201)
+#### ✌️ [Chapter 2: 값](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%202)
