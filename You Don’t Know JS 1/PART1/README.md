@@ -10,3 +10,5 @@
 
 ### ✌️ [Chapter 2: 값](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%202)
 1. 배열
+    - 유사 배열
+2. 문자열
