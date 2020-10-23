@@ -165,3 +165,110 @@ Array.prototype.reverse.call(a);
 ```javascript
 var c = a.split('').reverse().join('');
 ```
+
+### 🎯 숫자
+- **자바스크립트의 숫자 타입은 `number`가 유일**하며 정수(integer), 부동 소수점 숫자를 모두 아우른다.
+- 따라서 자바스크립트의 정수는 **부동 소수점 값이 없는 값이다.**(42.0은 정수 42와 같다.)
+
+#### 📚 숫자 구문
+- 자바스크립트 숫자 리터럴은 다음과 같이 10진수 리터럴로 표시한다.
+- 소수점 앞 정수가 0이면 생략 가능하다.
+- 소수점 이하가 0일 때도 생략 가능하다.
+```javascript
+var a = 42;
+var b = 42.3;
+
+var a = 0.42;
+var b = .42;
+
+var a = 42.0;
+var b = 42.;
+```
+- 아주 크거나 아주 작은 숫자는 지수형으로 표시하며, `toExponential()` 메서드의 결괏값과 같다.
+
+```javascript
+var a = 5E10;
+a; // 50000000000
+a.toExponential() // "5e+10"
+```
+
+- 숫자 값은 `Number` 객체 래퍼(Wrapper)로 박싱(Boxing)할 수 있기 때문에 `Number.prototype` 메서드로 접근할 수도 있다.
+
+```javascript
+var a = 42.59;
+
+a.toFixed(0); // "43"
+a.toFixed(1); // "42.6"
+a.toFixed(2); // "42.59"
+```
+- 실제로는 숫자 값을 문자열 형태로 반환하며, 원래 값의 소수점 이하 숫자보다 더 많은 자릿수를 지정하면 그만큼 0이 우측에 붙는다.
+- 소수점일 경우엔 프로퍼티 접근자가 아닌 숫자 리터럴의 일부로 해석되므로, 연산자를 사용할 떄는 조심해야 한다.
+
+```javascript
+42.toFixed(3); // Uncaught SyntaxError: Invalid or unexpected token
+
+(42).toFixed(3); // "42.000"
+0.42.toFixed(3); // "0.420"
+42..toFixed(3); // "42.000"
+```
+- `42.toFixed(3);`가 구문 에러가 나는 이유는 `42.` 리터럴(맞는 표현)의 일부가 되어 버려 `.toFixed` 메서드에 접근할 수단이 없기 때문이다.
+- 숫자 리터럴은 2진, 8진, 16진 등 다른 진번으로도 나타낼 수 있다.
+- ES6+ 엄격 모드(strict mode)에서는 `0363`처럼 `0`을 앞에 붙여 8진수를 표시하지 못한다.
+
+#### 📚 작은 소수 값
+- 다음 예제는 이진 부동 소수점 숫자의 부작용 문제이다.
+- 자바스크립트만의 문제가 아니라 IEEE 754 표준을 따르는 모든 언어에서 공통적인 문제이다.
+
+```javascript
+0.1 + 0.2 === 0.3 // false
+```
+- 이 문제는 이진 부동 소수점으로 나타낸 `0.1`과 `0.2`는 원래 숫자와 일치하지 않는다.
+- 그래서 둘을 더한 결과 역시 정확한 0.3이 아니다. 실제로는 `0.300000000004`에 가깝지만, 가깝다고해도 같은 것은 아니다.
+- 많은 애플리케이션이(대부분) 전체수(0과 양수를 포함한 숫자)만을, 그것도 기껏해야 백만이나 조 단위 규모의 숫자를 다룬다.
+- 이런 상황이라면 안심하고 자바스크립트의 숫자 연산 기능을 믿고 써도 된다.
+- 그렇다면 `0.1 + 0.2` 과 `0.3`, 두 숫자는 미세한 반올림 오차를 허용 공차로 처리하는 방법을 사용한다.
+- 이렇게 미세한 오차를 **머신 입실론(컴퓨터가 이해할 수 있는 가장 작은 숫자 단위)** 이라고 하는데, 자바스크립트 숫자의 머신 입실론은 `2^-52^`이다.
+- ES6부터는 이 값이 `Number.EPSILON`으로 미리 정의되어 있으므로 필요시 사용하면 되고, ES6 이전 브라우저는 폴리필을 대신 사용한다.
+
+```javascript
+if(!Number.EPSILON) {
+  Number.EPSILON = Math.pow(2,-52);
+}
+```
+
+- `Number.EPSILON`으로 두 숫자의 (반올림 허용 오차 이내의) 동등함을 비교할 수 있다.
+
+```javascript
+function numbersCloseEnoughToEqual(n1, n2) {
+  return Math.abs(n1 - n2) < Number.EPSILON;
+}
+
+var a = 0.1 + 0.2;
+var b = 0.3;
+
+numbersCloseEnoughToEqual(a, b); // true
+numbersCloseEnoughToEqual(0.00000001, 0.00000002); // false
+```
+
+#### 📚 정수인지 확인
+- ES6부터는 `Number.isInteger()`로 어떤 값의 정수 여부를 확인한다.
+
+```javascript
+Number.isInteger(42); // true
+Number.isInteger(42.000); // true
+Number.isInteger(42.3); // false
+```
+
+- 안전한 정수 여부는 ES6부터 `Number.isSafeInteger()`로 체크한다.
+
+```javascript
+Number.isSafeInteger(Number.MAX_SAFE_INTEGER); // true
+Number.isSafeInteger(Math.pow(2, 53)); // false
+Number.isSafeInteger(Math.pow(2, 53) - 1); // true
+```
+
+#### 📚 32비트 (부호 있는) 정수
+- 정수의 안전 범위가 대략 9조에 이르지만, 32비트 숫자에만 가능한 연산이 있으므로 실제 범위는 훨씬 줄어든다.
+- 따라서 정수의 안전 범위는 `Math.pow(-2, 31)`에서 `Math.pow(2, 31) - 1` 까지이다.
+- `a | 0` 과 같이 쓰면 숫자 값 ➡ 32 비트 부호 있는 정수로 강제변환을 한다.
+- `|` 비트 연산자는 32비트 정수 값에만 쓸 수 있기 때문에 가능한 방법이다.
