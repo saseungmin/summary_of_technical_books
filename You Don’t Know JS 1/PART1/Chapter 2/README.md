@@ -272,3 +272,134 @@ Number.isSafeInteger(Math.pow(2, 53) - 1); // true
 - 따라서 정수의 안전 범위는 `Math.pow(-2, 31)`에서 `Math.pow(2, 31) - 1` 까지이다.
 - `a | 0` 과 같이 쓰면 숫자 값 ➡ 32 비트 부호 있는 정수로 강제변환을 한다.
 - `|` 비트 연산자는 32비트 정수 값에만 쓸 수 있기 때문에 가능한 방법이다.
+
+### 🎯 특수 값
+#### 📚 값이 아닌 값
+- `undefinded` 타입의 값은 `undefinded` 밖에 없다. `null` 타입도 값은 `null`뿐이다.
+- 그래서 이 둘은 **타입과 값이 항상 같다.**
+- `null`은 식별자가 아닌 특별한 키워드이므로 `null`이라은 변수에 뭔가 할당할 수는 없다.
+- 그렇지만 `undefined`는 식별자로 쓸 수 있다.
+
+#### 📚 Undefined
+- 느슨한 모드에서는 전역 스코프에서 `undefined`란 식별자에 값을 할당할 수 있다.(절대 추천 X)
+
+```javascript
+function foo() {
+  undefined = 2; // 좋지 못하다.
+}
+
+function foo() {
+  "use strict";
+  undefined = 2; // 타입 에러 발생
+}
+```
+
+- 모드에 상관없이 `undefined`란 이름을 가진 지역 변수는 생성할 수 있다. (사용 X)
+
+```javascript
+function foo() {
+  "use strict";
+  var undefined = 2;
+  console.log(undefined); // 2
+}
+```
+- `undefined`는 내장 식별자로, 값은 `undefined`지만, 이 값은 `void` 연산자로도 얻을 수 있다.
+- 표현식 `void __`는 어떤 값이든 무효로 만들어, 항상 결괏값을 `undefined`로 만든다. 기존 값은 건드리지 않고 연산 후 값은 복구할 수 없다.
+
+```javascript
+var a = 42;
+console.log(void a, a); // undefined 42
+```
+
+- 관례에 따라 `void`만으로 `undefined` 값을 나타내려면 `void 0`이라고 쓴다. `void 0`, `void 1`, `undefined` 모두 같다.
+- `void` 연산자는 값이 존재하는 곳에서 그 값이 `undefined`가 되어야 좋을 경우에만 사용해야 한다. (거의 사용하지 않는다.)
+
+#### 📚 특수 숫자
+
+- 숫자 연산 시 두 피연산자가 전부 숫자가 아닐 경우 유효환 숫자가 나올 수 없으므로 그 결과는 `NaN` 이다.
+- `NaN`은 숫자 아님보다는 유효하지 않은(invalid) 숫자, 실패한 숫자, 또는 몹쓸 숫자라고 하는 것이 더 정확하다.
+
+```javascript
+var a = 2 / 'foo'; // NaN
+
+typeof a === 'number'; // true
+```
+
+- `NaN`은 경계 값의 일종으로 숫자 집합 내에서 특별한 종류의 에러 상황을 나타낸다.
+- 어떤 변수값이 특수한 실패 숫자, 즉 `NaN`인지 여부를 확인할 때 `null`, `undefined`처럼 `NaN`도 직접 비교하고 싶지만 틀리다.
+- `NaN`은 **다른 어떤 `NaN`과도 동등하지 않다.**
+- 사실상 반사성(Reflexive)이 없는 유일무이한 값이다.
+- 따라서 `NaN !== NaN`이다.
+- `NaN`을 여부를 확일 할 때는 내장 전역 유틸리티 `isNaN()` 함수가 `NaN` 여부를 말해준다.
+- 하지만 `isNaN()`는 치명적인 결함이 있는데 이 함수는 `NaN`의 의미를 너무 글자 그대로만 해석해서 실제로 인자 값이 숫자인이 여부를 평가하는 기능이 전부이다.
+
+```javascript
+var a = 2 / 'foo';
+var b = 'foo';
+
+a; // NaN
+b; // 'foo'
+
+window.isNaN(a); // true
+window.isNaN(b); // true
+```
+- `foo`는 당연히 숫자가 아니지만, 그렇다고 `NaN`는 아니다.
+- 이 버그는 자바스크립트 탄생 이후 오늘까지 계속됐다.
+- ES6 부터는 `Number.isNaN()`이 등장하여 `NaN`여부를 안전하게 체크할 수 있다.
+- 자바스크립트에서는 0으로 나누기 연산이 잘 정의되어 있어서 에러 없이 `Infinity(Number.POSITIVE_INFINITY)`라는 결과값이 나온다.
+
+```javascript
+var a = 1 / 0; // Infinity
+var b = -1 / 0; // Infinity
+```
+
+- IEEE 754 명세에 따르면, 덧셈 등의 연산 결과가 너무 커서 표현하기 곤란할 때 가장 가까운 수로 반올림 모드가 결괏값을 정한다.
+- 만약 무한을 무한으로 나누면 무한대또는 1이 나올거 같지만 수학책, 자바스크립트 모두 **무한대/무한대는 정의되지 않은 연산이며, 결괏값은 NaN이다**
+- 유한한 양수를 무한대로 나누면 `0`이지만 유한한 음수를 무한대로 나누면??
+- 자바스크립트에는 `0`과 `-0`이 존재한다.
+- 음의 영은 표기만 `-0`으로 하는 것이 아니라 특정 수식의 연산 결과 또한 `-0`으로 떨어진다.
+
+```javascript
+var a = 0 / -3; // -0
+var b = 0 * -3; // -0
+```
+- 덧셈과 뺄셈에는 `-0`이 나올 수가 없다.
+- 명세에 의하면 `-0`을 문자열화 하면 항상 `"0"`이다.
+- 반대로하면 있는 그대로 보여준다.
+
+```javascript
++"-0"; // -0
+Number("-0"); // -0
+JSON.parse("-0"); // -0
+JSON.stringify(-0); // "0"
+```
+
+- 확실하게 `-0`과 `0`을 구분하고 싶다 다음과 같이 해준다.
+
+```javascript
+function isNegZero(n) {
+  n = Number(n);
+  return (n === 0) && (1 / n === -Infinity);
+}
+
+isNegZero(-0); // true
+isNegZero(0 / -3); //true
+isNegZero(0); // false
+```
+- 이렇게 `-0`을 만든 이유는 값의 크기로 어떤 정보(ex. 애니메이션 프레임당 넘김 속도)와 그 값의 부호로 또 다른 정보를 동시에 나타내야 하는 애플리케이션이 있기 때문이다.
+
+#### 📚 특이한 동등 비교
+
+- ES6부터는 `NaN`과 `0`, `-0`간의 동등 비교에 대한 잡다한 예외를 걱정하지 않아도 두 값이 절대적으로 동등한지를 확인하는 새로운 유틸리티를 지원하는데 `Object.is()`를 사용할 수 있다.
+
+```javascript
+var a = 2 / 'foo';
+var b = -3 * 0;
+
+Object.is(a, NaN); // true
+Object.is(b, -0); // true
+Object.is(b, 0); //false
+```
+- `==`나 `===`가 안전하다면 굳이 `Object.is()`는 사용하지 않는 편이 좋다.
+- 기본 연산자가 좀 더 효울에 좋고 일반적이기 때문이다.
+- `Object.is()`는 주로 특이한 동등 비교에 쓴다.
