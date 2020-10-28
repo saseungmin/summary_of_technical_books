@@ -20,8 +20,16 @@
     - 32비트 (부호 있는) 정수
 4. 특수 값
     - 값 아닌 값
-    - Undefinded (void 연산자)
+    - `Undefined` (`void` 연산자)
     - 특수 숫자 (무한대, 0)
     - 특이한 동등 비교
 5. 값 vs 레퍼런스
 6. 정리하기
+
+### ✌ [Chapter 3: 네이티브](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%203)
+1. 내부 `[[Class]]`
+2. 래퍼 박싱하기
+    - 객체 래퍼의 함정
+3. 언박싱
+4. 네이티브, 나는 생성자다
+    - `Array()`
