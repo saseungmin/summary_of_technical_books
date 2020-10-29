@@ -205,3 +205,135 @@ a; // [undefined, undefined, undefined]
 - 물론 이 세 프로퍼티도 모두 `{ length: 3 }` 객체에는 존재하지 않기 때문에 모두 `undefined`를 반환한다.
 - 즉, `Array()`를 호출하면 `Array(undefined, undefined, undefined)`처럼 되어, 빈 슬롯이 아닌, `undefined`로 채워진 배열이 탄생한다.
 - **절대로 빈 슬롯 배열을 애써 만들어서 사용하지 말자.**
+
+#### 📚 Object(), Function(), and RegExp()
+
+- 일반적으로 `Object()`, `Function()`, `RegExp()` 생성자도 선택 사항이다.(분명한 의도가 아니면 사용하지 않는 편이 좋다).
+
+```javascript
+var c = new Object();
+c.foo = 'bar';
+c; // { foo: 'bar' }
+
+var d = { foo: 'bar' };
+d; // { foo: 'bar' }
+
+var e = new Function('a', 'return a * 2;');
+var f = function(a) { return a * 2; }
+function g(a) { return a * 2; }
+
+var h = new RegExp('^a*b+', 'g');
+var i = /^a*b+/g;
+```
+
+- `new Object()` 같은 생성자 폼은 사실상 사용할 일이 없다.
+- `Function` 생성자는 함수의 인자나 내용을 동적으로 정의해야 하는, 매우 드문 경우에 한해 유용하다.
+- 정규 표현식은 리터럴 형식으로 정의할 것을 적극 권장한다. 구문이 쉽고 무엇보다 성능상 이점이 있다.
+- `RegExp()`는 정규 표현식 패턴을 동적으로 정의할 경우 의미 있는 유틸리티다.
+
+```javascript
+var name = 'kyle';
+var namePattern = new RegExp('\\b(?:' + name + ')+\\b', 'ig');
+
+var matches = someText.match(namePattern);
+```
+
+#### 📚 Date() and Error()
+- 네이티브 생성자 `Date()`와 `Error()`는 리터럴 형식이 없으므로 다른 네이티브에 비해 유용하다.
+- `date` 객체 값은 `new Date()`로 생성한다.
+- ES5에 정의된 정적 도우미 함수(Helper Function), `Date.now()`를 사용하는 게 더 쉽다. (`getTime()` 보다)
+- `Error()` 생성자는 앞에 `new`가 있든 없든 결과는 같다.
+- `error` 객체의 주 용도는 현재의 실행 스택 콘텍스트(Execution Stack Context)를 포착하여 객체에 담든 것이다.
+- 이 실행 스택 콘텍스트는 **함수 호출 스택, `error` 객체가 만들어진 줄 번호 등 디버깅에 도움이 될 만한 정보들을 담고 있다.**
+- `error` 객체는 보통 `throw` 연산자와 함께 사용한다.
+
+```javascript
+function foo(x) {
+  if(!x) {
+    throw new Error('error..');
+  }
+  // ...
+}
+```
+
+#### 📚 Symbol()
+- ES6에서 처음 선보인, 새로운 원시 값 타입이다.
+- 심벌은 **충돌 염려 없이 객체 프로퍼티로 사용 가능한, 특별한 유일 값이다.**(절대적으로 유일함이 보장되지는 않는다.)
+- 심벌은 프로퍼티명으로 사용할 수 있으나, 프로그램 코드나 개발자 콘솔 창에서 심벌의 실제 값을 보거나 접근하는 건 불가능하다.
+- ES6에는 `Symbol.create`, `Symbol.iterator` 식으로 `Symbol` 함수 객체의 정적 프로퍼티로 접근한다.
+
+```javascript
+obj[Symbol.iterator] = function() { /* ... */ };
+```
+
+- 심벌을 직접 정의하려면 `Symbol()` 네이티브를 사용한다.
+- **`Symbol()`은 앞에 `new`를 붙이면 에러**가 나는, 유일한 네이티브 생성자다.
+
+```javascript
+var mysym = Symbol('my symbol');
+mysym; // Symbol(my symbol)
+mysym.toString(); // "Symbol(my symbol)"
+typeof mysym; // "symbol"
+
+var a = { };
+a[mysym] = 'foobar';
+Object.getOwnPropertySymbols(a); // [Symbol(my symbol)]
+```
+
+- 심벌은 전용(Private) 프로퍼티는 아니지만, 본래의 사용 목적에 맞게 대부분 전용 혹은 특별한 프로퍼티로 사용한다.
+- 심벌은 객체가 아니다. 단순한 스칼라 원시 값이다.
+
+#### 📚 네이티브 프로토타입
+- 내장 네티이브 생성자는 각자의 `.prototype` 객체를 가진다.(`Array.prototype`..)
+> `prototype` 객체에는 해당 객체의 하위 타입별로 고유한 로직이 담겨 있다.
+- 문자열 원시 값을 확장한 것까지 포함하여 모든 `String` 객체는 기본적으로 `String.prototype` 객체에 정의된 메서드에 접근할 수 있다.
+
+```javascript
+String.prototype.indexOf() // 문자열에서 특정 문자의 위치를 검색
+String.prototype.charAt() // 문자열에서 특정 위치의 문자를 반환
+String.prototype.substr(), substring(), slice() // 문자열 일부를 새로운 문자열로 추출
+String.prototype.toUpperCase(), toLowerCase() // 대소문자 변환된 문자열 생성
+String.prototype.trim() // 앞/뒤 공란잉 제거된 새로운 문자열 생성
+```
+- 이 중 문자열 값을 변경하는 메서드는 없다.
+- 수정이 일어나면 늘 **기존 값으로부터 새로운 값을 생성한다.**
+- **프로토타입 위임(Prototype Delegation)** 덕분에 모든 문자열이 이 메서드들을 가이 쓸 수 있다.
+
+```javascript
+var a = ' abc ';
+
+a.indexOf('c'); // 3
+a.toUpperCase(); // ' ABC ';
+a.trim(); // 'abc'
+```
+
+- 모든 네이티브 프로토타입이 평범한 것은 아니다.
+
+```javascript
+typeof Function.prototype; // 'function'
+Function.prototype(); // 빈 함수
+
+RegExp.prototype.toString(); // "/(?:)/" - 빈 regex
+```
+
+- 네이티브 프로토타입을 변경할 수도 있지만 바람직하지 못하다.
+
+```javascript
+Array.isArray(Array.prototype); // true
+Array.prototype.push(1, 2, 3); // 3
+Array.prototype; // [1, 2, 3]
+
+// 이런 식으로 놔두면 이상하게 작동할 수 있다.
+Array.prototype.length = 0;
+```
+
+- **프로토타입은 디폴트다**
+- 변수에 적절한 값이 할당되지 않은 상태에서 `Function.prototype` -> 빈 함수, `RegExp.prototype` -> 빈 정규식, `Array.prototype` -> 빈 배열은 모두 디폴드 값이다.
+- 프로토타입으로 디폴드 값을 세팅하면 추가적인 이점이 있다.
+- `.prototype`들은 이미 생성되어 내장된 상태이므로 단 한 번만 생성된다.
+- 어떤 식으로도 **프로토타입을 변경하지 않도록 유의해야 한다.**
+
+#### 📚 정리하기
+- 자바스크립트는 원시 값을 감싸는 객체 레퍼, 즉 네이티브를 제공한다. (`String`, `Number`)
+- 객체 레퍼에는 타입별로 쓸 만한 기능이 구현되어 있어 편리하게 사용할 수 있다. (ex. `trim()`, `concat()`)
+- `abc`같은 단순 스칼라 원시 값이 있을 때, 이 값의 `length` 프로퍼티나 `String.prototype`에 정의된 메서드를 호출하면 자바스크립트는 자동으로 원시 값을 박싱(해당되는 객체 레퍼로 감싼다.)하여 필요한 프로퍼티와 메서드를 쓸 수 있게 도와준다.
