@@ -33,3 +33,8 @@
 3. 언박싱
 4. 네이티브, 나는 생성자다
     - `Array()`
+    - `Object()`, `Function()`, and `RegExp()`
+    - `Date()` and `Error()`
+    - `Symbol()`
+    - 네이티브 프로토타입
+5. 정리하기
