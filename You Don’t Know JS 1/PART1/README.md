@@ -43,4 +43,4 @@
 
 1. 값 변환
 2. 추상 연산
-    - ToString, JSON 문자열화
+    - `ToString`, `JSON` 문자열화
