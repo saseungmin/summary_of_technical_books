@@ -38,3 +38,9 @@
     - `Symbol()`
     - 네이티브 프로토타입
 5. 정리하기
+
+#### ✌ [Chapter 4: 강제변환](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%204)
+
+1. 값 변환
+2. 추상 연산
+    - ToString, JSON 문자열화
