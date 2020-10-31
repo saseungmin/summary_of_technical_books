@@ -167,3 +167,96 @@ JSON.stringify(a, null, '-----');
 - `JSON.stringify()`는 직접적인 강제변환의 형식은 아니지만 두 가지 이유로 `ToString` 강제변환과 연관된다.
   - 문자열, 숫자, 불리언, `null` 값이 `JSON`으로 문자열화하는 방식은 `ToString` 추상 연산의 규칙에 따라 문자열 값으로 강제변환되는 방식과 동일하다.
   - `JSON.stringify()`에 전달한 객체가 **자체 `toJSON()` 메서드를 갖고 있다면**, **문자열화 전 `toJSON()`이 자동 호출**되어 **`JSON` 안전 값으로 강제변환**된다.
+
+#### 📚 ToNumber
+
+- *숫자가 아닌 값 -> 수식 연산이 가능한 숫자* 변환 로직은 예를 들어 `true`는 1, `false`는 0이 되고, `undefined`는 `NaN`으로, `null`은 0으로 바뀐다.
+- 문자열 값에 `ToNumber`를 적용하면 대부분 숫자 리터럴 규칙/구문과 비슷하게 작동한다.
+- 변환이 실패하면 결과는 `NaN`이다.
+- 한 가지 차이는 0이 앞에 붙은 8진수는 `ToNumber`에서 올바른 숫자 리터럴이라도 8진수로 처리하지 않는다.(10진수로 처리)
+- 객체(또는 배열)는 **동등한 원시 값으로 변환 후** 그 결괏값(아직 숫자가 아닌 원시 값)을 앞서 설명한 `ToNumber` 규칙에 의해 강제변환한다.
+- 동둥한 원시 값으로 바꾸기 위해 **`ToPrimitive` 추상 연산 과정에서 해당 객체가 `valueOf()` 메서드를 구현**했는지 확인한다.
+- **`valueOf()`를 쓸 수 있고 반환 값이 원시 값이면 그대로 강제변환**하되, 그렇지 않을 경우 (`toString()` 메서드가 존재하면) **`toString()`을 이용하여 강제변환**한다.
+- 원시 값으로 **바꿀 수 없을 땐 `TypeError` 오류를 던진다.**
+- ES5부터는 `[[Prototype]]`가 `null`인 경우 대부분 `Object.create(null)`를 이용하여 강제변환이 불가능한 객체(`valueOf()`, `toString()` 메서드가 없는 객체)를 생성할 수 있다.
+
+```javascript
+var a = {
+  valueOf: function() {
+    return '42';
+  }
+};
+
+var b = {
+  toString: function() {
+    return '42';
+  }
+};
+
+var c = [4, 2];
+c.toString = function() {
+  return this.join(''); // '42'
+};
+
+Number(a); // 42
+Number(b); // 42
+Number(c); // 42
+Number(''); // 0
+Number([]); // 0
+Number(['abc']); // NaN
+```
+
+#### 📚 ToBoolean
+- 1을 `true`로, 0을 `false`로 강제변환할 수는 있지만 그렇다고 두 값이 똑같은 건 아니다.
+
+**📌 Falsy 값**
+- `true/false`가 아닌 값을 불리언에 상당한 값으로 강제변환했을 때, 이 값들은?
+- 자바스크립트 모든 값은 다음 둘 중 하나다.
+  1. 불리언으로 강제변환하면 `false`가 되는 값
+  2. 1번을 제외한 나머지(즉, 명백히 `true`인 값) 
+- 명세가 정의한 `falsy` 값은 `undefined`, `null`, `false`, `+0`, `-0`, `NaN`, `''`이다.
+- 위 `falsy` 값은 불리언으로 강제변환하면 `false`이다.
+- 반대로 위 값들 중 없으면 `truthy`이다. 하지만 자바스크립트 명세에는 `truthy` 값 목록 같은 건 없다.
+- 모든 객체는 명백히 `truthy`하다는 식의 몇 가지 예시만 있을 뿐 `falsy` 값 목록에 없으면 응당 `truthy` 값이 되는 것이다.
+
+**📌 Falsy 객체**
+
+```javascript
+var a = new Boolean(false);
+var b = new Number(0);
+var c = new String('');
+
+var d= Boolean(a && b && c);
+
+d; // true
+```
+- a, b, c는 명백히 `falsy` 값을 감싼 객체이다.
+- d가 `true`인 것으로 봐서 세 변수는 모두 `true`이다.
+- 일반적인 자바스크립트의 의미뿐 아니라 브라우저만의 특이한 작동 방식을 가진 값을 생성하는 경우가 있는데, 이것이 바로 `falsy` 객체의 정체이다.
+- `falsy` 객체는 불리언으로 강제변환하면 `false`이다.
+
+**📌 truthy 값**
+
+```javascript
+var a = 'false';
+var b = '0';
+var c = "''";
+
+var d = Boolean(a && b && c);
+
+d; // true
+```
+- 문자열 값을 보면 `falsy`처럼 보이지만 문자열 값 자체는 모두 `truthy` 이기 때문이다.
+
+```javascript
+var a = []; // 빈 배열
+var b = {}; // 빈 객체
+var c = function(){}; // 빈 함수
+
+var d = Boolean(a && b && c);
+d; // true
+```
+
+- 외향은 `falsy` 처럼 생겼지만 어떻든 `[]`, `{}`, `function(){}`는 `falsy` 값 목록에 없으므로 모두 `truthy` 값이다.
+- `truthy` 값 목록은 사실상 무한하여 일일이 작성하는 게 불가능하다.
+- `truthy/falsy` 개념은 어떤 값을 불리언 타입으로 (명시적/암시적) 강제변환 시 해당 값의 작동 방식을 이해한다는 점에서 중요하다.
