@@ -44,3 +44,5 @@
 1. 값 변환
 2. 추상 연산
     - `ToString`, `JSON` 문자열화
+    - `ToNumber`
+    - `ToBoolean` (`Falsy` 값, `Falsy` 객체, `truthy` 값)
