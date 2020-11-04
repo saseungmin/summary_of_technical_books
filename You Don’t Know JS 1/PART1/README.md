@@ -46,3 +46,5 @@
     - `ToString`, `JSON` 문자열화
     - `ToNumber`
     - `ToBoolean` (`Falsy` 값, `Falsy` 객체, `truthy` 값)
+3. 명시적 강제변환
+    - 명시적 강제변환: 문자열 ↔ 숫자 (날짜 ➡ 숫자, 이상한 나라의 틸드(`~`), 비트 잘라내기)
