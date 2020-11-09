@@ -1,5 +1,21 @@
 ## 🌈 Chapter 3 : 네이티브
 
+<details><summary>Table of Contents</summary>
+
+- 내부 `[[Class]]` [:link:](#-내부-class)
+- 래퍼 박싱하기 [:link:](#-래퍼-박싱하기)
+  - 문자열 [:link:](#-객체-래퍼의-함정)
+- 언박싱 [:link:](#-언박싱)
+- 네이티브, 나는 생성자다. [:link:](#-네이티브-나는-생성자다)
+  - Array() [:link:](#-array)
+  - Object(), Function(), and RegExp() [:link:](#-object-function-and-regexp)
+  - Date() and Error() [:link:](#-date-and-error)
+  - Symbol() [:link:](#-symbol)
+  - 네이티브 프로토타입 [:link:](#-네이티브-프로토타입)
+- 정리하기 [:link:](#-정리하기)
+
+</details>
+
 - 가장 많이 사용하는 네이티브들
 > `String`, `Number`, `Boolean`, `Array`, `Object`, `Function`, `RegExp`, `Date`, `Error`, `Symbol`
 - 네이티브는 내장 함수이다.
@@ -333,7 +349,7 @@ Array.prototype.length = 0;
 - `.prototype`들은 이미 생성되어 내장된 상태이므로 단 한 번만 생성된다.
 - 어떤 식으로도 **프로토타입을 변경하지 않도록 유의해야 한다.**
 
-#### 📚 정리하기
+### 🎯 정리하기
 - 자바스크립트는 원시 값을 감싸는 객체 레퍼, 즉 네이티브를 제공한다. (`String`, `Number`)
 - 객체 레퍼에는 타입별로 쓸 만한 기능이 구현되어 있어 편리하게 사용할 수 있다. (ex. `trim()`, `concat()`)
 - `abc`같은 단순 스칼라 원시 값이 있을 때, 이 값의 `length` 프로퍼티나 `String.prototype`에 정의된 메서드를 호출하면 자바스크립트는 자동으로 원시 값을 박싱(해당되는 객체 레퍼로 감싼다.)하여 필요한 프로퍼티와 메서드를 쓸 수 있게 도와준다.

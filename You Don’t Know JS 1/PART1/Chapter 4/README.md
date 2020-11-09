@@ -1,5 +1,22 @@
 ## 🌈 Chapter 4 : 강제변환
 
+<details><summary>Table of Contents</summary>
+
+- 값 변환 [:link:](#-값-변환)
+- 추상 연산 [:link:](#-추상-연산)
+  - ToString [:link:](#-tostring)
+  - ToNumber [:link:](#-tonumber)
+  - ToBoolean [:link:](#-toboolean)
+- 명시적 강제변환 [:link:](#-명시적-강제변환)
+  - 문자열 ↔ 숫자 [:link:](#-명시적-강제변환-문자열--숫자)
+  - 숫자 형태의 문자열 파싱 [:link:](#-명시적-강제변환-숫자-형태의-문자열-파싱)
+  - `*` ➡ 불리언 [:link:](#-명시적-강제변환---불리언)
+- 암시적 변환 [:link:](#-암시적-변환)
+  - 암시적이란? [:link:](#-암시적이란)
+  - 문자열 ↔ 숫자 [:link:](#-암시적-강제변환-문자열--숫자)
+
+</details>
+
 ### 🎯 값 변환
 
 - 어떤 값을 다른 타입의 값으로 바꾸는 과정이 **명시적이면 타입 캐스팅(Type Casting)**, **암시적이면 강제변환(Coercion)** 이라고 한다.
@@ -479,7 +496,7 @@ parseInt('0x10'); // 16
 parseInt('103', 2); // 2
 ```
 
-#### 📚 명시적 강제변환: * ➡ 불리언
+#### 📚 명시적 강제변환: `*` ➡ 불리언
 - `String()`, `Number()`도 그렇듯이 `Boolean()` 명시적인 강제변환 방법이다.(앞에 `new` x)
 
 ```javascript
