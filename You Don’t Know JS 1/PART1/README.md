@@ -39,7 +39,7 @@
     - 네이티브 프로토타입
 5. 정리하기
 
-#### ✌ [Chapter 4: 강제변환](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%204)
+### ✌ [Chapter 4: 강제변환](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%204)
 
 1. 값 변환
 2. 추상 연산
@@ -49,7 +49,7 @@
 3. 명시적 강제변환
     - 문자열 ↔ 숫자 (날짜 ➡ 숫자, 이상한 나라의 틸드(`~`), 비트 잘라내기)
     - 숫자 형태의 문자열 파싱 (비 문자열 파싱)
-    - * ➡ 불리언
+    - `*` ➡ 불리언
 4. 암시적 변환
     - 암시적이란?
     - 문자열 ↔ 숫자
