@@ -71,3 +71,9 @@
       - 암시적 강제변환의 안전한 사용법
 6. 추상 관계 비교
 7. 정리하기
+
+### ✌ [Chapter 5: 문법](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%205)
+
+1. 문과 표현식
+    - 문의 완료 값
+    - 표현식의 부수 효과
