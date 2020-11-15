@@ -527,3 +527,157 @@ var d = a && b || c ? c || b ? a : c && b : a;
 - 연산자 우선순위/결합석과 손으로 `()`를 감싸 주는 두 방법을 적절히 사용해야 한다.
 - 예를 들어, `(a && b && c)`는 그 자체로 최선이므로 굳이 결합성을 고려하여 순서를 명시하고자 **((a && b) && c)** 처럼 쓰는 건 장환한 코드를 낳을 뿐이므로 그냥 놔둔다.
 - 두 개의 `? :` 조건 연산자가 체이닝된 코드가 있다면, 주저 없이 `()`로 그룹핑하여 의도한 로직을 확실히 밝힌다.
+
+## 🎯 세미콜론 자동 삽입
+- ASI(Automatic Semicolon Insertion)는 자바스크립트 프로그램의 세미콜론이 누락된 곳에 엔진이 자동으로 `;`를 삽입하는 것을 말한다.
+- 단 하나의 `;`이라도 누락되면 자바스크립트 프로그램은 돌아가지 않기 때문에 자바스크립트 코딩 시 `;`를 안 써도 될 것 같은 부분에 생략을 해도 프로그램이 실행되는 이유는 ASI 덕분이다.
+- 단, ASI는 새 줄에만 적용되며 어떠한 경우에도 줄 중간에 삽입되는 일은 없다.
+- 기본적으로 자바스크립트 파서는 줄 단위로 파싱을 하다가 에러가 나면 `;`을 넣어보고 타당한 거 같으면 `;`를 삽입한다.
+
+```javascript
+var a = 42, b
+c;
+```
+
+- 이 경우 자바스크립트 엔진은 b 뒤에 암시적으로 `;`을 삽입한다. 따라서 `c;`는 독립적인 표현식 문이 된다.
+
+```javascript
+var a = 42, b = 'foo';
+a
+b // "foo"
+```
+- 표현식 문에도 ASI가 적용되므로 에러 없는 유효한 프로그램이다.
+
+```javascript
+var a = 42;
+do {
+  // ...
+} while(a) // ; 빼먹었다!
+a;
+```
+- 위 같은 경우에서도 ASI는 끼어들어 친절하게 `;`를 넣어준다.
+- ASI는 주로 `break`, `continue`, `return`, `yield`에도 동일한 추론 로직이 사용된다.
+
+### 📚 에러 정정
+
+- 대부분의 세미콜론은 선택 사항이다.
+- 명세에는 ASI가 에러 정정(Error Correction) 루틴이라고 씌여 있다.
+- 에기서 에러는 구체적으로는 파서 에러다. 다른 말로 풀이하면 ASI가 파서를 너그럽게하여 에러를 줄이는 것이다.
+- 파서 에러는 프로그램을 부정확하게/잘못 코딩했기 때문에 나는 것일 뿐, 그 외의 경우는 없다.
+- 따라서 ASI가 꼼꼬히 파서 에러를 정정했음에도 발생한 파서 에러는 프로그램 작성자가 정말 잘못 짠 코드가 있다는 증거다.
+- 하지만 ASI의 기능에 의존하는 것은 본질적으로 새 줄을 유효 공백 문자로 바라보는 것과 같다는 의견도 있다.
+- 그렇기 때문에 **필요하다고 생각되는 곳이라면 어디든지 세미콜론을 사용하고, ASI가 어떻게든 뭔가 해줄 거라는 가정은 최소화하는게 좋다.**
+> - 자바스크립트의 창시자인 브렌단 아이크는 이렇게 말했다.
+> - **ASI는 구문 오류를 정정하는 프로시저다.**
+> 만약 ASI를 보편적인, 유효 개행 문자 규칙쯤으로 여기고 코드를 작성한다면 곤경에 처하게 될 것이다.
+> 내가 1995년 5월 열흘 간으로 되돌아갈 수만 있다면 강력한 유효 개행 문자를 만들 것이다. **ASI가 마치 유효 개행 문자를 넣어주는 것처럼 착각하지 않기를 바란다.**
+
+## 🎯 에러
+- 자바스크립트에는 하위 에러 타입(TypeError, ReferenceError, SyntaxError 등)뿐만 아니라, 일부 에러는 컴파일 시점에 발생하도록 문법적으로 정의도어 있다.
+- 자바스크립트는 조기 에러(Early Error) 붙잡아 던지게 되어 있는, 한눈에 봐도 알 수 있는 구문 에러는 물론이고, 자바스크립트 문법에는 구문상 오류는 아니지만 허용되지 않는 것들도 정의되어 있다.
+- 코드가 실행되기 전에 발생하므로 이런 에러는 `try...catch`로 잡을 수 없으며, 그냥 프로그램 파싱/컴파일이 실패한다.
+- 다음 정규 표현식 리터럴 내부의 구문이 그런 예로 자바스크립트 구문상 아무 문제 없지만 올바르지 않은 정규 표현식은 조기 에러를 던진다.
+
+```javascript
+var a = /+foo/; // Uncaught SyntaxError: Invalid regular expression: /+foo/: Nothing to repeat
+```
+
+- 할당 대상은 반드시 식별자여야 하므로 다음 예제에서 42는 잘못된 위치에 있기 때문에 곧바로 에러가 난다.
+  
+```javascript
+var a;
+42 = a; // Uncaught SyntaxError: Invalid left-hand side in assignment
+```
+
+### 📚 너무 이른 변수 사용
+- ES6는 임시 데드 존(TDZ, Temporal Dead Zone)이라는 새로운 개념을 도입했다.
+- **TDZ는 아직 초기화를 하지 않아 변수를 참조할 수 없는 코드 영역이다.**
+- ES6 `let` 블록 스코핑이 대표적인 예이다.
+
+```javascript
+{
+  a = 2; // Uncaught ReferenceError: Cannot access 'a' before initialization
+  let a;
+}
+```
+- `let a` 선언에 의해 초기화되기 전 `a = 2` 할당문이 변수 a에 접근하려고 한다.
+- 하지만 a는 아직 TDZ 내부에 있으므로 에러가 난다.
+- 원래 `typeof` 연산자는 산언되지 않은 변수 앞에 붙여도 오류가 나지 않는데 TDZ 참조 시에는 이러한 안전장치가 없다.
+
+```javascript
+{
+  typeof a; // undefined
+  typeof b; // Uncaught ReferenceError: Cannot access 'b' before initialization
+  let b;
+}
+```
+
+## 🎯 함수 인자
+- TDZ 관련 에러는 ES6 디폴트 인자 값에서도 찾아볼 수 있다.
+
+```javascript
+let b = 3;
+function foo(a = 42, b = a + b + 5) {
+  // ... 
+}
+
+// Uncaught SyntaxError: Identifier 'b' has already been declared
+```
+- 두 번째 할당문에서 좌변 b는 아직 TDZ에 남아 있는 b를 참조하려고 하기 때문에 에러를 던진다.
+- 그러나 이 시점에서 인자 a는 TDZ를 밟고 간 이후여서 문제가 없다.
+- ES6 디폴트 인자 값은 함수에 인자를 넘기기 않거나 `undefined`를 전달했을 때 적용된다.
+
+```javascript
+function foo(a = 42, b = a + 1) {
+  console.log(a, b);
+}
+
+foo(); // 42 43
+foo(undefined); // 42 43
+foo(5); // 5 6
+foo(void 0, 7); // 42 7
+foo(null); // null 1
+```
+
+- ES6 디폴트 인자 입장에서 보면 인자 값이 없거나 `undefined` 갓을 받거나 그게 그거지만 차이점을 엿볼 수 있는 경우도 있다.
+
+```javascript
+function foo(a = 42, b = a + 1) {
+  console.log(
+    arguments.length, a, b,
+    arguments[0], arguments[1],
+  );
+}
+
+foo(); // 0 42 43 undefined undefined
+foo(10); // 1 10 11 10 undefined
+foo(10, undefined); // 2 10 11 10 undefined
+foo(10, null); // 2 10 null 10 null
+```
+
+- `undefined` 인자를 명시적으로 넘기면 `arguments` 배열에도 값이 `undefined`인 원소가 추가되는데, 여기에 해당하는 디폴트 인자 값과 다르다.
+- 이런 현상이 ES5에서도 똑같은 불일치는 교묘하게 발생한다.
+
+```javascript
+function foo(a) {
+  a = 42;
+  console.log(arguments[0]);
+}
+
+foo(2); // 42
+foo(); // undefined
+```
+
+- 인자를 넘기면 `arguments`의 슬롯과 이나가 연결되면서 항상 같은 값이 할당되지만 인자 없이 호출하면 전혀 연결되지 않다.
+- 더욱이 엄격 모드에서는 어떻게 해도 연결되지 않는다.
+
+```javascript
+function foo(a) {
+  "use strict";
+  a = 42;
+  console.log(arguments[0]);
+}
+
+foo(2); // 2
+foo(); // undefined
+```
