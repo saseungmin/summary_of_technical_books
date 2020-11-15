@@ -681,3 +681,201 @@ function foo(a) {
 foo(2); // 2
 foo(); // undefined
 ```
+
+## 🎯 try...finally
+- `finally` 절의 코드는 반드시 실행디고 다른 코드로 넘어가기 전에 `try` 이후부터 항상 실행된다.
+- 어떤 의미에서 `finally` 절은 다른 블록 코드에 상관없이 필히 실행되어야 할 콜백 함수와 같다고 봐야 맞다.
+- 그런데 만약 `try` 절에 `return`문이 있으면?
+
+```javascript
+function foo() {
+  try {
+    return 42;
+  }
+  finally {
+    console.log('hello');
+  }
+  console.log('실행될 리 없지.');
+}
+
+console.log(foo());
+// hello
+// 42
+```
+
+- `return 42`에서 `foo()` 함수의 완료 값은 42로 세팅되고, `try` 절의 실행이 종료되면서 곧 바로 `finally` 절로 넘어간다.
+- 그 후 `foo()` 함수 전체의 실행이 끝나고 완료 값은 호출부 `console.log()`문에 반환된다.
+- `try`안에 `throw`가 있어도 비슷하다.
+
+```javascript
+function foo() {
+  try {
+    throw 42;
+  }
+  finally {
+    console.log('hello');
+  }
+  console.log('실행될 리 없지.');
+}
+
+console.log(foo());
+// hello
+// Uncaught 42
+```
+- 만약 `finally` 절에서 예외가 던져지면, 이전의 실행 결과는 모두 무시한다. 즉, 이전에 `try` 블록에서 생성한 완료 값이 있어도 완전히 사라진다.
+
+```javascript
+function foo() {
+  try {
+    return 42;
+  }
+  finally {
+    throw 'hello';
+  }
+  console.log('실행될 리 없지.');
+}
+
+console.log(foo());
+// Uncaught hello
+```
+
+- `continue`나 `break` 같은 비선형 제어문 역시 `return`과 `throw`와 비슷하게 작동한다.
+
+```javascript
+for(var i = 0; i < 10; i++) {
+  try {
+    continue;
+  }
+  finally {
+    console.log(i);
+  }
+}
+
+// 0 1 2 3 4 5 6 7 8 9
+```
+
+- `finally` 절의 `return`은 그 이전에 실행된 `try`나 `catch` 절의 `return`을 덮어쓰는데 반드시 명시적으로 `return` 문을 써야 한다.
+
+```javascript
+function bar() {
+  try {
+    return 42;
+  }
+  finally {
+    // return 42를 무시한다.
+    return;
+  }
+}
+
+function foo() {
+  try {
+    return 42;
+  }
+  finally {
+    // return 42를 무시한다.
+    return 'hello';
+  }
+}
+
+function baz() {
+  try {
+    return 42;
+  }
+  finally {
+    // return이 존재하지 않으면 이전 return을 존중한다.
+  }
+}
+```
+
+- 보통 함수에서는 `return`을 생략해도 `return;` 또는 `return undefined;` 한 것으로 치지만, `finally` 안에서 `return`을 빼면 이전의 `return`을 무시하지 않고 존중한다.
+
+```javascript
+function foo() {
+  bar: {
+    try {
+      return 42;
+    }
+    finally {
+      // bar 레이블 블록으로 나간다.
+      break bar;
+    }
+  }
+  console.log('이게 뭐야!');
+
+  return 'hello';
+}
+
+console.log(foo());
+// 이게 뭐야!
+// hello
+```
+- 이런 코딩은 피하자.
+- 사실상 `return`을 취소해버리는 `finally + 레이블 break` 코드는 그냥 골치 아픈 코드를 양산할 뿐이다.
+
+## 🎯 switch
+
+```javascript
+switch(a) {
+  case 2:
+    // 뭔가 할테고
+    break;
+  case 42:
+    // 다른 일을 할테고
+    break;
+  default:
+    // 이무것도 안 걸리면 여기
+}
+```
+
+- `switch` 표현식과 `case` 표현식 간의 매치 과정은 `===` 알고리즘과 똑같다.
+- `case` 문에 확실한 값이 명시된 경우라면 엄격한 매치가 적절하다.
+- 그러나 강제변환이 일어나는 동등비교를 이용하고 싶다면 `switch` 문에 꼼수?를 부려야 한다.
+
+```javascript
+var a = '42';
+switch (true) {
+  case a == 10:
+    console.log('10 또는 "10"');
+    break;
+  case a == 42:
+    console.log('42 또는 "42"');
+    break;
+  default:
+    // 여기는 올리가 없어용
+}
+
+// '42 또는 "42"'
+```
+- `==`를 써도 `switch` 문은 엄격하게 매치한다. 그래서 `case` 표현식 평가 결과가 `truthy`이지만 엄격히 `true`는 아닐 경우 매치는 실패한다.
+- 이를테면 표현식에 `&&`나 `||`같은 논리 연산자를 사용할 때 문제가 된다.
+
+```javascript
+var a = 'Hello World';
+var b = 10;
+
+switch (true) {
+  case (a || b == 10):
+    // 여기로 안오는데..
+    break;
+  default:
+    console.log('오잉');
+}
+
+// 오잉
+```
+
+- `(a || b == 10)`의 평가 결과는 `true`가 아닌 `Hello World`이므로 매치가 되지 않는다.
+- 이 때는 분명히 표현식의 결과가 `true/false`로 떨어지게 `case !!(a || b == 10) :`과 같이 작성해야 한다.
+- `default` 절은 선택 사항이며 꼭 끝 부분에 쓸 필요는 없다.
+- 그런데 `default`에서도 `break`를 안 써주면 코드가 계속 실행된다.
+
+
+## 🎯 정리하기
+- 문과 표현식은 영어 언어의 문장, 어구와 각각 유사하다. 포현식은 순수하고 독립적이지만 부수 효과를 일으킬 수 있다.
+- 자바스크립트 문법에는 순수 구문 외에 의미론적인 **사용 규칙(코텍스트)가 내재**되어 있다. 예를 들어, 프로그램에서 자주 등장하는 `{}` 쌍은 문 블록, 객체 리터럴이 될 수 있고, 해체 할당이나 명명된 함수 인자로 쓸 수 있다.
+- 자바스크립트 연산자는 그 **우선순위**와 **결합성**이 분명히 정해져 있다.
+- ASI(자동 세미콜론 삽입)는 자바스크립트 엔진에 내장된 **파서 에러 감지 시스템으로 필요한 `;`이 코드에서 누락된 경우 파서 에러가 나면 자동으로 삽입해보고 코드 실행에 문제가 없도록 도와준다.**
+- 자바스크립트 에러는 몇 가지 유형이 있지만 크게 **조기 에러(컴파일러가 던진 잡을 수 없는 에러)** 와 **런타임 에러(try..catch로 잡을 수 있는 에러)** 로 분류 된다.
+- 함수 `arguments`와 명명된 인자의 관계는 흥미로운데 `arguments` 배열을 조심하지 앟으면 구멍 난 추상화에서 비롯된 갖가지 함정에 빠질 수 있다. **가급적 `arguments` 사용을 자제**하되 꼭 사용해야 할 경우 **`arguments`의 원소와 이에 대응하는 명명된 인자를 동시에 사용하지 말자.**
+- `try`에 붙은 `finally` 절에는 실행 처리 순서 면에서 별난 점이 있는데 떄로는 이런 기벽이 도움이 되기는 하지만, **레이블 블록과 함께 사용하면 많은 혼란을 가중시킬 수 있다.**
+- `switch`는 장황한 `if..else if...` 문을 대체하는 훌륭한 수단아지만, 단순하게만 생각했다간 예기치 않은 결과에 당황할 수 있다.
