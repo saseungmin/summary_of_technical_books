@@ -162,3 +162,172 @@ const result =
 
 result.length; // 5
 ```
+
+### 📚 '필요할 때 부르리' 전략
+- 반복적인 계싼을 피하는 것도 애플리케이션 실행 속도를 끌어올리는 방법으로 캐시를 사용했었다.
+- 다음은 함수에 캐시 계층을 간단히 구현한 코드이다.
+
+```js
+function cachedFn (cache, fn, args) {
+  // 함수 실행 결과를 식별하기 위해 함수명과 인수를 조합하여 키값을 정한다.
+  let key = fn.name + JSON.stringify(args);
+  if (contains(cache, key)) {
+    return get(cache, key);
+  }
+  else {
+    let result = fn.apply(this, args); // 캐시에 값이 없으면 함수를 실행한다. (캐시 미스)
+    put(cache, key, result); // 결과를 캐시에 담는다.
+    return result;
+  }
+}
+```
+
+- `findStudent` 함수 실행을 `cachedFn`으로 감싸면 다음과 같다.
+
+```js
+var cache = {};
+cachedFn(cache, findStudent, '444-44-4444'); // 처음에는 캐시 미스이므로 findStudent를 실행
+cachedFn(cache, findStudent, '444-44-4444'); // 두 번째는 캐시에 보관된 값을 곧바로 읽는다.
+```
+
+- 하지만 이런 함수에 일일히 이런 래퍼를 두고 호출하게끔 코딩하는 건 상당히 버겁기도 하고 가독성이 떨어지고, 그렇게 작성한 함수는 전역 공유 캐시 객체에 의존하는 부수효과가 있다.
+- 그렇기 때문에 함수형 언어에는 **메모화(memoization)** 라는 메커니즘이 있다.
+
+#### 🎈 메모화
+- 함수의 결과를 해당 입력과 연관시키는 일, 즉 다시 말해, 함수의 입력을 어떤 값으로 계산해내는 건 어떤 함수형 프로그래밍의 원리 덕분에 가능할까? 그렇다. 바로 **참조 투명성이다.**
+
+
+#### 🎈 계산량이 많은 함수를 메모화
+- 순수 함수형 언어는 자동으로 메모화를 실천하지만, 자바스크립트나 파이썬 같은 언어에서는 함수를 언제 메모할지 선택할 수 있는데, 예를 들어 문자열 ROT13 형식으로 인코딩하는 rot13 함수를 보자.
+
+```js
+var discountCode = 'functional_js_50_off';
+
+rot13(discountCode); // shapgvbany_wf_50_bss
+```
+- 여기서 중요한 점은 rot13 함수에 **동일한 문자열을 입력하면 반드시 동일한 문자열이 출력된다 (즉, 참조 투명하다)는 사실이다.**
+- 바꿔 말해, 이 함수를 메모하면 엄청난 성능 향상을 기대할 수 있다.
+- 메모화를 하면 동일한 입력으로 함수를 재호출할 때 내부 캐시가 히트되어 즉시 결과가 반환된다.
+- 자바스크립트의 고정밀 시각 API가 그 예이다. 이 API는 `Date.now()`, `console.time()` 같은 기본 자바스크립트 함수보다 더 정확한 타임스탬프를 계산하고 함수 호출 경과 시간을 잴 수 있다.
+- 시간을 재는 호출을 tap으로 추가
+```js
+const start = () => now();
+const runs = [];
+const end = function (start) {
+  let end = now();
+  let result = (end - start).toFixed(3);
+  runs.push(result);
+  return result;
+};
+
+const test = function (fn, input) {
+  return () => fn(input);
+};
+
+const testRot13 = IO.form(start)
+  // tap 조합기로 모나드를 통해 시작 시간 정보를 전파한다.
+  .map(R.tap(test(rot13, 'functional_js_50_off')))
+  .map(end);
+
+testRot13.run();
+testRot13.run();
+assert.ok(runs[0] >= runs[1]);
+```
+
+- 함수 호출에 메모화 추가
+
+```js
+Function.prototype.memoized = function() {
+  let key = JSON.stringify(arguments);
+  // 내부 지역 캐시를 만든다.
+  this._cache = this._cache || {};
+  // 이전에 함수를 실행한 적 있는지 캐시를 먼저 읽고 값이 있으면 함수를 건너뛰고 
+  // 결과를 반환하며, 값이 없으면 계산을 한다.
+  this._cache[key] = this._cache[key] ||
+    this.apply(this, arguments);
+  
+  return this._cache[key];
+};
+
+// 함수 메모화를 활성화한다.
+Function.prototype.memoize = function() {
+  let fn = this;
+  is(fn.length === 0 || fn.length > 1) {
+    return fn; // 단항 함수만 메모한다.
+  }
+
+  return function () {
+    // 함수 인스턴스를 memoized 함수로 감싼다.
+    return fn.memoized.apply(fn, arguments); 
+  }
+}
+```
+
+- 위와 같이 `Function` 객체를 확장하니 어디서건 메모화 기능을 꺼내 쓸 수 있고 **전역 공유 캐시에 접근하는 기시적인 부수효과가 사라졌다.**
+- 또 **함수의 내부 캐시 체제를 추상**하여 테스트와 완전히 무관한 코드로 만들었다.
+- 여러 인수를 받는 함수의 메모화 과정에는 아무래도 적합한 캐시키를 생성하는 작업이 복잡하고 비싼 연산을 수반하게 되기 때문에 이럴 때 커링을 사용한다.
+
+#### 🎈 커링과 메모화를 활용
+- 복잡한 함수, 즉 인수가 여러 개인 함수는 아무리 순수함수라 해도 캐시하기가 어렵다.
+- 한 가지 해결 방법은 커링이다.
+
+```js
+// 이 함수는 참조 투명하지 않지만, 실제로 값비싼 검색이나 원격 HTTP 요청을 할 때는 보통 결과를 캐시하는 경우가 많다.
+const safeFindObject = R.curry(function (db, ssn) {
+  // 값비싼 IO 검색 수행
+});
+
+const findStudent = safeFindObject(DB('student')).memoize();
+findStudent('444-44-4444');
+```
+- 단항 함수로 만들면 다루기 쉽고 합성하기도 쉬울 뿐만 아니라, 프로그램을 더 잘게 분해하여 전체를 구성하는 요소별로 메모화하고 캐시를 적용하는 이점을 살릴 수 있다.
+
+#### 🎈 분해하여 메모화를 극대화
+- 코드를 잘게 나눌수록 메모화 효과는 더욱 커진다.
+- 메모화가 일종의 작은 쿼리 캐시 역할을 담당하면서 이미 조회한 객체를 다음에 빨리 접근할 수 있게 보관한다는 점이다.
+- 함수를 어떤 값, 즉 느긋하게 계산된 값으로 바라보는 관점에서 메모화를 확실히 그만한 가치가 있다.
+- `showStudent`에 있는 일부 함수를 메모된 함수로 변경한 코드다.
+
+```js
+const showStudent = R.compose(
+  map(append('#student-info')),
+  liftIO,
+  getOrElse('학생을 찾을 수 없습니다!'),
+  map(csv),
+  map(R.props(['ssn', 'firstname', 'lastname'])),
+  chain(findStudent),
+  chain(checkLengthSsn),
+  lift(cleanInput),
+);
+
+showStudent('444-44-4444').run(); // 평균 9.2 밀리초 (메모화 X)
+showStudent('444-44-4444').run(); // 평균 2.5 밀리초 (메모화 O)
+```
+
+#### 🎈 재귀 호출에도 메모화를 적용
+- 재귀는 때때로 브라우저를 망치게 한다. 스택이 비정상적으로 커질 때이다.
+- 메모화를 이용하면 이런 문제를 해결하는 데 도움이 될 때가 있다.
+- 일반적으로, 재귀 호출은 **기저 케이스에 도달할 때**까지 **같은 문제**,즉 큰 문제의 하위 문제들을 풀어, 결국 마지막에 스택이 풀리며 최종 결과를 낸다.
+- 이때 하위 문제의 결과를 캐시하면 같은 함수를 호출할 때 성능을 끌어올릴 수 있다.
+
+```js
+3! = 3 * 2 * 1 = 6
+// 4! = 4 x 3! 처럼 계승도 더 작은 계승으로 재귀적 표현이 가능하다.
+4! = 4 * 3 * 2 * 1 = 4 * 3! = 24
+```
+
+- 따라서 계승을 계산하는 프로그램은 메모화한 재귀 호출 형태로 구현할 수 있다.
+
+```js
+const factorial = ((n) => (n === 0) ? 1
+  : (n * factorial(n - 1))).memoize();
+
+factorial(100); // .299밀리초
+factorial(101); // .021밀리초
+```
+
+- 계승의 수학적 원리를 메모화 형태로 응용할 수 있어 두 번째 함수를 실행할 때 처리율(throughput)이 확 올라간다.
+- 스택 프레임을 관리하고 스택 오염을 방지하는 효과도 있다.
+- 처음 `factorial(100)`을 실행하면 전체 알고리즘을 실행하면 100개의 프레임을 함수 스택에 쌓는다. 이것이 재귀 해법의 흠이다.
+- 계승을 계산하는 일처럼 주어진 입력 숫자만큼 프레임 개수가 늘어날 수밖에 없는 경우, 재귀는 스택 공간을 너무 많이 허비하는 경향이 있다.
+- 하지만 메모화를 이용하면 다음 숫자를 계산할 때 필요한 스택 프레임 개수를 엄청나게 줄일 수 있다.
