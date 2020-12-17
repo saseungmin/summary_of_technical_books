@@ -220,3 +220,129 @@ const ShowStudentAsync = R.compose(
 ```
 - 함수가 내부적으로 어떤 비동기 로직을 구사했는지, 어떤 콜백을 썼는지 등은 철저히 베일에 감싼 채 선언적인 포즈를 취한다.
 - 따라서 동시에 실행되지 않지만 나중에 함수 조합기로서의 본색을 드러낼 함수를 서로 붙여놓은 **무인수 프로그램들을 합성하여 조정할 수 있다.**
+
+
+### 📚 느긋한 데이터 생성
+- **제너레이터** 함수는 `function*`라고 표기하는, 언어 수준에서 지원되는 장치이다.
+- 이 함수는 `yield`를 만나면 함수 밖으로 잠시 나갔다가 자신의 보관된 콘텍스트를 찾아 다시 돌아온다.
+- 제너레이터 함수의 실행 콘텍스트는 잠정 중단했다가 언제라도 재개할 수 있어서 제너레이터로 다시 돌아올 수 있다.
+- 제너레이터는 함수를 호출하는 시점에 내부적으로 이터레이터 객체를 생성하여 느긋함을 부여하고, 이터레이터는 매번 `yield`를 호출할 때마다 호출자에게 데이터를 돌려준다.
+
+#### 🎈 제너레이터와 재귀
+- 제너레이터도 다른 제너레이터를 얼마든지 호출할 수 있다.
+- 중첩된 객체 집합을 평평한 모양으로 만들고 싶을 때 아주 유용한 특성이다.
+- 제너레이터는 `for..of` 루프문으로 반복할 수 있기 때문에 다른 제너레이터에게 위임하는 건 마치 두 컬렉션을 병합한 전체 컬렉션을 반복하는 것과 비슷하다.
+
+```js
+function* AllStudentsGenerator() {
+  yield 'Church';
+
+  yield 'Rosser';
+  yield* RosserStudentGenerator(); // yield*로 다른 제너레이터에게 위임한다.
+
+  yield 'Turing';
+  yield* TuringStudentGenerator();
+
+  yield 'Kleene';
+  yield* KleeneStudentGenerator();
+}
+
+function* RosserStudentGenerator() {
+  yield 'Mendelson';
+  yield 'Sacks';
+}
+
+function* TuringStudentGenerator() {
+  yield 'Gandy';
+  yield 'Sacks';
+}
+
+function* KleeneStudentGenerator() {
+  yield 'Nelson';
+  yield 'Constable';
+}
+
+for (let student of AllStudentsGenerator()) {
+  console.log(student);
+}
+
+// Church
+// Rosser
+// Mendelson
+// Sacks
+// Turing
+// Gandy
+// Sacks
+// Kleene
+// NelsonA
+```
+- 재귀로 탐색하면 다음과 같다.
+
+```js
+function* TreeTraversal(node) {
+  yield node.value;
+  if (node.hasChildren()) {
+    for (let child of node.children) {
+      yield* TreeTraversal(child); 
+    }
+  }
+}
+
+var root = node(new Person('Alonzo', 'Church', '111-11-1231'));
+
+for (let person of TreeTraversal(root)) {
+  console.log(person.lastname);
+}
+
+// Church
+// Rosser
+// Mendelson
+// Sacks
+// Turing
+// Gandy
+// Sacks
+// Kleene
+// NelsonA
+```
+
+#### 🎈 이터레이터 프로토콜
+- 제너레이터는 **이터레이터** 와 밀접한 관계가 있는데 여느 자료구조처럼 루프로 반복시킬 수 있는 것도 이터레이터 덕분이다.
+- 제너레이터 함수는 내부적으로 이터레이터 프로토콜에 따라 `yield` 키워드 값을 반환하는 `next()` 메서드가 구현된 Generator 객체를 반환한다.
+- Generator 객체의 속성은 다음과 같다.
+  1. `done`: 제일 마지막에 이터레이터가 전달되면 `true`, 그 외에는 `false`로 세팅된다. 즉, `false`는 이터레이터가 아직 **도중에 다른 값을 생산할 수 있음을 의미한다.**
+  2. `value`: 이터레이터가 반환한 값이다.
+- 다음은 range 제너레이터를 원시 형태로 구현한 코드이다.
+
+```js
+function range(start, end) {
+  return {
+    [Symbol.iterator]() {
+      return this; // 반환된 객체가 이터러블임을 나타낸다.
+    },
+    next() {
+      if(start < end) {
+        // 더 생성할 데이터가 있으면 done에 false를 세팅
+        return { value: start++, done: false };
+      }
+      // 없으며 done에 true를 세팅
+      return { done: true, value: end };
+    }
+  };
+}
+```
+- 이렇게 제너레이터를 구현하면 특정한 패턴이나 명세를 따르는 어떤 종류의 데이터라도 만들어낼 수 있다.
+- 다음은 제곱수 제너레이터를 만든 것이다.
+
+```js
+function squares() {
+  let n = 1;
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      return { value: n * n++ };
+    }
+  };
+}
+```
