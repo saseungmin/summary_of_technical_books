@@ -1,5 +1,23 @@
 ## 🌈 Chapter 8: 비동기 이벤트와 데이터를 관리
 
+<details><summary>Table of Contents</summary>
+
+- 골칫덩이 비동기 코드 [:link:](#-골칫덩이-비동기-코드)
+  - 함수 간에 일시적 의존 관계가 형성 [:link:](#-함수-간에-일시적-의존-관계가-형성)
+  - 콜백 피라미드의 늪에 빠짐 [:link:](#-콜백-피라미드의-늪에-빠짐)
+  - 연속체 전달 스타일 [:link:](#-연속체-전달-스타일)
+- 비동기 로직을 프라미스로 일급화 [:link:](#-비동기-로직을-프라미스로-일급화)
+  - 미래의 메서드 체인 [:link:](#-미래의-메서드-체인)
+  - 동기/비동기 로직을 합성 [:link:](#-동기비동기-로직을-합성)
+- 느긋한 데이터 생성 [:link:](#-느긋한-데이터-생성)
+  - 제너레이터와 재귀 [:link:](#-제너레이터와-재귀)
+  - 이터레이터 프로토콜 [:link:](#-이터레이터-프로토콜)
+- RxJS를 응용한 함수형 리액티브 프로그래밍 [:link:](#-RxJS를-응용한-함수형-리액티브-프로그래밍)
+  - 옵저버블 순차열로서의 데이터 [:link:](#-옵저버블-순차열로서의-데이터)
+  - 함수형 리액티브 프로그래밍 [:link:](#-함수형-리액티브-프로그래밍)
+  - RxJS와 프라미스 [:link:](#-RxJS와-프라미스)
+- 마치며 [:link:](#-마치며)
+</details>
 
 ### 📚 골칫덩이 비동기 코드
 - 비차단 비동기 호출 코드를 구현하여 문제를 해결하는데 다음과 같은 문제가 발목을 잡는다.
@@ -220,3 +238,241 @@ const ShowStudentAsync = R.compose(
 ```
 - 함수가 내부적으로 어떤 비동기 로직을 구사했는지, 어떤 콜백을 썼는지 등은 철저히 베일에 감싼 채 선언적인 포즈를 취한다.
 - 따라서 동시에 실행되지 않지만 나중에 함수 조합기로서의 본색을 드러낼 함수를 서로 붙여놓은 **무인수 프로그램들을 합성하여 조정할 수 있다.**
+
+
+### 📚 느긋한 데이터 생성
+- **제너레이터** 함수는 `function*`라고 표기하는, 언어 수준에서 지원되는 장치이다.
+- 이 함수는 `yield`를 만나면 함수 밖으로 잠시 나갔다가 자신의 보관된 콘텍스트를 찾아 다시 돌아온다.
+- 제너레이터 함수의 실행 콘텍스트는 잠정 중단했다가 언제라도 재개할 수 있어서 제너레이터로 다시 돌아올 수 있다.
+- 제너레이터는 함수를 호출하는 시점에 내부적으로 이터레이터 객체를 생성하여 느긋함을 부여하고, 이터레이터는 매번 `yield`를 호출할 때마다 호출자에게 데이터를 돌려준다.
+
+#### 🎈 제너레이터와 재귀
+- 제너레이터도 다른 제너레이터를 얼마든지 호출할 수 있다.
+- 중첩된 객체 집합을 평평한 모양으로 만들고 싶을 때 아주 유용한 특성이다.
+- 제너레이터는 `for..of` 루프문으로 반복할 수 있기 때문에 다른 제너레이터에게 위임하는 건 마치 두 컬렉션을 병합한 전체 컬렉션을 반복하는 것과 비슷하다.
+
+```js
+function* AllStudentsGenerator() {
+  yield 'Church';
+
+  yield 'Rosser';
+  yield* RosserStudentGenerator(); // yield*로 다른 제너레이터에게 위임한다.
+
+  yield 'Turing';
+  yield* TuringStudentGenerator();
+
+  yield 'Kleene';
+  yield* KleeneStudentGenerator();
+}
+
+function* RosserStudentGenerator() {
+  yield 'Mendelson';
+  yield 'Sacks';
+}
+
+function* TuringStudentGenerator() {
+  yield 'Gandy';
+  yield 'Sacks';
+}
+
+function* KleeneStudentGenerator() {
+  yield 'Nelson';
+  yield 'Constable';
+}
+
+for (let student of AllStudentsGenerator()) {
+  console.log(student);
+}
+
+// Church
+// Rosser
+// Mendelson
+// Sacks
+// Turing
+// Gandy
+// Sacks
+// Kleene
+// NelsonA
+```
+- 재귀로 탐색하면 다음과 같다.
+
+```js
+function* TreeTraversal(node) {
+  yield node.value;
+  if (node.hasChildren()) {
+    for (let child of node.children) {
+      yield* TreeTraversal(child); 
+    }
+  }
+}
+
+var root = node(new Person('Alonzo', 'Church', '111-11-1231'));
+
+for (let person of TreeTraversal(root)) {
+  console.log(person.lastname);
+}
+
+// Church
+// Rosser
+// Mendelson
+// Sacks
+// Turing
+// Gandy
+// Sacks
+// Kleene
+// NelsonA
+```
+
+#### 🎈 이터레이터 프로토콜
+- 제너레이터는 **이터레이터** 와 밀접한 관계가 있는데 여느 자료구조처럼 루프로 반복시킬 수 있는 것도 이터레이터 덕분이다.
+- 제너레이터 함수는 내부적으로 이터레이터 프로토콜에 따라 `yield` 키워드 값을 반환하는 `next()` 메서드가 구현된 Generator 객체를 반환한다.
+- Generator 객체의 속성은 다음과 같다.
+  1. `done`: 제일 마지막에 이터레이터가 전달되면 `true`, 그 외에는 `false`로 세팅된다. 즉, `false`는 이터레이터가 아직 **도중에 다른 값을 생산할 수 있음을 의미한다.**
+  2. `value`: 이터레이터가 반환한 값이다.
+- 다음은 range 제너레이터를 원시 형태로 구현한 코드이다.
+
+```js
+function range(start, end) {
+  return {
+    [Symbol.iterator]() {
+      return this; // 반환된 객체가 이터러블임을 나타낸다.
+    },
+    next() {
+      if(start < end) {
+        // 더 생성할 데이터가 있으면 done에 false를 세팅
+        return { value: start++, done: false };
+      }
+      // 없으며 done에 true를 세팅
+      return { done: true, value: end };
+    }
+  };
+}
+```
+- 이렇게 제너레이터를 구현하면 특정한 패턴이나 명세를 따르는 어떤 종류의 데이터라도 만들어낼 수 있다.
+- 다음은 제곱수 제너레이터를 만든 것이다.
+
+```js
+function squares() {
+  let n = 1;
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      return { value: n * n++ };
+    }
+  };
+}
+```
+
+### 📚 RxJS를 응용한 함수형 리액티브 프로그래밍
+- RxJS는 함수형 프라미스 기반과 비슷한 방식으로 작동하지만, 더 높은 수준의 추상화를 제공하며 더 강력한 연산을 제공한다.
+
+#### 🎈 옵저버블 순차열로서의 데이터
+- **옵저버블(observable)** 은 **구독(subscribe)** 가능한 모든 객체를 가리킨다.
+- 애플리케이션은 파일 읽기, 웹 서비스 호출, DB 쿼리, 시스템 통지 푸시, 사용자 입력 처리, 원소 컬렉션 탐색, 단순 문자열 파싱 등으로 비롯된 비동기 이벤트를 구독할 수 있다.
+- **리액티브 프로그래밍**은 모든 데이터 제공원(data provider)을 `Rx.Observable` 객체를 통해 **옵저버블 스트림(observable stream)** 이라는 단일 개념으로 일원화한다.
+- 스트림이란 **시간의 흐름에 따라 발생하는 이벤트의 순차열**이다.
+- 값을 추출할려면 구독은 필수이다.
+
+```js
+Rx.Observable.range(1, 3)
+  .subscribe(
+    x => console.log(`다음: ${x}`),
+    err => console.log(`error: ${err}`),
+    () => console.log('완료!'),
+  );
+
+// 다음: 1
+// 다음: 2
+// 다음: 3
+// 완료!
+```
+
+- 제곱수 제너레이터 함수를 이용해서 값 스트립을 채운것이다.
+
+```js
+const squares = Rx.Observable.wrap(function* (n) {
+  for(let i = 1; i <= n; i++) {
+    return yield Observable.just(i * i);
+  }
+});
+
+squares(3).subscribe(x => console.log(`다음: ${x}`));
+
+// 다음: 1
+// 다음: 4
+// 다음: 9
+```
+
+- `Rx.Observable`로 어떤 옵저버블 객체라도 **감싸거나 승급하면 관찰된 값에 상이한 함수를 매핑/적용해서 원하는 출력을 얻도록 변환**할 수 있다. 결국 모나드이다.
+
+#### 🎈 함수형 리액티브 프로그래밍
+- `Rx.Observable` 객체는 함수형과 리액티브, 두 프로그래밍 세상을 하나로 묶는다.
+- 이 객체는 `map`, `of`, `join` 등 최소한의 모나드 인터페이스에 해당하는 구현체와 스트림 조작에 특화된 메서드를 여럿 거느린다.
+
+```js
+Rx.Observable.of(1, 2, 3, 4, 5)
+  .filter(x => x % 2 !== 0)
+  .map(x => x * x)
+  .subscribe(x => console.log(`다음: ${x}`));
+
+// 다음: 1
+// 다음: 9
+// 다음: 25
+```
+- 다음은 SSN 필드 입력값이 올바른지 검증하는 예제이다.
+
+```js
+document.querySelector('#student-ssn')
+  .addEventListener('change', function(event) {
+    let value = event.target.value;
+    value = value.replace(/^\s*|\-|\s*$/g, '');
+    console.log(value.length !== 9 ? '맞음' : '틀림');
+  });
+
+// 444 맞음
+// 444-44-4444 틀림
+```
+- `change` 이벤트가 비동기로 발생하기 때문에 어쩔 수 없이 콜백 함수 하나에 비지니스 로직을 몰아넣었다. 하지만 로직을 추가할수록 점점 복잡해진다.
+- 이벤트와 함수형 두 세계를 접목시키기 위해 `Rx.Observable`로 추상화 계층을 둔다.
+- 이벤트를 구독하고 비지니스 로직은 모두 순수함수로 구현하는 것이다.
+
+```js
+Rx.Observable.fromEvent(
+  document.querySelector('#student-ssn'), 'change')
+  .map(x => x.target.value)
+  .map(cleanInput) // SSN 값을 정제한다
+  .map(checkLengthSsn)
+  .subscribe( // Either.Right, Either.Left 중 어느 쪽인지 체크하여 올바른지 여부를 판단한다.
+    ssn => ssn.isRight ? console.log('Valid') : console.log('Invalid')
+  );
+```
+
+#### 🎈 RxJS와 프라미스
+- RxJS는 모든 프라미스/A+ 호환 객체를 **옵저버블 순차열로 변환**할 수 있다.
+- 즉, 실행 시간이 긴 getJSON 함수를 감싸 귀결 시점에 그 값을 스트림으로 바꾼다.
+
+```js
+Rx.Observable.fromPromise(getJSON('/students'))
+  // 모든 학생 객체를 대소문자 구분 없이 이름 순으로 정렬한다.
+  .map(R.sortBy(R.compose(R.toLower, R.prop('firstname'))))
+  // 하나의 학생 객체 배열을 옵저버블한 학생 순차열로 바꾼다.
+  .flatMapLatest(student => Rx.Observable.from(student))
+  // 미국에 살지 않는 학생 거르기
+  .filter(R.pathEq(['address', 'country'], 'US'))
+  .subscribe(
+    student => console.log(student.fullname),
+    err => console.log(err)
+  );
+```
+
+- RxJS에 대한 자세한 정보 [참고](https://rxjs-dev.firebaseapp.com/guide/overview)
+- https://xgrommx.github.io/rx-book/
+
+
+### 📚 마치며
+- 프라미스는 오랫동안 자바스크립트 프로그래머들의 골머리를 앓아온, 콜백 중심적인 설계를 함수형으로 해결하는 방안이다.
+- "미래의" 함수를 프라미스로 합성, 체이닝하면 일시적으로 의존 관계가 형성된 코드의 잡다한 저수준 로직을 추상화할 수 있다.
+- 제너레이터는 비동기 코드에 접근하는 또 다른 방안으로, 느긋한 이터레이터로 데이터를 쓸 수 있는 시점에 내어준 프로그래밍 장치이다.
+- 함수형 리액티브 프로그래밍은 프로그램의 추상화 수준을 높여 이벤트를 논리적으로 독립된 단위로 다룰 수 있게 한다.
