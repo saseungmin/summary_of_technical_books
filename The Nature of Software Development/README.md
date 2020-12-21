@@ -9,4 +9,4 @@
 - 스터디 후 repository에 정리한다.
 
 
-### 🌈 PART 1: 가치를 이루는 것들
+### 🌈 [PART 1: 가치를 이루는 것들](https://github.com/saseungmin/reading_books_record_repository/tree/master/The%20Nature%20of%20Software%20Development/PART%201)
