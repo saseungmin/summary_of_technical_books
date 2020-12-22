@@ -10,3 +10,5 @@
 
 
 ### 🌈 [PART 1: 가치를 이루는 것들](https://github.com/saseungmin/reading_books_record_repository/tree/master/The%20Nature%20of%20Software%20Development/PART%201)
+
+### 🌈 [PART 2: 메모와 에세이](https://github.com/saseungmin/reading_books_record_repository/tree/master/The%20Nature%20of%20Software%20Development/PART%202)
