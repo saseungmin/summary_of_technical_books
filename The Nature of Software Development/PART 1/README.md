@@ -6,6 +6,10 @@
 
 ### ✌️ [Chapter 3: 피처 단위 개발을 위한 가이드라인](https://github.com/saseungmin/reading_books_record_repository/blob/master/The%20Nature%20of%20Software%20Development/PART%201/Chapter%203.md)
 
+### ✌️ [Chapter 4: 피처 단위로 조직 구성하기](https://github.com/saseungmin/reading_books_record_repository/blob/master/The%20Nature%20of%20Software%20Development/PART%201/Chapter%204.md)
+
+### ✌️ [Chapter 5: 피처 단위로 계획하기](https://github.com/saseungmin/reading_books_record_repository/blob/master/The%20Nature%20of%20Software%20Development/PART%201/Chapter%205.md)
+
 ### ✌️ [Chapter 6: 피처 단위로 개발하기](https://github.com/saseungmin/reading_books_record_repository/blob/master/The%20Nature%20of%20Software%20Development/PART%201/Chapter%206.md)
 
 ### ✌ [Chapter 7: 피처와 기반을 동시에](https://github.com/saseungmin/reading_books_record_repository/blob/master/The%20Nature%20of%20Software%20Development/PART%201/Chapter%207.md)
