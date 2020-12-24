@@ -6,7 +6,7 @@
 
 ### 🎯 진행 방법
 - 책을 읽고 스터디를 진행
-- 스터디 후 repository에 정리한다.
+- [스터디](https://github.com/CodeSoom/The-Nature-of-Software-Development) 후 repository에 정리한다.
 
 
 ### 🌈 [PART 1: 가치를 이루는 것들](https://github.com/saseungmin/reading_books_record_repository/tree/master/The%20Nature%20of%20Software%20Development/PART%201)
