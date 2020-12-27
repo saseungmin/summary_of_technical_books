@@ -9,6 +9,7 @@
 - [함수형 자바스크립트](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%95%A8%EC%88%98%ED%98%95%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8)
 - [The Nature of Software Development](https://github.com/saseungmin/reading_books_record_repository/tree/master/The%20Nature%20of%20Software%20Development)
 - [클린 애자일: 새로운 세대를 위한 애자일 가치와 실천](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC)
+- [Do it! 타입스크립트 프로그래밍](https://github.com/saseungmin/typescript_programming_study)
 - You Don’t Know JS this와 객체 프로토타입, 비동기와 성능
 - Clean Code 클린 코드 애자일 소프트웨어 장인 정신
 - 클린 아키텍처 소프트웨어 구조와 설계의 원칙
@@ -16,4 +17,3 @@
 - 프로 Git 2판 그림으로 이해하는 Git의 작동 원리와 사용법
 - CSS 완벽 가이드
 - JAVASCRIPT 완벽 가이드
-- Do it! 타입스크립트 프로그래밍
