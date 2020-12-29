@@ -14,3 +14,5 @@
 #### [🎈 Chapter 1: 애자일 소개](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%201)
 
 #### [🎈 Chapter 2: 왜 애자일인가](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%202)
+
+#### [🎈 Chapter 3: 비즈니스 실천 방법](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%203)
