@@ -17,4 +17,6 @@
 
 #### [🎈 Chapter 3: 비즈니스 실천 방법](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%203)
 
+#### [🎈 Chapter 4: 팀 실천 방법](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%204)
+
 #### [🎈 Chapter 5: 기술 실천 방법](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%205)
