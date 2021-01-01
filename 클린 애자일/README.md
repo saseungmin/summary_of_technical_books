@@ -22,3 +22,5 @@
 #### [🎈 Chapter 5: 기술 실천 방법](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%205)
 
 #### [🎈 Chapter 6: 애자일해지기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%206)
+
+#### [🎈 Chapter 7: 장인 정신](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC/Chapter%207)
