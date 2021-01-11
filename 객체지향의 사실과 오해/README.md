@@ -29,3 +29,10 @@
 - 타입
 - 타입의 계층
 - 정적 모델
+
+### 🐣 [Chapter 4: 역할, 책임, 협력](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4/Chapter%204)
+- 협력
+- 책임
+- 역할
+- 객체의 모양을 결정하는 협력
+- 객체지향 설계 기법
