@@ -7,6 +7,7 @@
 - [The Nature of Software Development](https://github.com/saseungmin/reading_books_record_repository/tree/master/The%20Nature%20of%20Software%20Development)
 - [클린 애자일: 새로운 세대를 위한 애자일 가치와 실천](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC)
 - [객체지향의 사실과 오해: 역할, 책임, 협력 관점에서 본 객체지향](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4)
+- 루비로 배우는 객체지향 디자인
 
 ### 📚 읽은 책 목록
 #### 책을 읽고 정리합니다. 읽은 책 혹은 읽고 있는 책 목록입니다.
@@ -18,7 +19,6 @@
 - [프로 Git 2판: 그림으로 이해하는 Git의 작동 원리와 사용법](https://github.com/saseungmin/reading_books_record_repository/tree/master/Pro%20Git%202%ED%8C%90)
 
 ### 🎯 읽을 책 목록
-- 루비로 배우는 객체지향 디자인
 - 오브젝트
 - 엘리강트 오브젝트
 - 스칼라로 배우는 함수형 프로그래밍
