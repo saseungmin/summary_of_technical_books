@@ -20,3 +20,9 @@
 - 하나의 책임만을 지는 클래스 만들기
 - 변화를 받아들일 수 있는 코드 작성하기
 - 드디어, 진짜 바퀴
+
+
+### 🐣 [Chapter 3: 의존성 관리하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%203)
+- 의존성 이해하기
+- 약하게 결합된 코드 작성하기
+- 의존성의 방향 관리하기
