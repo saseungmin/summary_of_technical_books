@@ -39,3 +39,11 @@
 - 오리 타입을 사용하는 코드 작성하기
 - 오리 타입을 무서워하지 않고 사용하기
 - 요약
+
+### 🐣 [Chapter 6: 상속을 이용해 새로운 행동 얻기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%206)
+- 고전적 상속 이해하기
+- 상속을 사용해야 하는 지점을 알기
+- 상속의 잘못된 사용
+- 추상화 찾아내기
+- 상위클래스와 하위클래스 사이의 커프링 관리하기
+- 요약
