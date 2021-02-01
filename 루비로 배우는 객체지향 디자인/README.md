@@ -51,3 +51,10 @@
 ### 🐣 [Chapter 7: 모듈을 통한 역할 공유](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%207)
 - 역할 이해하기
 - 상속받을 수 있는 코드 작성하기
+
+### 🐣 [Chapter 8: 조합을 이용해 객체 통합하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%208)
+- 자전거 부품 조합하기
+- `Parts` 객체 조합하기
+- `Parts` 생산하기
+- 조합된 `Bicycle`
+- 상속과 조합 중 하나 선택하기
