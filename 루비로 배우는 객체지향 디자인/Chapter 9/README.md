@@ -1,4 +1,15 @@
 # ✌️ Chapter 9: 비용-효율적인 테스트 디자인하기
+
+<details><summary>Table of Contents</summary>
+
+- 📚 의도를 가지고 테스트하기 [:link:](#-의도를-가지고-테스트하기)
+- 📚 들어오는 메시지 테스트하기 [:link:](#-들어오는-메시지-테스트하기)
+- 📚 프라이빗 메서드 테스트하기 [:link:](#-프라이빗-메서드-테스트하기)
+- 📚 오리 타입 테스트하기 [:link:](#-오리-타입-테스트하기)
+- 📚 상속 받은 코드 테스트하기 [:link:](#-상속-받은-코드-테스트하기)
+
+</details>
+
 -  수정하기 쉬운 코드를 작성하는 일은?
     - 객체지향 디자인을 이해하고 있어야 한다.
     - 코드를 리팩터링하는 법을 익혀야 한다. (**코드의 외적인 작동방식을 변경하지 않으면서**) 
@@ -302,3 +313,553 @@ end
 - 프라이빗 메서드에 대한 테스트는 문제가 발생한 바로 그 부분을 정확하게 짚어주는데 의의가 있다. 정확한 에러 메시지를 제공해 줄 수 있기 떄문이다. 이런 구체적인 에러들은 실제 코드와 테스트 코드 사이의 강한 결합을 뜻하며, 이런 결합은 유지보수 비용을 높인다.
 - 하지만 코드를 수정하면 어떤 결과를 나오는지 이해하기 쉽게 만들어 주고, 복잡한 프라이빗 메서드를 리팩터링하는 과정의 힘겨움을 어느 정도 덜어 줄 수 있다.
 - **프라이빗 메서드를 테스트할 때 기본 원칙은 절대 태스트 하지 마라. 만약 테스트해야 한다면, 그래도 테스트 하지 마라. 물론 꼭 해야 하는 상황에서는 테스트해도 된다.**
+
+## 📚 밖으로 나가는 메시지 테스트하기
+- 밖으로 나가는 메시지는 **쿼리 메시지**이거나 **커멘드 메시지**이다.
+- 쿼리 메시지는 전송하는 송신자에게만 중요한 메시지이고 커맨드 메시지는 애플리케이션의 다른 객체들에게도 영향을 미친다.
+
+### 🎈 쿼리 메시지 무시하기
+
+```ruby
+class Gear
+  # ...
+  def gear_inches
+    ratio * wheel.diameter
+  end
+end
+```
+
+- `gear_inches`를 제외한 애플리케이션의 다른 부분은 `diameter`가 전송되었다는 사실에 관심이 없다. `diameter` 메서드는 아무런 부작용도 낳지 않는다.
+- 자기 자신에게 전송하는 메시지를 테스트하지 않는 것과 같은 이유로 밖으로 나가는 메시지도 테스트할 필요가 없다.
+- `gear_inches` 메서드는 `diameter` 메시지가 반환하는 값에 의존하고 있지만, `diameter`가 제대로 작동하는지 테스트하는 것은 `Wheel` 담당이지 `Gear`가 신경 쓸 내용이 아니다. 떄문에 `Gear`가 테스트틀 중복해서 작성할 필요는 없다.
+- `Gear`의 책임은 `gear_inches`가 제대로 작동하고 있는지 검증하는 것이다.
+
+### 🎈 커맨드 메시지 검증하기
+- 애플리케이션의 다른 부분이 이 메시지 전송의 결과에 의존하고 있으면 테스트 중인 객체가 메시지를 전송해야 할 책임을 가지고 있다.
+- 예를 들어 `Gear` 클래스는 애플리케이션 전체에 기어가 바뀌는 순간 알려줄 책임이 있다. 이 정보를 가지고 행동을 변경해야 한다.
+
+```ruby
+class Gear
+  attr_reader :chainring, :cog, :wheel, :observer
+  def initialize(args)
+    # ...
+    @observer = args[:observer]
+  end
+
+  # ...
+
+  def set_cog(new_cog)
+    @cog = new_cog
+    changed
+  end
+
+  def set_chainring(new_chainring)
+    @chainring = new_chainring
+    changed
+  end
+
+  def changed
+    observer.changed(chainring, cog)
+  end
+
+  # ...
+end
+```
+
+- `cogs`나 `chainring`가 변경되면 이 내용을 `observer`에게 알려줘야 한다. 때문에 `changed` 메시지가 전송되었는지 테스트해야 한다. 또한, `observer`의 `changed`메서드가 무엇을 반환하는지와는 상관없이 작동해야 한다.
+- 중복을 피하려면 `Gear`의 `changed`가 무엇을 반환하는지 확인하지 않으면서도, `Gear`가 `changed`를 `observer`에게 전송했다는 사실을 검증해야 한다. 이럴때 **목**(**mock**)을 사용하면 된다. 목은 행동에 대한 테스트이고, 상태에 대한 테스트와는 반대된다. 목 객체가 기대하는 바를 테스트한다.
+- 테스트는 목 객체를 만들고 목 객체를 `observer`의 위치에 놓는다.
+
+```ruby
+class GearTest < MiniTest::Unit::TestCase
+
+  def setup
+    @observer = MiniTest::Mock.new
+    @gear = Gear.new(
+      chainring: 52,
+      cog: 11,
+      observer = @observer
+    )
+  end
+
+  def test_notifies_observers_when_cogs_change
+    # 목 객체가 changed 메시지를 수신하고자 한다는 사실을 명시 (어떤 메시지를 기대하고 있는지)
+    @observer.expect(:changed, true, [52, 27])
+    # 기대를 충족시킬 수 있는 행동을 유발
+    @gear.set_cog(27)
+    # 목 객체에게 주어진 기대가 충족하는지 물어본다.
+    @observer.verify
+  end
+
+  def test_notifies_observers_when_chainring_change
+    @observer.expect(:changed, true, [42, 11])
+    @gear.set_chainring(42)
+    @observer.verify
+  end
+
+end
+```
+
+- 목 객체가 메시지를 가지고 하는 일은 그저 메시지를 수신했다는 사실을 기억하는 것뿐이다. 반환 값이 중한게 아니라 메시지의 전송 여부를 검증해야 한다.
+
+## 📚 오리 타입 테스트하기
+
+### 🎈 역할 테스트하기
+- 5장의 예제이다.
+
+```ruby
+class Trip
+  attr_reader :bicycles, :customers, :vehicle
+
+  def prepare(preparers)
+    preparers.each {|preparer|
+      preparer.prepare_trip(self)}
+  end
+end
+
+class Mechanic
+  def prepare_trip(trip)
+    trip.bicycles.each {|bicycle|
+      prepare_bicycle(bicycle)}
+  end
+
+  # ...
+end
+
+class TripCoordinator
+  def prepare_trip(trip)
+    buy_food(trip.customers)
+  end
+
+  # ...
+end
+
+class Driver
+  def prepare_trip(trip)
+    vehicle = trip.vehicle
+    gas_up(vehicle)
+    fill_water_tank(vehicle)
+  end
+
+  # ...
+end
+```
+
+- 테스트는 `Preparer` 역할을 문서화해야 하고, 역할 수행자 각각이 올바르게 행동하고 있는지 검증해야 한다. 그리고 `Trip`이 `Preparers`들과 제대로 소통하고 있다는 것을 보여줘야 한다.
+- `Preparer`의 인터페이스를 테스트하고 문서화해주는 모듈은 다음과 같다.
+
+```ruby
+module PreparerInterfaceTest
+  def test_implements_the_preparer_interface
+    assert_respond_to(@object, :prepare_trip)
+  end
+end
+```
+
+- 이 모듈은 `@object`가 `prepare_trip`에 반응하는지 검증한다. 아래 테스트 코드는 이 모듈을 사용해서 `Mechanic`이 `Preparer`인지 확인하고 있다.
+
+```ruby
+class MechanicTest < MiniTest::Unit::TestCase
+  include PreparerInterfaceTest
+
+  def setup
+    # @object를 가지고 Mechanic을 만든다.
+    @mechanic = @object = Mechanic.new
+  end
+
+  # @mechanic을 사용하는 다른 테스트들
+end
+```
+
+- 나머지 `TripCoordinator`와 `Driver` 테스트도 같은 패턴이다.
+- `PreparerInterfaceTest`를 모듈의 형태로 정의했기 때문에 테스트를 한 번만 작성하고도 역할 수행 객체들이 텟트 코드를 재사용할 수 있었다. 모듈 덕분에 역할을 명시적으로 불 수 있게 되었다.
+- 들어오는 메시지를 테스트하였으니 반대로 `Trip`이 전송하는 메시지를 테스트한다. 목 객체를 만들고 이 객체가 기대하는 바를 정의하면 된다.
+
+```ruby
+class TripTest < MiniTest::Unit::TestCase
+
+  def test_requests_trip_preparation
+    @preparer = MiniTest::Mock.new # 목 객체 생성
+    @trip = Trip.new
+    @preparer.expect(:prepare_trip, nil, [@trip])
+
+    @trip.prepare([@preparer]) # 메서드 실행
+    @preparer.verify # 목 객체가 제대로 수신했는지 확인
+  end
+
+end
+```
+
+### 🎈 테스트 더블을 확인하기 위해 역할 테스트 사용하기
+- 아래는 잘못된 테스트 코드로 이전에 설명했던 스텁을 사용했을 때의 문제이다. (실패해야 하는 순간에도 통과)
+
+```ruby
+class DiameterDouble
+  def diameter # 인터페이스가 'width'로 바꿨지만
+    10         # 이 테스트 더블과 Gear 모두
+  end          # 여전히 'diameter'를 사용하고 있다.
+end
+
+class GearTest < MiniTest::Unit::TestCase
+  def test_calculates_gear_inches
+    gear = Gear.new(
+      chainring: 52,
+      cog: 11,
+      wheel: DiameterDouble.new
+    )
+
+    assert_in_delta(47.27, gear.gear_inches, 0.01)
+  end
+end  
+```
+- 더 이상 유효하지 않은 테스트 더블 때문에 테스트는 문제를 걸러내지 못하고 `Gear`가 정상적으로 작동한다는 잘못된 믿음을 준다. 하지만 `GearTest`가 정상적으로 작동한다는 것은 잘못된 테스트 더블을 사용했기 때문이다.
+- `WheelTest`를 다음과 같이 만들었었다.
+- `Wheel`이 `width` 인터페이스를 구현하고 있는 `Diameterizable`의 역할을 수행하고 있다는 사실을 검증하고 있다.
+
+```ruby
+class WheelTest < MiniTest::Unit::TestCase
+  def setup
+    @wheel = Wheel.new(26, 1.5)
+  end
+
+  def test_implements_the_diameterizable_interface
+    assert_respond_to(@wheel, :width)
+  end
+  
+  def test_calculates_diameter
+    # ...
+  end
+end
+```
+
+- 문제를 해결하기 위해서 `Wheel`에서 `test_implements_the_diameterizable_interface` 테스트를 뽑아내서 새로운 모듈 속에 넣는다.
+
+```ruby
+module DiameterizableInterfaceTest
+  def test_implements_the_diameterizable_interface
+    assert_respond_to(@object, :width)
+  end
+end
+```
+
+- 모듈을 인클루드하고 `Wheel`을 가지고 `@object`를 초기화한다.
+
+```ruby
+class WheelTest < MiniTest::Unit::TestCase
+  include DiameterizableInterfaceTest
+
+  def setup
+    @wheel = Wheel.new(26, 1.5)
+  end
+  
+  def test_calculates_diameter
+    # ...
+  end
+end
+```
+
+- 리팩터링의 결과로 독립적인 모듈을 얻었고, 이 모듈은 `Diameterizable`이 제대로 작동한다는 것을 검증해줄 수 있다.
+- 아래 코드는 `GearTest`에 이 모듈을 적용한 것이다.
+
+```ruby
+class DiameterDouble
+  def diameter
+    10
+  end
+end
+
+# 테스트 더블이 올바른 인터페이스를 따르고 있는지 검증한다.
+class DiameterDoubleTest < MiniTest::Unit::TestCase
+    include DiameterizableInterfaceTest
+
+  def setup
+    @object = DiameterDouble.new
+  end
+end
+
+class GearTest < MiniTest::Unit::TestCase
+  def test_calculates_gear_inches
+    gear = Gear.new(
+      chainring: 52,
+      cog: 11,
+      wheel: DiameterDouble.new
+    )
+
+    assert_in_delta(47.27, gear.gear_inches, 0.01)
+  end
+end  
+```
+
+- 이렇게 테스트 더블이 주어진 역할을 올바르게 수행하고 있는지도 테스트한다. 테스트를 실행하면 `DiameterDoubleTest`에 에러가 출력된다. 그리고 `DiameterDouble`에 `width`를 추가할 수 있다.
+
+```ruby
+class DiameterDouble
+  def width
+    10
+  end
+end
+```
+
+- 이제 테스트 더블을 수정하고 다시 테스트를 돌려보면, 테스트는 `GearTest`애서 실패한다.
+- `Gear`의 `gear_inches` 메서드가 `diameter` 대신 `width`를 전송해야한다는 것이다.
+
+```ruby
+class Gear
+  def gear_inches
+    ratio * wheel.width
+  end
+
+  # ...
+end
+```
+- 오리 타입을 테스트하려면 역할을 테스트하는 독립적인 코드를 만들고 이 코드를 공유할 수 있어야만 한다.
+- 이렇게 역할 기반의 관점을 취하고 난뒤 테스트 중인 객체의 관점에서 보면 다른 모든 객체는 하나의 역할이다. 그리고 이 객체들을 주어진 역할의 대변자로 취급하면, 애플리케이션과 테스트 모두 결합을 줄이고 유연성을 높일 수 있다.
+
+## 📚 상속 받은 코드 테스트하기
+
+### 🎈 상속 받는 인터페이스 명확하게 하기
+- 아래는 6장의 `Bicycle` 클래스이다.
+
+```ruby
+class Bicycle
+  attr_reader :size, :chain, :tire_size
+
+  def initialize(args={})
+    @size = args[:size]
+    @chain = args[:chain] || default_chain
+    @tire_size = args[:tire_size] || default_tire_size
+    post_initialize(args)
+  end
+
+  def spares
+    {
+      tire_size: tire_size,
+      chain: chain,
+    }.merge(local_spares)
+  end
+
+  def default_tire_size
+    raise NotImplementedError, "This #{self.class} cannot respond to:"
+  end
+
+  # 하위클래스가 재정의 할 수 있다.
+  def post_initialize(args)
+    nil
+  end
+
+  def local_spares
+    {}
+  end
+
+  def default_chain 
+    '10-speed'
+  end
+end
+```
+- 아래는 `Bicycle`의 하위클래스 중 하나인 `RoadBike` 코드이다.
+
+```ruby
+class RoadBike < Bicycle
+  attr_reader :tape_color
+
+  def post_initialize(args)
+    @tape_color = args[:tape_color]
+  end
+
+  def local_spares
+    { tape_color: tape_color }
+  end
+
+  def default_tire_size
+    '23'
+  end
+end
+```
+- 테스트의 첫 번째 목표는 이 상속 관계에 속한 모든 객체들이 약속을 제대로 이행하고 있는지 검증하는 것이다.
+- 리스코프 원칙을 검증하는 방법은 공통의 약속을 테스트하는 공용코드를 작성하고 이 테스트를 모든 객체에 인크루드하는 것이다.
+
+```ruby
+module BicycleInterfaceTest
+  def test_responds_to_default_tire_size
+    assert_respond_to(@object, :default_tire_size)
+  end
+
+  def test_responds_to_default_chain
+    assert_respond_to(@object, :default_chain)
+  end
+
+  def test_responds_to_chain
+    assert_respond_to(@object, :chain)
+  end
+
+  def test_responds_to_size
+    assert_respond_to(@object, :size)
+  end
+
+  def test_responds_to_tire_size
+    assert_respond_to(@object, :tire_size)
+  end
+
+  def test_responds_to_spares
+    assert_respond_to(@object, :spares)
+  end
+end
+```
+
+- `BicycleInterfaceTest` 테스트를 통과하는 모든 객체는 `Bicycle`처럼 행동하는 객체라고 볼 수 있다.
+- 아래 코드는 `BicycleTest`에 이 인터페이스를 인클ㄹ드한 것이다. 그리고 구체적인 하위클래스 `RoadBikeTest`에도 인클루드했다.
+
+```ruby
+class BicycleTest < MiniTest::Unit::TestCase
+  include BicycleInterfaceTest
+
+  def setup
+    @bike = @object = Bicycle.new({tire_size: 0})
+  end
+end
+
+class RoadBikeTest < MiniTest::Unit::TestCase
+  include BicycleInterfaceTest
+
+  def setup
+    @bike = @object = RoadBike.new
+  end
+end
+```
+
+- `BicycleInterfaceTest`는 모든 종류의 `Bicycle`이 사용할 수 있고, 새로운 클래스를 만들더라도 쉽게 인클루드할 수 있다.
+
+### 🎈 하위클래스의 책임 명확히 하기
+
+#### 🐤 하위클래스의 행동 확인하기
+- 아래 코드는 하위클래스가 갖추어야 하는 바를 문서화한 테스트이다.
+
+```ruby
+module BicycleSubClassTest
+  def test_responds_to_post_initialize
+    assert_respond_to(@object, :post_initialize)
+  end
+
+  def test_responds_to_local_spares
+    assert_respond_to(@object, :local_spares)
+  end
+
+  def test_responds_to_default_tire_size
+    assert_respond_to(@object, :default_tire_size)
+  end
+end
+```
+
+- 이 테스트는 이 메시지들이 오작동하는 것을 방지할 뿐이다. 하위클래스가 꼭 구현해야 하는 메서드는 `default_tire_size`이다. 하위클래스가 자신만의 고유한 로직을 구현하지 않는다면 테스트는 통과할 수 없다.
+- `RoadBike`는 `Bicycle`의 하위클래스처럼 작동해야 한다.
+
+```ruby
+class RoadBikeTest < MiniTest::Unit::TestCase
+  include BicycleInterfaceTest
+  include BicycleSubClassTest
+
+  def setup
+    @bike = @object = RoadBike.new
+  end
+end
+```
+
+- 이 두개의 인터페이스를 사용하면 하위클래스가 공유하는 모든 행동을 쉽게 테스트할 수 있다.
+
+#### 🐤 상위클래스의 요구사항 검증하기
+- 하위클래스가 `default_tire_size`를 구현하고 있지 않다면 `Bicycle`이 에러를 발생시켜야 한다. 이 조건은 하위클래스가 충족시켜야 하는 것이지만 실제 행동은 `Bicycle` 안에서 실행된다. 떄문에 이 테스트는 `BicycleTest` 안에 직접 추가되어야 한다.
+
+```ruby
+class BicycleTest < MiniTest::Unit::TestCase
+  include BicycleInterfaceTest
+
+  def setup
+    @bike = @object = Bicycle.new({tire_size: 0})
+  end
+
+  def test_forces_subclasses_to_implement_default_tire_size
+    assert_raises(NotImplementedError) {@bike.default_tire_size}
+  end
+end
+```
+
+### 🎈 하나뿐인 행동 테스트하기
+- 이제 두가지의 문제만이 남았다. 하나는 구체적인 하위클래스만의 특수한 행동을 테스트하지 않았고, 추상화된 상위클래스가 제공하는 구체적인 행동도 테스트하지 않았다.
+
+#### 🐤 구체적인 하위클래스의 행동 테스트하기
+- `RoadBike`의 특수한 행동만 테스트하면 된다.
+- 하위클래스의 특수한 행동을 테스트할 때는 상위클래스에 대한 지식을 끌어오지 않는 것이 중요하다.
+- 아래 `RoadBikeTest`는 `local_spares` 메서드를 테스트하고 있는데 이때 `spares`에 반응하면 안되고 존재를 무시해야한다. (이미 `BicycleInterfaceTest`가 검증했다.)
+
+```ruby
+class RoadBikeTest < MiniTest::Unit::TestCase
+  include BicycleInterfaceTest
+  include BicycleSubClassTest
+
+  def setup
+    @bike = @object = RoadBike.new(tape_color: 'red')
+  end
+
+  def test_puts_tape_color_in_local_spares
+    assert_equal 'red', @bike.local_spares[:tape_color]
+  end
+end
+```
+
+#### 🐤 추상화된 상위클래스의 행동 테스트하기
+- `Bicycle`의 상속 관계를 살펴보면 여전히 추상화된 상위클래스이기 떄문에 발생하는 문제가 여전히 남아 있다. `Bicycle`의 인스턴스를 생성하기도 어렵고 테스트를 하기 위한 충분한 행동을 가지고 있지 않을 수도 있다.
+- 해결책은 `Bicycle`은 구체적인 행동을 구현하기 위해 템플릿 메서드를 사용하고 있기 땜누에 상위클래스가 제공하는 행동을 스텁하면 된다.
+
+```ruby
+# Bicycle의 새로운 하위클래스인 StubbedBike를 정의한다.
+class StubbedBike < Bicycle
+  def default_tire_size
+    0
+  end
+
+  def local_spares
+    {saddle: 'painful'}
+  end
+end
+
+class Bicycle < MiniTest::Unit::TestCase
+  include BicycleInterfaceTest
+
+  def setup
+    @bike = @object = Bicycle.new({tire_size: 0})
+    # StubbedBike 클래스의 인스턴스 생성
+    @stubbed_bike = StubbedBike.new
+  end
+
+  def test_forces_subclasses_to_implement_default_tire_size
+    assert_raises(NotImplementedError) {
+      @bike.default_tire_size
+    }
+  end
+
+  # local_spares를 제대로 처리하는지 검증
+  def test_includes_local_spares_in_spares
+    assert_equal @stubbed_bike.spares,{
+      tire_size: 0,
+      chain: '10-speed',
+      saddle: 'painful'
+    }
+  end
+end
+```
+
+- 만약 `StubbedBike`가 더 이상 유효하지 않아서 `BicycleTest`가 실패해야 할 때 실패하지 않을까 걱정된다면, 해결책은 이미 `BicycleSubClassTest`를 가지고 있다. `BicycleSubClassTest`를 이용해서 `StubbedBike`의 정상상태를 확인할 수 있다.
+
+```ruby
+class StubbedBike < MiniTest::Unit::TestCase
+  include BicycleSubClassTest
+
+  def setup
+    @object = StubbedBike.new
+  end
+end
+```
+
+- 전체적인 인터페이스에 대한 코드를 하나 작성해서 공유하고, 하위클래스의 책임을 테스트하면 된다.
+- 여러가지 책임을 독립적으로 분리하돌고 노력한다. 또한 하위클래스 고유의 행동을 테스트할 때는 상위클래스에 대한 지식이 하위클래스의 테스트 속으로 흘러들어오지 않도록 주의해야 한다.
+- 리스코프 원칙에 충실한 새로운 하위클래스를 만들고, 이 클래스의 테스트 용도로 사용할 수 있다.
