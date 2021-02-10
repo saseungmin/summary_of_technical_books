@@ -23,3 +23,7 @@
 - 문서를 작성하는 대신 테스트를 만드세요
 - 모의 객체(Mock) 대신 페이크 객체(Fake)를 사용하세요
 - 인터페이스를 짧게 유지하고 스마트(smart)를 사용하세요
+
+
+### 🐣 [Question](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%97%98%EB%A0%88%EA%B0%95%ED%8A%B8%20%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Question)
+- 질문에 대한 답을 정리
