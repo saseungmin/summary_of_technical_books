@@ -5,7 +5,7 @@
 - 저: Yegor Bugayenko
 
 ### 🎯 진행 방법
-- 책을 읽고 스터디를 진행
+- 책을 읽고 [스터디](https://github.com/CodeSoom/elegant-objects)를 진행
 - 책을 읽으며 repository에 정리한다.
 
 ### 🐣 [Chapter 1: 출생](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%97%98%EB%A0%88%EA%B0%95%ED%8A%B8%20%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%201)
