@@ -482,3 +482,391 @@ public Iterable<File> find(Mask mask) {
 - 두 번째 방법은 `NULL`을 무사하는 것이다. 여기서는 인자가 절대 `NULL`이 아니라고 가정하고 어떤 대비도 하지 않는다. 메서드를 실행하는 도중에 인자에게 접근하면 `NullPointerException`이 던져지고 메서드 호출자는 실수했다는 사실을 인지하게 될 것이다.
 - 중요하지 않은 `NULL` 확인 로직으로 코드를 오명시켜서는 안된다. 방어적으로 대응하기보단 무시함으로써 JVM에 정의된 표준방식으로 처리하는 것이 좋다.
 - 요약하자면 **메서드 인자에 절대 `NULL`을 허용하지 마라.**
+
+### 🦄 충성스러우면서 불변이거나, 아니면 상수이거나
+
+```java
+class WepPage {
+  private final URI uri;
+
+  WebPage (URI path) {
+    this.uri = path;
+  }
+
+  public String content() {
+    // HTTP GET 요청 전송
+    // 웹 페이지의 컨텐츠를 읽은 후,
+    // 읽혀진 컨텐츠를 UTF-8 문자열로 변환한다.
+  }
+}
+```
+
+- 위 예제의 `WebPage`는 불변이다. `content()` 메서드가 호출할 때마다 서로 다른 값이 반홚되더라도 이 객체는 불변이다. 여기에서 객체의 행동이나 메서드의 반환값은 중요하지 않다. 핵심은 **객체가 살아있는 동안 상태가 변하지 않는다는 사실이다.**
+- 일단 이 클래스들로부터 인스턴스를 생성하고나면, 생선된 객체의 모든 메서드는 항상 동일한 값을 반환한다. 때문에 100% 예측할 수 있다.
+- 불변 객체는 예를 들어, `content()` 메서드의 결과를 예측할 수는 없더라도 `WebPage`는 불변 객체에 속한다. 우리는 이 객체가 무엇을 돌려줄지 알지 못한다. 객체의 행동을 예상할 수는 없지만, 그럼에도 이 객체는 불변이다.
+- 결과가 변하기 떄문에 상수는 아니지만, 객체가 대표하는 엔티티에 **충성하기** 때문에 불변 객체로 분류된다.
+- 객체란 웹 페이지, 바이트 배열, 해시맵, 달력의 월과 같은 **실제 엔티티의 대표자이다.** 여기서 실제라는 말은 객체의 가시성 범위 밖에 존재하는 모든 것을 의미한다. 예를 들어 다음 코드에서 객체 `f`는 디스크에 저장되어 있는 파일을 대표한다.
+
+```java
+public void echo() {
+  File f = new File("/tmp/test.txt");
+
+  System.out.println("File size: %d",  file.length());
+}
+```
+
+- 여기서 `f`의 가시성 범위는 `echo()` 메서드의 경계에 대응한다.
+- 코드에서 객체 `f`는 `/tmp/test.txt` 파일의 대표자이다. `echo()` 메서드 안에서만큼은 객체 `f`가 파일이다.
+- 디스크에 저장된 파일을 다루기 위해 객체는 파일의 **좌표**를 알아야 한다. 이 좌표를 다른 말로 객체의 **상태**라고 부른다. 앞 예제에서 객체 `f`의 상태는 `/tmp/test.txt`이다.
+- 모든 객체는 식별자, 상태, 행동을 포함한다. 식별자는 `f`를 다른 객체와 구별하고 상태는 `f`가 디스크 상의 파일에 대해 알고 있는 것이다. 행동은 요청을 수신했을 때 `f`가 할 수 있는 작업을 나타낸다.
+- **불변 객체와 가변 객체의 중요한 차이는 불변 객체에는 식별자가 존재하지 않으며, 절대로 상태를 변경할 수 없다는 점이다.**
+- 이전 예제인 `WebPage` 객체는 동일한 `URI`를 가진 두 개의 인스턴스를 생성할 경우 두 객체는 동일한 실제 웹 페이지를 대표한다. 즉, 별도로 인스턴스를 생성했다고 하더라도, 두 객체는 동일하다.
+- 하지만, Java를 포함한 대부분의 OOP 언어에서는 상태가 동일하더라도 서로 다른 객체라고 판단한다. 기본적으로 각 객체는 재정의 할 수 있는 자신만의 유일한 식별자를 가진다.
+- 다음은 `WebPage` 식별자를 정의하는 예시이다.
+
+```java
+class WebPage {
+  private final URI uri;
+
+  WebPage(URI path) {
+    this.uri = path;
+  }
+
+  @Override
+  public void equals(Object obj) {
+    return this.uri.equals(WebPage.class.cast(obj).uri);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.uri.hashCode();
+  }
+}
+```
+- `equals()`와 `hashCode()` 메서드는 모두 캡슐화된 `uri` 프로퍼티에 기반하며, `WebPage` 클래스의 객체들을 투명하게 만든다. 투명하다는 말은 객체들이 더 이상 자기 자신만의 식별자를 가지지 않는다는 뜻으로 객체들은 웹 상의 페이지를 대표하며, 객체들이 포함하는 유일한 상태는 `URI` 형태의 페이지 죄표뿐이다.
+- 불변 객체는 좌표를 알고, 우리는 이 좌표를 상태라고 부른다. 불변 객체는 엔티티의 죄표를 절대로 변경하지 않고 어떤 경우에도 항상 동일한 엔티티를 대표한다.
+- 다음 예제는 숫자 컬렉션을 불변 객체로 구현하는 첫번째 방법으로 상수 리스트로 구현한 방법이다.
+
+```java
+class ConstantList<T> {
+  private final T[] array;
+
+  ConstantList() {
+    this(new T[0]);
+  }
+
+  private ConstantList(T[] numbers) {
+    this.array = numbers;
+  }
+
+  ConstantList with(T number) {
+    T[] nums = new T[this.array.length + 1];
+    System.arraycopy(this.array, 0, nums, 0, this.array.length);
+    nums[this.array.length] = number;
+    return new ConstantList(nums);
+  }
+
+  Iterable<T> iterate() {
+    return Arrays.asList(this.array);
+  }
+}
+```
+
+- 다음과 같이 사용할 수 있다.
+
+```java
+ConstantList list = new ConstantList()
+  .with(1)
+  .with(15)
+  .with(5);
+```
+
+-  상수 리스트에서는 리스트를 수정하거나 새로운 요소를 추가할 때마다 리스트에 포함된 모든 요소의 복사본을 가지는 새로운 리스트를 생성한다.
+-  `this.array`는 `ConstantList`의 상태인 동시에 `ConstantList` 객체가 대표하는 엔티티와 동일하다.
+-  불변 리스트는 다음과 같이 만들 수 있다.
+
+```java
+class ImmutableList<T> {
+  private final List<T> items = LinkedList<T>();
+
+  void add(T number) {
+    this.items.add(number);
+  }
+
+  Iterable<T> iterate() {
+    return Collections.unmodifiableList(this.items);
+  }
+}
+```
+
+- 위 예제의 `ImmutableList` 객체가 대표하는 실제 엔티티는 웹이 아니라 **메모리**에 존재한다.
+- 요점은 개념적으로 디스크, 네트워크, 또는 기타 외부 저장소와 정확하게 동일한 방식으로 메모리를 다뤄야 한다는 것이다.
+- 우리 입장에서 메모리 바이트는 디스크 파일과 정확하게 동일한 종류의 외부 리소스일 뿐이다. 설계 관점에서 이 둘 사이에 아무런 차이도 없으며 이 원칙을 명심하면 어떤 경우에도 불변 객체를 사용할 수 있다. 이 객체 중 일부는 상수 객체이고, 일부는 단순히 메모리의 일부를 대표하는 불변 객체이다.
+- 상수 객체가 설계하고, 유지보수하고, 이해하기에 더 편하기 때문에 불변 객체보다는 상수 객체를 사용하는 편이 더 낫다.
+- 결론적으로, 어떤 종류의 시스템이라도 전체적으로 불변 객체를 이용해서 설계될 수 있고 설계되어야 한다.
+
+### 🦄 절대 getter와 setter를 사용하지 마세요
+- `getter`와 `setter`의 형태는 다음과 같다.
+
+```java
+class Cash {
+  private int dollars;
+
+  public int getDollars() {
+    return this.dollars;
+  }
+
+  public void setDollars(int value) {
+    this.dollars = value;
+  }
+}
+```
+
+- 이 클래스는 가변이다. 이 클래스에 포함된 두 메서드는 이름도 잘 못 지어졌다. 이 클래스에는 생성자도 없기 때문에 섹션 2.1에서 설명한 원칙에도 위배된다.
+- 가장 큰 문제는 바로 `Cash`가 진짜 클래스가 아니라 단순한 **자료 구조**라는 사실이다.
+
+#### 🎈 객체 대 자료구조
+- 다음은 C로 구현한 자료구조이다.
+
+```C
+struct Cash {
+  int dollars;
+}
+
+printf("Cash value is %d", cash.dollars);
+```
+
+- 다음은 C++에서 객체라고 불리는 요소이다.
+
+```C++
+#include <string>
+
+class Cash {
+  public:
+    Cash(int v): dollars(v) {};
+    std::string print() const;
+  private:
+    int dollars;
+};
+
+printf("Cash value is %s", cash.print())
+```
+
+- 이 둘의 차이점은 `struct`인 경우, 멤버인 `dollars`에 직접 접근한 후 해당 값을 정수로 취급한다. `struct`와는 아무런 의사소통도 하지 않고 직접적으로 멤버에 접근한다.
+- 클래스는 다르게 어떤 식으로든 멤버에게 접근하는 것을 허용하지 않는다. 게다가 자신의 멤버를 노출하지도 않는다. 심지어 `dollars`라는 멤버가 있는지조차 알 수 없다. 할 수 있는 일이라고는 `print()`하라고 요청하는 것 뿐이다. `print()`가 실제로 어떤 방식으로 동작하는 지도 알 수 없고, 캡슐화된 어떤 멤버가 이 작업에 개입하는 지도 알 수 없다. 이것이 바로 **캡슐화**이며, OOP가 지향하는 가장 중요한 설계 원칙 중 하나이다.
+- 자료구조는 투명하지만, 객체는 불투명하다. 자료구조는 글래스 박스지만, 객체는 블랙 박스이다. 또한, 자료구조는 수동적이지만, 객체는 능동적이다.
+- 자료구조를 사용하지 말아야할 이유는 늘 그렇듯이, 유지보수성과 관련이 있다.
+- OOP에서는 코드가 데이터를 지배하지 않고, 필요한 시점에 객체가 자신의 코드를 실행시킨다. 객체가 일급 시민이며, 생성자를 통한 객체 초기화가 곧 소프트웨어이다. 소프트웨어는 연산자나 구문이 아닌 생성자를 통해 구성된다.
+- 객체지향적이고 선언형 스타일을 유지하기 위해서는, 데이터를 객체 안에 감추고 절대로 외부에 노출해서는 안된다. 무엇을 캡슐화하고 있고, 자료구조가 얼마나 복잡한 지는 오직 객체만이 알고 있어야 한다.
+
+#### 🎈 좋은 의도, 나쁜 결과
+- 근복적으로 `getter`와 `setter`는 캡슐화의 원칙을 위반하기 위해 설계되었다.
+- 모든 현대적인 IDE는 `getter`와 `setter`를 기존의 `private` 프로퍼티에 추가하는 기능을 제공한다. Ruby는 언어 차원에서 자동으로 `getter`와 `setter`를 생성하는 기능을 내장하고 있다.
+
+```rb
+class Cash
+  attr_reader :dollars
+  attr_writer :dollars
+end
+```
+- 언어와 IDE 설계자들은 `getter`와 `setter`를 이용해서 `private` 프로퍼티를 감싸는 방식을 권장한다.
+- 저자의 요점은 `getter`와 `setter`를 사용하면 OOP의 캡슐화 원칙을 손쉽게 위반할 수 있다는 점이다. 겉으로는 메서드처럼 보이지만, 실제로는 데이터에 직접 접근하고 있다는 현실이다.
+- **`getter`와 `setter`의 내부 구현과 무관하게 이들은 데이터일 뿐이다. 다시 말해 행동이 아닌 데이터를 표현할 뿐이다.**
+
+#### 🎈 접두사에 관한 모든 것
+- `getter/setter` 안티 패턴에서 유해한 부분은 두 접두사인 `get`과 `set`이라는 사실이다.
+- 두 접두사는 이 객체가 진짜 객체가 아니고, 어떤 존중도 받을 가치가 없는 자료주고라는 사실을 명확하게 전달한다.
+- 어떤 데이터를 반환하는 메서드를 포함하는 것은 괜찮다.
+
+```java
+class Cash {
+  private final int value;
+
+  public int dollars() {
+    return this.value;
+  }
+}
+```
+
+- 하지만 이 메서드의 이름을 다음과 같이 짓는 것은 적절하지 않다.
+
+```java
+class Cash {
+  private final int value;
+
+  public int getDollars() {
+    return this.value;
+  }
+}
+```
+
+- 여기서 `getDollars()`는 데이터 중에 `dollars`를 찾은 후 반환하라는 뜻을 지니고 있고, `dollars()`는 얼마나 많은 달러가 필요한가요? 라고 묻는 것과 같다. `dollars()`는 객체를 데이터의 저장소로 취급하지 않고, 객체를 존중한다. 데이터를 노출하지 않는다.
+
+### 🦄 부 ctor 밖에서는 new를 사용하지 마세요
+
+```java
+class Cash {
+  private final int dollars;
+
+  public int euro() {
+    return new Exchange().rate("USD", "EUR") * this.dollars;
+  }
+}
+```
+
+- 위 예제는 의존성에 문제가 있는 코드의 전형적인 모습이다. 하드코딩된 의존성을 가지고 있다.
+- `Cash` 클래스는 `Exchange` 클래스에 직접 연결되어 있기 때문에, 의존성을 끊기 위해서는 `Cash` 클래스의 내부 코드를 변경할 수 밖에 없다.
+- `Cash`를 사용한 코드이다.
+
+```java
+Cash five = new Cash("5.00");
+print("$5 equals to %d", five.euro());
+```
+
+- 위 코드는 `print()` 테스트를 실행할 때마다 매번 서버와 네트워크 통신이 발생한다. 이 경우 내부 동작은 테스트에서 제외해야 하지만 그렇지 못하다.
+- 현재 설계에서는 `Cash`가 서버와 통신하지 않게 만들 수 없다. 둘 사이의 결합을 끊기 위해서는 `Cash`의 소스 코드를 수정해야만 한다. 이 문제의 근본 원인은 `new` 연산자이다.
+- 다음은 수정한 후의 `Cash` 클래스이다.
+
+```java
+class Cash {
+  private final int dollars;
+  private final Exchange exchange;
+
+  Cash (int value, Exchange exch) {
+    this.dollars = value;
+    this.exchange = exch;
+  }
+
+  public int euro() {
+    return this.exchange.rate("USD", "EUR") * this.dollars;
+  }
+}
+```
+- 다음은 `print`를 테스트하는 올바른 코드이다.
+
+```java
+Cash five = new Cash(5, new FakeExchange());
+print("$5 equals to %d", five.euro());
+```
+- 이렇게 수정하면 `Cash` 클래스는 더이상 `Exchange` 인스턴스를 직접 생성할 수 없고, 오직 `ctor`을 통해 제공된 `Exchange`와만 협력할 수 있다. 더 이상 `Exchange` 클래스에 의존하지 않는다.
+- 다시 말해서, 객체가 필요한 의존성을 직접 생성하는 대신, **우리가 `ctor`을 통해 의존성을 주입한다.**
+- **부 `ctor`을 제외한 어떤 곳에서도 `new`를 사용하지 말아야 한다.** 이런 규칙을 가지면 객체들은 상호간에 충분히 분리되고 테스트 용이성과 유지보수성을 크게 향상시킬 수 있다.
+- 다음 예는 객체가 다른 객체를 인스턴스화해야만 하는 경우의 상황이다.
+
+```java
+class Requests {
+  private final Socket socket;
+
+  public Requests(Socket skt) {
+    this.socket = skt;
+  }
+
+  public Request next() {
+    return new SimpleRequest(/* 소켓에서 데이터를 읽는다. */);
+  }
+}
+```
+
+- 위 `Requests` 클래스는 `next()` 메서드를 호출할 때마다 매번 새로운 `Request` 객체를 생성해서 반환해야 한다. `Request`는 `ctor`이 아니기 때문에 위 설계는 앞의 규칙을 위반한다.
+- 다음과 같이 코드를 수정한다.
+
+```java
+class Requests {
+  private final Socket socket;
+  private final Mapping<String, Request> mapping;
+
+  public Requests(Socket skt) {
+    this(skt,
+      new Mapping<String, Request>() {
+        @Override
+        public Request map(String data) {
+          return new SimpleRequest(data);
+        }
+      }
+    )
+  }
+
+  public Requests(Socket skt, Mapping<String, Request> mpg) {
+    this.socket = skt;
+    this.mapping = mpg;
+  }
+
+  public Request next() {
+    return this.mapping.map(
+      /* 소켓에서 데이터를 읽는다. */
+    )
+  }
+}
+```
+
+- `Requests` 클래스는 텍스트 데이터를 `Request` 인스턴스로 변환하는 `Mapping` 인스턴스를 캡슐화한다.
+- `new` 연산자는 오직 부 `ctor` 내부에서만 사용된다. `next()` 메서드는 더이상 `new`를 사용하지 않는다.
+- `new`를 합법적으로 사용할 수 있는 유일한 곳은 부 `ctor` 뿐이다.
+
+### 🦄 인트로스펙션과 캐스팅을 피하세요
+- 타입 인트로스펙션과 캐스팅을 사용하고 싶어도 절대 사용해서는 안된다. 기술적으로 Java의 `instanceof` 연산자와 `Class.cast()` 메서드, 다른 언어에서 동일한 기능을 수행하는 연산자들이 모두 이 범주에 포함된다.
+- 프로그래머는 이 연산자들을 사용해서 런타임에 객체의 타입을 확인할 수 있다.
+
+```java
+public <T> int size(Iterable<T> items) {
+  if (items instanceof Collection) {
+    return Collection.class.cast(items).size();
+  }
+
+  int size = 0;
+
+  for (T item : items) {
+    ++size;
+  } 
+
+  return size;
+}
+```
+
+- 타입 인트로스펙션은 **리플렉션**이라는 더 포괄적인 용어로 불리는 여러 가지 기법들 중 하나이다.
+- 리플렉션을 사용하면 메서드, 명령어, 구문, 클래스, 객체, 타입 등을 변경할 수 있다. CPU가 이 요소들에 접근하기 전에 쉽고 간단하게 코드를 수정할 수 있다. 리플렉션은 매우 강력한 기법이지만 동시에 코드를 유지보수하기 어렵게 만드는 매우 너저분한 기법이다.
+- 위 예제 코드의 접근방법은 타입에 따라 **객체를 차별하기 때문에** OOP의 기본 사상을 훼손시킨다. 위 코드에서 요청을 어떤 식으로 처리할 지 객체가 결정할 수 있도록 하는 대신, 객체를 배재한 상태에서 결정을 내리고, 이를 바탕으로 좋은 객체와 나쁜 객체를 차별한다.
+- 또한, 런타임에 객체를 조사하는 것은 클래스 사이의 결합도가 높아지기 때문에 기술적인 관점에서도 좋지 않다. `size()` 메서드는 `Iterable` 인터페이스 하나가 아니라, `Collection`도 포함 두 개의 인터페이스를 의존하고 있다. 유지보수성에 커다란 악영향을 끼친다.
+- 다음은 개선한 설계이다.
+
+```java
+public <T> int size(Collection<T> items) {
+  return items.size();
+}
+
+public <T> int size(Iterable<T> items) {
+  int size = 0;
+
+  for (T item : items) {
+    ++size;
+  }
+
+  return size;
+}
+```
+
+- 위 기법은 **메서드 오버로딩**이라고 부른다.
+- **클래스 캐스팅**에도 동일하게 적용된다.
+
+```java
+return Collection.class.cast(items).size();
+```
+- 위의 코드를 다음과 같이 구현할 수도 있다.
+
+```java
+return ((Collection) items).size();
+```
+
+- 기술적으로 두 코드는 거의 동일하게 동작한다. 최종 결과는 `items` 객체가 `Collection`이라라는 사실다.
+- 다음 예제는 보다 완결된 예제이다.
+
+```java
+if (items instanceof Collection) {
+  return((Collection) items).size();
+}
+```
+- 앞의 예제보다 개선된 것이 사실이지만 여전히 좋지 않다. 결합도가 숨겨져 있다.
+- 예를들어 다음에 새로운 배관공을 파견하려고 할 때, 회사는 여러분이 프린터 수리에 추가 금액을 지불한다는 사실을 기억하고 있기 때문에 배관공인 동시에 컴퓨터 전문까인 사람을 찾으려고 시도할 것이다.
+- 나중에 수도배관회사를 바꾸기로 결정한다면, 싱크대와 프린터를 함꼐 수리할 수 있는 사람을 다시 요청해야 한다.
+- 다시 말해서, 방문한 객체에 대한 **기대**를 문서에 명시적으로 기록하지 않은 채로 외부에 노출해버린 것이다. 어떤 클라이언트는 기대하는 바를 학습한 후 더 적절한 객체에 제공하겠지만 어떤 클라이언트는 그럴 수 없을 것이다.
+- 요약하면, `instanceof` 연산자를 사용하거나 클래스를 캐스팅하는 일은 안티패턴이기 때문에 사용해서는 안된다.
