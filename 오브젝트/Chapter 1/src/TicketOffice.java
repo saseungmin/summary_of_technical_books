@@ -1,8 +1,12 @@
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
+
 public class TicketOffice {
   private Long amount;
   private List<Ticket> tickets = new ArrayList<>();
 
-  public TicketOffice(Long amount, Ticket, ...tickets) {
+  public TicketOffice(Long amount, Ticket ...tickets) {
     this.amount = amount;
     this.tickets.addAll(Arrays.asList(tickets));
   }
