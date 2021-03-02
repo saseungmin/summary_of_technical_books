@@ -13,3 +13,10 @@
 - 무엇이 문제인가
 - 설계 개선하기
 - 객체지향 설계
+
+### 🐣 [Chapter 2: 객체지향 프로그래밍](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%202)
+- 영화 예메 시스템
+- 객체지향 프로그래밍을 향해
+- 할인 요금 구하기
+- 상속과 다형성
+- 추상화와 유연성
