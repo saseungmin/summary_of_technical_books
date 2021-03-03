@@ -20,3 +20,8 @@
 - 할인 요금 구하기
 - 상속과 다형성
 - 추상화와 유연성
+
+### 🐣 [Chapter 3: 역할, 책임, 협력](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%203)
+- 협력
+- 책임
+- 역할
