@@ -25,3 +25,11 @@
 - 협력
 - 책임
 - 역할
+
+### 🐣 [Chapter 4: 설계 품질과 트레이드오프](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%204)
+- 데이터 중심의 영화 예매 시스템
+- 설계 트레이드오프
+- 데이터 중심의 영화 예매 시스템의 문제점
+- 자율적인 객체를 향해
+- 하지만 여전히 부족하다
+- 데이터 중심 설계의 문제점
