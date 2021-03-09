@@ -33,3 +33,9 @@
 - 자율적인 객체를 향해
 - 하지만 여전히 부족하다
 - 데이터 중심 설계의 문제점
+
+### 🐣 [Chapter 5: 책임 할당하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%205)
+- 책임 주도 설계를 향해
+- 책임 할당을 위한 GRASP 패턴
+- 구현을 통한 검증
+- 책임 주도 설계의 대안
