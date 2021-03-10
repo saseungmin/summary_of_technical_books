@@ -5,7 +5,7 @@
 - 저: 조영호
 
 ### 🎯 진행 방법
-- 책을 읽고 스터디를 진행
+- 책을 읽고 [스터디](https://github.com/CodeSoom/Objects)를 진행
 - 책을 읽으며 repository에 정리한다.
 
 ### 🐣 [Chapter 1: 객체, 설계](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%201)
