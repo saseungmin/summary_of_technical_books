@@ -52,3 +52,7 @@
 - 모듈
 - 데이터 추상화와 추상 데이터 타입
 - 클래스
+
+### 🐣 [Chapter 8: 의존성 관리하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%208)
+- 의존성 이해하기
+- 유연한 설계
