@@ -56,3 +56,10 @@
 ### 🐣 [Chapter 8: 의존성 관리하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%208)
 - 의존성 이해하기
 - 유연한 설계
+
+### 🐣 [Chapter 9: 유연한 설계](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%209)
+- 개방-폐쇄 원칙
+- 생성 사용 분리
+- 의존성 주입
+- 의존성 역전 원칙
+- 유연성에 대한 조언
