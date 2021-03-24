@@ -73,3 +73,5 @@
 ### 🐣 [Chapter 11: 합성과 유연한 설계](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%2011)
 - 상속을 합성으로 변경하기
 - 상속으로 인한 조합의 폭발적인 증가
+- 합성 관계로 변경하기
+- 믹스인
