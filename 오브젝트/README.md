@@ -86,3 +86,6 @@
 ### 🐣 [Chapter 13: 서브클래싱과 서브타이핑](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%2013)
 - 타입
 - 타입 계층
+- 서브클래싱과 서브타이핑
+- 리스코프 치환 원칙
+- 계약에 의한 설계와 서브타이핑
