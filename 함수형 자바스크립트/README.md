@@ -1,8 +1,9 @@
 ## 🚀 함수형 자바스크립트 (FUNCTIONAL PROGRAMMING IN JAVASCRIPT)
 
 ### 📚 책 정보
-- [도서 정보](http://www.yes24.com/Product/Goods/34902704)
+- [도서 정보](http://www.yes24.com/Product/Goods/58181696)
 - 저: 루이스 아텐시오
+
 ### 🎯 진행 방법
 - 책을 읽고 스터디를 진행
 - 스터디 후 repository에 정리한다.
