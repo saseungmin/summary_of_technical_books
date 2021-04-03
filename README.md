@@ -19,6 +19,7 @@
 - [You Don’t Know JS 타입과 문법, 스코프와 클로저](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201)
 - [Do it! 타입스크립트 프로그래밍](https://github.com/saseungmin/typescript_programming_study)
 - [프로 Git 2판: 그림으로 이해하는 Git의 작동 원리와 사용법](https://github.com/saseungmin/reading_books_record_repository/tree/master/Pro%20Git%202%ED%8C%90)
+- 코어 자바스크립트
 
 ### 🎯 읽을 책 목록
 - 스칼라로 배우는 함수형 프로그래밍
