@@ -94,3 +94,7 @@
 - 핸드폰 과금 시스템 변경하기
 - 설계에 일관성 부여하기
 - 일관성 있는 기본 정책 구현하기
+
+### 🐣 [Chapter 15: 디자인 패턴과 프레임워크](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8/Chapter%2014)
+- 디자인 패턴과 설계 재사용
+- 프레임워크와 코드 재사용
