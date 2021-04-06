@@ -173,3 +173,203 @@ obj2 = {
 
 - 이번에는 새로운 객체를 할당함으로써 값을 직접 변경했다. 그러면 메모리의 데이터 영역에 새로운 공간에 새 객체가 저장되고 그 주소를 변수 영역의 `obj2` 위치에 저장할 것이다.
 - 즉, 참조형 데이터가 *가변값*이라고 설명할 때의 *가변*은 참조형 데이터 자체를 변경할 경우가 아니라 그 내부의 프로퍼티를 변경할 때만 성립한다.
+
+## 📚 불변 객체
+
+### 🎈 불변 객체를 만드는 간단한 방법
+- 참조형 데이터의 가변은 데이터 자체가 아닌 내부 프로퍼티를 변경할 때만 성립한다. 데이터 자체를 변경하고자 하면 기본 데이터와 마찬가지로 기존 데이터는 변하지 않는다.
+- 그렇다면 내부 프로퍼티를 변경할 필요가 있을 때마다 매번 새로운 객체를 만들어 재할당하기로 규칙을 정하거나 새로운 객체를 만드는 도구(immer.js, spread operator, Object.assign)를 활용한다면 객체 역시 불변성을 확보할 수 있다.
+- 값으로 전달받은 객체에게 변경을 가하더라도 원본 객체가 변하지 않아야 하는 경우에 불변 객체가 필요하다.
+
+```js
+var user = {
+  name: 'Seungmin',
+  gender: 'male',
+};
+
+var changeName = function (user, newName) {
+  return {
+    name: newName,
+    gender: user.gender,
+  };
+};
+
+var uses2 = changeName(user, 'Jung');
+
+if (user !== user2) {
+  console.log('유저 정보 변경'); // 유저 정보 변경
+}
+
+console.log(user.name, user2.name); // Seungmin Jung
+console.log(user === user2); // false
+```
+
+- `changeName` 함수가 새로운 객체를 반환한다. 그렇기 때문에 `user`와 `user2`는 서로 다른 객체이므로 안전하게 비교할 수 있다.
+- 하지만 현재 `gender` 프로퍼티를 하드코딩으로 입력했다. 대상 객체의 프로퍼티 개수에 상관 없이 모든 프로퍼티를 복사하는 함수를 만들 수 있다.
+
+```js
+var copyObject = function (target) {
+  var result = {};
+
+  for(var prop in target) {
+    result[prop] = target[prop];
+  }
+
+  return result;
+};
+```
+
+- `copyObject` 함수를 사용하기로 합의하고 그 규칙을 지킨다는 전제하에서는 `user` 객체가 곧 불변 객체라고 불 수 있다. 하지만 모두가 그 규칙을 지키리라는 보장은 없다. 
+- 또한, `copyObject`는 얕은 복사를 수행하고 있다.
+- 이런 맥락에서 `immutable.js`, `immer.js`등의 라이브러리가 인기를 끌고 있다.
+
+### 🎈 얕은 복사와 깊은 복사
+- 얕은 복사는 바로 아래 단계의 값만 복사흔 방법이고, 깊은 복사는 내부의 모든 값들을 하나하나 찾아서 전부 복사하는 방법이다.
+- 이 말은 중첩된 객체에서 참조형 데이터가 저장된 프로퍼티를 복사할 때 그 주솟값만 복사한다는 의미이다. 그러면 해당 프로퍼티에 대해 원본과 사본이 동일한 참조형 데이터의 주소를 가리키게 된다. 즉, 사본을 변경하면 원본도 바뀌고, 원본을 변경하면 사본도 변경된다.
+
+```js
+var user = {
+  name: 'Seungmin',
+  urls: {
+    portfolio: 'https://github.com/saseungmin',
+    blog: 'https://haranglog.tistory.com',
+  },
+};
+
+var user2 = copyObject(user);
+
+user2.name = 'Jung';
+console.log(user.name === user2.name); // false
+
+user.urls.portfolio = 'https://...';
+console.log(user.urls.portfolio === user2.urls.portfolio); // true
+```
+
+- 위 예제처럼 한 단계 더 들어간 `urls`의 내부 프로퍼티들은 **기존 데이터를 그대로 참조**하고 있다. 이런 현상이 발생하지 않게 하려면 `user.urls` 프로퍼티에 대해서도 불변 객체로 만들 필요가 있다.
+
+```js
+var user2 = copyObject(user);
+user2.urls = copyObject(user.urls);
+
+user.urls.portfolio = 'https://...';
+console.log(user.urls.portfolio === user2.urls.portfolio); // false
+```
+
+- 어떤 객체를 복사할 때 객체 내부의 모든 값을 복사해서 완전히 새로운 데이터를 만들고자 할 때, 객체의 프로퍼티 중에서 그 값이 기본형 데이터일 경우에는 그대로 복사하면 되지만 **참조형 데이터는 다시 그 내부의 프로퍼티들을 복사**해야 한다.
+- 이 과정을 참조형 데이터가 있을 때마다 재귀적으로 수행해야만 비로소 깊은 복사가 된다.
+
+```js
+var copyObjectDeep = function (target) {
+  var result = {};
+  
+  // null을 붙인 이유는 typeof 명령어가 null에 대해서도 object를 반환한다. (자바스크립트 버그)
+  if(typeof target === 'object' && target !== null) {
+    for(prop in target) {
+      result[prop] = copyObjectDeep(target[prop]);
+    }
+  } else {
+    result = target;
+  }
+
+  return result;
+};
+```
+
+- 간단하게 깊은 복사를 처리할 수 있는 다른 방법은 객체를 JSON 문법으로 표현된 문자열로 전환했다가 다시 JSON 객체로 바꾸는 것이다. 다만 메서드(함수)니 숨겨진 프로퍼티인 `__proto__`나 `getter/setter` 등과 같이 JSON으로 변경할 수 없는 프로퍼티들은 모두 무시한다.
+
+```js
+var copyObjectViaJSON = function (target) {
+  return JSON.parse(JSON.stringify(target));
+};
+
+var obj = {
+  a: 1,
+  b: {
+    c: null,
+    d: [1, 2],
+    func1: function() {
+      console.log(3);
+    },
+  },
+  func2: function() {
+    console.log(4);
+  },
+};
+
+var obj2 = copyObjectViaJSON(obj);
+
+obj2.a = 3;
+obj2.b.c = 4;
+obj.b.d[1] = 3;
+
+console.log(obj); // { a: 1, b: { c: null, d: [1, 3], func1: f() }, func2: ƒ() }
+console.log(obj2); // { a: 3, b: { c: 4, d: [1, 2] } }
+```
+
+### 🎈 undefined와 null
+- 자바스크립트에서 없음을 나타내는 값이 두 가지 있는데 바로 `undefined`와 `null`이다.
+- `undefined`는 사용자가 명시적으로 지정할 수도 있지만 값이 존재하지 않을 때 자바스크립트 엔진은 자동으로 부여하는 경우도 있다.
+- 자바스크립트 엔진은 사용자가 어떤 값을 지정할 것이라고 예상되는 상황임에도 실제로는 그렇게 하지 않았을 때 `undefined`를 반환한다. 다음 세 경우가 이에 해당한다.
+  1. 값을 대입하지 않은 변수, 즉 데이터 영역의 메모리 주소를 지정하지 않은 식별자에 접근할 때
+  2. 객체 내부의 존재하지 않는 프로퍼티에 접근하려고 할 때
+  3. `return` 문이 없거나 호출되지 않는 함수의 실행 결과
+
+```js
+// 자동으로 undefined를 부여하는 경우
+var a;
+console.log(a); // undefined (1)
+
+var obj = {
+  a: 1,
+};
+console.log(obj.b); // (2) 존재하지 않는 프로퍼티에 접근
+
+var func = function() {};
+var c = func(); // (3) return 문이 없거나 호출되지 않는 함수의 실행 결과
+console.log(c); // undefined
+```
+
+- `undefined`와 배열
+
+```js
+var arr1 = [];
+arr1.length = 3;
+console.log(arr1); // [empty x 3]
+
+var arr2 = new Array(3);
+console.log(arr2); // [empty x 3]
+
+var arr3 = [undefined, undefined, undefined];
+console.log(arr3); // [undefined, undefined, undefined]
+```
+
+- 위 예제처럼 비어있는 요소와 `undefined`를 할당한 요소는 출력 결과부터 다르다.
+- 비어있는 요소는 순회와 관련된 많은 배열 메서드들의 순회 대상에서 제외된다.
+- 사용자가 직접 `undefined`를 할당한 배열에 대해서는 일반적으로 알고 있는 대로 배열의 모든 요소를 순회해서 결과를 출력한다.
+- 그러나 `empty`로 비어있는 요소에 대해서는 어떠한 처리도 하지 않고 건너뛴다.
+- 그렇다면 사용자가 명시적으로 부여한 경우와 비어있는 요소에 접근하려 할 때 반환되는 두 경우의 `undefined`의 의미는 전자는 그 자체로 값이다. `undefined`가 비록 *비어있음*을 의미하기는 하지만 하나의 값으로 동작하기 때문에 이때의 프로퍼티나 배열의 요소는 고유의 키값이 실존하게 되고 순회의 대상이 될 수 있다.
+- 사용자가 아무것도 하지 않은 채로 접근했을 때 자바스크립트 엔진이 하는 수 없이 반환해주는 `undefined`는 해당 프로퍼티 내지 배열의 키값 자체가 존재하지 않음을 의미한다.
+- 같은 의미를 가진 `null`이라는 값이 별도로 존재하기 때문에 사용자가 직접 `undefined`를 써야 할 이유가 없다. 즉, *비어있음*을 명시적으로 나타내고 싶을 때는 `undefined`가 아닌 `null`를 쓰면 된다.
+- 추가로 `null`은 주의할 점이 있는데 `typeof null`이 `object`라는 점이다. 이는 [자바스크립트 자체 버그](https://2ality.com/2013/10/typeof-null.html)이다. 따라서 어떤 변수의 값이 `null`인지 여부를 판별하기 위해서는 `typeof`를 사용하면 안된다.
+
+```js
+// undefined와 null 비교
+var n = null;
+console.log(typeof n); // object
+
+console.log(n == undefined); // true
+console.log(n == null); // true
+
+console.log(n === undefined); // false
+console.log(n === null); // true
+```
+
+- 동등 연산자로 비굥할 경우 `null`과 `undefined`가 서로 같다고 판단한다. 따라서 어떤 변수가 실제로 `null`인지 아니면 `undefined`인지는 동등 연산자로 비교해서는 알 수 없다. 때문에 일치 연산자를 사용해야지 정확히 비교할 수 있다.
+
+## 📚 정리
+- 자바스크립트 데이터 타입에는 크게 기본형과 참조형이 있다. 기본적으로 기본형은 불변값이고 참조형은 가변값이다.
+- 변수는 변경 가능한 데이터가 담길 수 있는 공간이고, 식별자는 그 변수의 이름을 말한다.
+- 변수를 선언하면 컴퓨터는 우선 메모리의 빈 공간에 식별자를 저장하고, 그 공간의 값은 `undefined`로 할당한다. 이후 그 변수에 기본형 데이터를 할당하려고 하면 별도의 공간에 데이터를 저장하고, 그 공간의 주소를 변수의 값 영역에 할당한다.
+- 참조형 데이터를 할당하고자 할 경우 컴퓨터는 참조형 데이터 내부 프로퍼티들을 위한 변수 영역을 별도로 확보해서 확보된 주소를 변수에 연결하고, 다시 앞서 확보한 변수 영역에 각 프로퍼티의 식별자를 저장하고, 각 데이터를 별도의 공간에 저장해서 그 주소를 식별자들과 매칭시킨다.
+- 이처럼 할당 과정이 차이가 생기는 이유는 참조형 데이터가 여러 개의 프로퍼티(변수)를 모은 그룹이기 떄문이다. 그리고 이 차이로 인해 참조형 데이터를 가변값으로 여겨야만 하는 상황이 발생한다.
+- 없음을 나타내는 값은 두 가지가 있는데, `undefined`는 어떤 변수에 값이 존재하지 않을 경우를 의미하고 `null`은 사용자가 명시적으로 없음을 표현하기 위해 대입한 값이다. 그렇기 떄문에 본래의 의미에 따라 사용자가 없을을 표현하기 위해 명시적으로 `undefined`를 대입하는 것은 지양해야 한다.

@@ -9,6 +9,9 @@
 - 데이터 타입에 관한 배경지식
 - 변수 선언과 데이터 할당
 - 기본형 데이터와 참조형 데이터
+- 불변 객체
+- `undefined`와 `null`
+- 정리
 
 ### 🤔 [Chapter 5: 클로저](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/Chapter%205)
 - 클로저의 의미 및 원리 이해
