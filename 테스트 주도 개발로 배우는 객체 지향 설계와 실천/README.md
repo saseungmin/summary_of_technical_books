@@ -17,3 +17,12 @@
 - 전 구간 테스트
 - 테스트의 수준
 - 외부 품질과 내부 품질
+
+### 🐣 [Chapter 2: 객체를 활용한 테스트 주도 개발](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A3%BC%EB%8F%84%20%EA%B0%9C%EB%B0%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%EC%84%A4%EA%B3%84%EC%99%80%20%EC%8B%A4%EC%B2%9C/Chapter%202)
+- 객체망
+- 값과 객체
+- 메시지를 따르라
+- 묻지 말고 말하라
+- 그래도 가끔은 물어라
+- 협력 객체의 단위 테스트
+- 목 객체를 활용한 TDD 지원
