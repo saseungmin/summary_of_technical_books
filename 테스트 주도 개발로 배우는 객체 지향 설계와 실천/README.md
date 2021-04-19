@@ -48,3 +48,12 @@
 - 메서드가 아닌 행위를 단위 테스트하라
 - 테스트에 귀를 기울이라
 - 주기의 미세 조정
+
+### 🐣 [Chapter 6: 객체 지향 스타일](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A3%BC%EB%8F%84%20%EA%B0%9C%EB%B0%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%EC%84%A4%EA%B3%84%EC%99%80%20%EC%8B%A4%EC%B2%9C/Chapter%206)
+- 유지 보수성을 고려한 설계
+- 내부 대 이웃
+- 단일 책임 원칙
+- 객체 이웃의 유형
+- 전체는 부분의 합보다 단순해야 한다
+- 콘텍스트 독립성
+- 올바른 정보 감추기
