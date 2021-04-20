@@ -68,3 +68,7 @@
 - 객체를 구성해 시스템의 행위를 기술하라
 - 고수준 프로그래밍을 위한 대비
 - 그럼 클래스는?
+
+### 🐣 [Chapter 8: 서드 파티 코드를 기반으로 한 개발](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A3%BC%EB%8F%84%20%EA%B0%9C%EB%B0%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%EC%84%A4%EA%B3%84%EC%99%80%20%EC%8B%A4%EC%B2%9C/Chapter%208)
+- 소유한 타입에 대해서만 목 객체를 적용하라
+- 통합 테스트에서 애플리케이션 객체에 목 객체를 적용하라
