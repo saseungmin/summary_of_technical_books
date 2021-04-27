@@ -83,3 +83,8 @@
 - 골격 사용 준비
 - 최초 테스트
 - 몇 가지 초기 선택
+
+### 🐣 [Chapter 11: 첫 테스트 통과하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A3%BC%EB%8F%84%20%EA%B0%9C%EB%B0%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%EC%84%A4%EA%B3%84%EC%99%80%20%EC%8B%A4%EC%B2%9C/Chapter%2011)
+- 테스트 도구 구축
+- 테스트 실패와 통과
+- 필요한 최소한의 것
