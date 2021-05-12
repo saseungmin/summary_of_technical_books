@@ -138,3 +138,14 @@
 - 팩터리 메서드를 이용한 도메인 모델 강조
 - 사용 시점에서 중복 없애기
 - 의사소통이 우선이다
+
+### 🐣 [Chapter 23: 테스트 진단](https://github.com/saseungmin/reading_books_record_repository/tree/master/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A3%BC%EB%8F%84%20%EA%B0%9C%EB%B0%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%EC%84%A4%EA%B3%84%EC%99%80%20%EC%8B%A4%EC%B2%9C/Chapter%2023)
+- 실패하는 설계
+- 작고, 문제에 집중하고, 이름을 잘 지은 테스트
+- 설명력 있는 단정 메시지
+- 매처를 활용한 세부 사항 강조
+- 자기 서술적인 값
+- 명확하게 가공된 값
+- 추적자 객체
+- 예상이 충족됐음을 명시적으로 단정하라
+- 진단은 일급 기능이다
