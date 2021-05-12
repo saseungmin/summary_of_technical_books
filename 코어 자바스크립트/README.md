@@ -25,6 +25,14 @@
 - 명시적으로 `this`를 바인딩하는 방법
 - 정리
 
+### 🤔 [Chapter 4: 콜백 함수](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/Chapter%204)
+- 콜백 함수란?
+- 제어권
+- 콜백 함수는 함수다
+- 콜백 함수 내부의 `this`에 다른 값 바인딩하기
+- 콜백 지옥과 비동기 제어
+- 정리
+
 ### 🤔 [Chapter 5: 클로저](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/Chapter%205)
 - 클로저의 의미 및 원리 이해
 - 클로저와 메모리 관리
