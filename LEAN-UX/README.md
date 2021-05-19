@@ -14,3 +14,4 @@
 
 ### 🐣 [Part 2: 프로세스](https://github.com/saseungmin/reading_books_record_repository/tree/master/LEAN-UX/Part%202)
 #### 👉 비전 정의와 실행 계획, 성과
+#### 👉 협업기반 디자인
