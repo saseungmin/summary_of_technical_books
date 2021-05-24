@@ -5,3 +5,5 @@
 ### 📚[Chapter 4: 협업기반 디자인](https://github.com/saseungmin/reading_books_record_repository/tree/master/LEAN-UX/Part%202/Chapter%204)
 
 ### 📚[Chapter 5: MVP와 실험](https://github.com/saseungmin/reading_books_record_repository/tree/master/LEAN-UX/Part%202/Chapter%205)
+
+### 📚[Chapter 6: 조사와 피드백](https://github.com/saseungmin/reading_books_record_repository/tree/master/LEAN-UX/Part%202/Chapter%206)
