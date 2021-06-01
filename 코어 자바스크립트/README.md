@@ -42,3 +42,10 @@
 - 프로토타입의 개념 이해
 - 프로토타입 체인
 - 정리
+
+### 🤔 [Chapter 7: 클래스](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8/Chapter%207)
+- 클래스와 인스턴스의 개념 이해
+- 자바스크립트의 클래스
+- 클래스 상속
+- ES6의 클래스 및 클래스 상속
+- 정리
