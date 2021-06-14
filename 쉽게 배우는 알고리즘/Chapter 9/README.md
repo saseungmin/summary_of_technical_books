@@ -62,6 +62,45 @@ fib(n)
 }
 ```
 
+#### 👉 JavaScript 피보나치 DP 예제
+
+```js
+// 재귀를 사용하지 않는 DP 피보나치
+function fibonacci(n) {
+  const dp = Array.from({ length: n + 1 }, () => 0);
+
+  dp[1] = 1;
+  dp[2] = 1;
+
+  for (let i = 3; i <= n; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
+  }
+
+  return dp[n];
+}
+
+// 재귀를 사용한 DP 피보나치
+function fibonacci(n) {
+  const dp = Array.from({ length: n + 1 }, () => 0);
+
+  function fibo(value) {
+    if (dp[value] !== 0) {
+      return dp[value];
+    }
+
+    if (value === 1 || value === 2) {
+      dp[value] = 1;
+    } else {
+      dp[value] = fibo(value - 1) + fibo(value - 2);
+    }
+
+    return dp[value];
+  }
+
+  return fibo(n);
+}
+```
+
 ## 📚 행렬 경로 문제
 - 행렬의 왼쪽 위에서 시작해 한 칸씩 이동해 오른쪽 아래까지 도달한다. 이 과정에서 방문한 칸에 있는 수들을 더한 값이 이 경로의 합이다.
 - 이동 규칙은 다음과 같다
@@ -97,6 +136,23 @@ matrixPath(n)
     for j <- 1 to n
       c[i, j] <- m(i, j) + max(c[i - 1, j], c[i, j - 1]);
   return c[n, n];
+}
+```
+
+#### 👉 JavaScript 행렬 경로 DP 예제
+
+```js
+function matrix(arr) {
+  const { length } = arr;
+  const dp = Array.from({ length: length + 1 }, () => Array(length + 1).fill(0));
+
+  for (let i = 1; i <= length; i++) {
+    for (let j = 1; j <= length; j++) {
+      dp[i][j] = arr[i - 1][j - 1] + Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+
+  return dp[length][length];
 }
 ```
 
@@ -147,6 +203,65 @@ pebble(n)
 
 - 부분 문제들의 답을 `n x 4` 배열 `peb[][]`에 저장한다. 이 알고리즘의 수행 시간은 `for`루프가 지배한다. 바깥쪽 `for` 루프는 `n - 1`번 반복되고, 각 반복마다 안쪽의 `for`루프는 단지 4번만 반복되므로 중첩된 `for` 루프는 총 `4(n - 1)`번 반복된다. 반복할 때마다 `peb[i, p]`를 구하기 위해 최대 3개의 양립도니는 패턴을 살펴볼 뿐이다. 그러므로 상수 시간이 소요되고 수행 시간은 ɵ(n) 이다.
 
+#### 👉 JavaScript 돌 놓기 DP 예제
+
+```js
+const setScore = {
+  1: (arr, c) => arr[0][c],
+  2: (arr, c) => arr[1][c],
+  3: (arr, c) => arr[2][c],
+  4: (arr, c) => arr[0][c] + arr[2][c],
+};
+
+const isPossible = (p1, p2) => {
+  if (p1 === p2) {
+    return false;
+  }
+
+  const patterns = [[1, 4], [3, 4], [4, 1], [4, 3]];
+
+  const isMatch = patterns.some(([x, y]) => p1 === x && p2 === y);
+
+  if (isMatch) {
+    return false;
+  }
+
+  return true;
+};
+
+function placePebbles(pebbles) {
+  const dp = Array.from({ length: 5 }, () => Array(pebbles[0].length).fill(0));
+
+  const sumPebbles = (c, previous) => {
+    if (c >= pebbles[0].length) {
+      return 0;
+    }
+
+    if (dp[previous][c] !== 0) {
+      return dp[previous][c];
+    }
+
+    let max = Number.MIN_SAFE_INTEGER;
+
+    for (let p = 1; p <= 4; p++) {
+      if (c === 0 || isPossible(previous, p)) {
+        const score = setScore[p](pebbles, c) + sumPebbles(c + 1, p);
+
+        if (score > max) {
+          max = score;
+        }
+      }
+    }
+
+    dp[previous][c] = max;
+
+    return dp[previous][c];
+  };
+
+  return sumPebbles(0, 1);
+}
+```
+
 ## 📚 최장 공통 부분 순서 (LCS)
 
 - 문자열 `bcdb`는 문자열 `abcdbad`의 부분 순서이다.
@@ -187,10 +302,40 @@ LCS(m, n) // 두 문자열 Xm 과 Yn의 LCS의 길이를 구한다.
     C[0, j] <- 0;
   for i <- 1 to m
     for j <- 1 to n
-      if (xi = yi) then C[i, j] <- C[i - 1, j - 1] + 1;
+      if (xi = yj) then C[i, j] <- C[i - 1, j - 1] + 1;
                    else C[i, j] <- max{C[i - 1, j], C[i, j - 1]};
   return C[m, n];
 }
 ```
 
 - 이차원 배열 `C[][]`에 각 부분 문제의 답을 저장하면서 풀어나가는 방식으로 배열의 총 원소는 `(m + 1)(n + 1)`개이고, `for` 루프가 총 `mn`번을 반곱하면서 원소를 하나씩 계산한다. 각 원소를 계산하는 데는 상수 시간이 든다. 따라서 총 수행 시간은 ɵ(mn)이다.
+
+#### 👉 JavaScript를 사용한 예제
+
+```js
+function lcs(str1, str2) {
+  const dp = Array.from({ length: 2000 }, () => []);
+  const len1 = str1.length;
+  const len2 = str2.length;
+
+  for (let i = 0; i <= len1; i++) {
+    dp[i][0] = 0;
+  }
+
+  for (let j = 0; j <= len2; j++) {
+    dp[0][j] = 0;
+  }
+
+  for (let i = 1; i <= len1; i++) {
+    for (let j = 1; j <= len2; j++) {
+      if (str1[i - 1] === str2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
+  }
+
+  return dp[len1][len2];
+}
+```
