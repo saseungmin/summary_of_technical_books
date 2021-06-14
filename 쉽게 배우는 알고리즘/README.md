@@ -3,5 +3,5 @@
 - 필요한 부분만 골라서 읽기
 
 ### 📚 책 정보
-- [도서 정보](yes24.com/Product/Goods/58154784?OzSrank=1)
+- [도서 정보](http://www.yes24.com/Product/Goods/58154784?OzSrank=1)
 - 저: 문병로
