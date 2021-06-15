@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saseungmin/daily_coding_dojo"
+    "url": "git+https://github.com/saseungmin/reading_books_record_repository"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saseungmin/daily_coding_dojo/issues"
+    "url": "https://github.com/saseungmin/reading_books_record_repository/issues"
   },
-  "homepage": "https://github.com/saseungmin/daily_coding_dojo#readme",
+  "homepage": "https://github.com/saseungmin/reading_books_record_repository#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "eslint": "^7.28.0",
