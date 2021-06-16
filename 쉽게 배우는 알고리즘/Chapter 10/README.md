@@ -7,6 +7,43 @@
 - 정점 `i`와 `j`의 인접 여부는 행렬의 `(i, j)`나 `(j, i)` 원소의 값만 보면 알 수 있기 때문이다.
 - 대신 `n x n` 행렬이 필요하므로 n<sup>2</sup>에 비례하는 공간이 필요하고, 행렬의 준비 과정에서 행렬의 모든 원소를 채우는 데만 n<sup>2</sup>에 비례하는 시간이 든다. 그러므로 O(n<sup>2</sup>) 미만의 시간이 소요되는 알고리즘이 필요한 경우에 행렬 표현법을 사용하면 행렬의 준비 과정에서만 ɵ(n<sup>2</sup>)의 시간을 소모해버려 적절하지 않다.
 - 간섭의 밀도가 아주 높은 그래프에서는 인접 행렬 표현이 적합하다.
+- JavaScript 인접 행렬 예제
+
+```js
+function adjacentMatrix(n, arr) {
+  const graph = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0));
+  const dp = Array.from({ length: n + 1 }, () => false);
+
+  let answer = 0;
+
+  arr.forEach(([x, y]) => {
+    graph[x][y] = 1; // 행렬 생성
+  });
+
+  function dfs(v) {
+    if (v === n) {
+      answer += 1;
+      return;
+    }
+
+    for (let i = 1; i <= n; i++) {
+      if (!dp[i] && graph[v][i] === 1) {
+        dp[i] = true;
+
+        dfs(i);
+
+        dp[i] = false;
+      }
+    }
+  }
+
+  dp[1] = true;
+  dfs(1);
+
+  return answer;
+}
+```
+
 
 ### 🎈 인접 리스트를 이용한 방법
 - 인접 리스트 표현법은 각 정점에 인접한 정점들을 리스트로 표현하는 방법이다. 각 정점마다 리스트를 하나씩 만들고 여기에 각 정점에 인접한 정점들을 연결 리스트로 매단다.
@@ -14,6 +51,44 @@
 - 무향 그래프를 위한 인접 리스트 표현에서 필요한 총 노드 수는 존재하는 총 간선 수의 2배다.
 - 유향 그래프의 경우에는 간선 하나당 노드가 하나씩 존재한다.
 - 인접 리스트는 공간이 간선의 총수에 비례하는 양만큼 필요하므로 대체로 행렬 표현에 비해 공간의 낭비가 없다. 모든 가능한 정점 쌍에 비해 간선의 수가 적을 떄 유용하다. 하지만, 거의 모든 정점 쌍에 대해 간선이 존재하는 경우에는 오히려 리스트를 만드는 데 필요한 오버헤드만 더 든다. 그래서 간선의 밀도가 높은 경우에는 적합하지 않다.
+- JavaScript 인접 리스트 예제
+
+```js
+function adjacentList(n, arr) {
+  const graph = Array.from({ length: n + 1 }, () => []);
+  const dp = Array.from({ length: n + 1 }, () => false);
+
+  let answer = 0;
+
+  arr.forEach(([x, y]) => {
+    graph[x].push(y); // 리스트 생성
+  });
+
+  function dfs(v) {
+    if (v === n) {
+      answer += 1;
+      return;
+    }
+
+    for (let i = 0; i < graph[v].length; i++) {
+      const node = graph[v][i];
+
+      if (!dp[node]) {
+        dp[node] = true;
+
+        dfs(node);
+
+        dp[node] = false;
+      }
+    }
+  }
+
+  dp[1] = true;
+  dfs(1);
+
+  return answer;
+}
+```
 
 ### 🎈 인접 배열과 인접 해시 테이블
 - 각 정점에 연결된 정점들을 연결 리스트로 저장하는 대신 배열로 저장하면 연결 리스트의 포인터를 관리하는 번거로움에서 해방될 뿐만 아니라 두 정점의 인접 여부를 체크하는 시간도 대폭 줄일 수 있다.
