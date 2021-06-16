@@ -117,6 +117,40 @@ BFS(G, s) // G: 그래프, s: 시작정점
 ```
 
 - BFS의 수행 시간은 ɵ(V + E)이다. 각 정점이 큐에 한 번씩 들어갔다 나온다.
+- JavaScript BFS 예제
+
+```js
+function solution(s, e) {
+  const dis = Array.from({ length: 10001 }, () => 0);
+  const check = Array.from({ length: 10001 }, () => false);
+
+  const queue = [];
+
+  queue.push(s);
+  check[s] = true;
+
+  while (queue.length) {
+    const v = queue.shift();
+
+    for (const nv of [v + 1, v - 1, v + 5]) {
+      if (nv === e) {
+        return dis[v] + 1;
+      }
+
+      if (nv > 0 && nv <= 10000 && !check[nv]) {
+        check[nv] = true;
+        queue.push(nv);
+        dis[nv] = dis[v] + 1;
+      }
+    }
+  }
+
+  return 0;
+}
+
+solution(5, 14); // 3
+```
+
 - 다음은 DFS 알고리즘이다.
 
 ```
@@ -137,6 +171,43 @@ aDFS(v)
 ```
 
 - 궁극적으로 모든 정점에 대해 `aDFS()`가 한 번씩 호출된다. DFS의 수행시간은 ɵ(V + E)이다.
+
+```js
+function solution(board) {
+  const maze = [...board];
+
+  let result = 0;
+  const len = maze.length - 1;
+
+  const dx = [-1, 0, 1, 0];
+  const dy = [0, 1, 0, -1];
+
+  function dfs(x, y) {
+    if (x === len && y === len) {
+      result += 1;
+      return;
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const newX = x + dx[i];
+      const newY = y + dy[i];
+
+      if (newX <= len && newX >= 0 && newY <= len && newY >= 0 && maze[newX][newY] === 0) {
+        maze[newX][newY] = 1;
+
+        dfs(newX, newY);
+
+        maze[newX][newY] = 0;
+      }
+    }
+  }
+
+  maze[0][0] = 1;
+  dfs(0, 0);
+
+  return result;
+}
+```
 
 ## 📚 최소 신장 트리
 - 그래프 `G=(V, E)`의 신장 트리는 정점 집합 `V`를 그대로 두고 간선을 `|V| - 1`개만 남겨 트리가 되도록 만든 것이다.
