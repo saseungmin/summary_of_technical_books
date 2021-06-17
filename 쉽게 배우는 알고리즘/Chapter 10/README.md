@@ -400,7 +400,41 @@ extractMin(Q, d[])
 
 - 다익스트라 알고리즘은 최소 신장 트리를 위한 프림 알고리즘과 원리가 거의 비슷하다. 다만 프림 알고리즘에서는 `d[v]`가 정점 `v`를 신장 트리에 연결하는 최소 비용을 위해 사용되는 반면, 다익스트라 알고리즘에서는 `d[v]`가 정점 `r`에서 정점 `v`에 이르는 최단 거리를 위해 사용된다.
 - 다익스트라 알고리즘은 프림 알고리즘과 거의 같으므로 수행시간은 힙을 이용하면 O(ElogV) 시간이 소요된다. 다익스트라 알고리즘은 간선의 가중치가 음이 되면 작동하지 않는다.
+- JavaScript 다익스트라 알고리즘 예제
 
+```js
+function dijkstra(board, n) {
+  const graph = Array.from({ length: n }, () => []);
+
+  board.forEach(([from, to, weight]) => {
+    graph[from].push([to, weight]);
+  });
+
+  const dist = Array.from({ length: n }, () => Infinity);
+  const visited = Array.from({ length: n }, () => false);
+  const pq = new PriorityQueue(dist);
+
+  pq.enqueue(0);
+  dist[0] = 0;
+
+  while (pq.queue.length) {
+    const [v] = pq.dequeue();
+
+    if (!visited[v]) {
+      visited[v] = true;
+
+      graph[v].forEach(([to, weight]) => {
+        if (dist[v] + weight < dist[to]) {
+          dist[to] = dist[v] + weight;
+          pq.enqueue(to);
+        }
+      });
+    }
+  }
+
+  return dist.reduce((acc, cur) => acc + cur, 0);
+}
+```
 ### 🎈 벨만-포드 알고리즘(음의 가중치를 허용하는 경우)
 - 벨만-포드(Bellman-Ford) 알고리즘은 입력 그래프 G=(V, E)에서 간선의 가중치가 음의 값을 허용하는 임의의 실수인 경우 최단 경로 알고리즘이다.
 - 벨만-포드 알고리즘은 간선을 최대 1개 사용하는 최단 경로, 간선을 최대 2개 사용하는 최단 경로, ... 식으로 간선을 최대 `n-1`개 사용하는 최단 경로까지 구해나간다.
