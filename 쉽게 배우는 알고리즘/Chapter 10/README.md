@@ -523,6 +523,29 @@ FloydWarshall(G)
 ```
 
 - 이 알고리즘의 수행 시간은 ɵ(n)의 `for` 루프가 세 겹 중첩되었고, 각 경우에 단 두 가지 경우의 대소를 비교하는 것으로 상수 시간이 걸려 ɵ(n<sup>3</sup>) 시간에 수행된다.
+- JavaScript 플로이드-워샬 알고리즘 예제
+
+```js
+function floydWarshall(n, edges) {
+  const adjMatrix = Array.from({ length: n + 1 }, () => Array(n + 1).fill(Infinity));
+
+  edges.forEach(([from, to, weight]) => {
+    adjMatrix[from][to] = weight;
+  });
+
+  for (let k = 1; k < n + 1; k++) {
+    for (let i = 1; i < n + 1; i++) {
+      for (let j = 1; j < n + 1; j++) {
+        // 정점 i -> j로 갈 때 기존 거리값과 k를 거쳐갈 때의 거리 값 중 작은 값을 저장
+        adjMatrix[i][j] = Math.min(adjMatrix[i][j], adjMatrix[i][k] + adjMatrix[k][j]);
+      }
+    }
+  }
+
+  // Infinity 배열 삭제
+  return adjMatrix;
+}
+```
 
 ### 🎈 사이클이 없는 그래프의 최단 경로
 - 사이클이 없는 유향 그래프를 DAG(Directed Acyclic Graph)라 한다. DAG에서는 모든 정점을 한 줄로 늘어놓을 때, 뒤에 위치한 정점부터 앞에 위치한 정점으로 가는 간선은 존재하지 않도록 정점들의 순열이 존재한다. 이 순열은 위상 정렬로 얻을 수 있다.
