@@ -1,0 +1,18 @@
+{
+  "name": "chapter-7",
+  "version": "1.0.0",
+  "description": "Chapter 8: 함수 조합의 원리와 응용",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src",
+    "build": "tsc && node dist"
+  },
+  "keywords": [],
+  "author": "saseungmin",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}

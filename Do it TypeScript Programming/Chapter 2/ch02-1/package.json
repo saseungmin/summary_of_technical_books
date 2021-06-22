@@ -1,0 +1,24 @@
+{
+  "name": "chapter2-1",
+  "version": "1.0.0",
+  "description": "타입스크립트 프로젝트 만들기",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "ts-node src",
+    "build": "tsc && node dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saseungmin/reading_books_record_repository.git"
+  },
+  "author": "seungmin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saseungmin/reading_books_record_repository/issues"
+  },
+  "homepage": "https://github.com/saseungmin/reading_books_record_repository#readme",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
