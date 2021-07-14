@@ -8,39 +8,39 @@
 - 책을 읽고 [스터디](https://github.com/CodeSoom/Practical-Object-Oriented-Design-in-Ruby)를 진행
 - 책을 읽으며 repository에 정리한다.
 
-### 🐣 [Chapter 1: 객체지향 디자인](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%201)
+### 🐣 [Chapter 1: 객체지향 디자인](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%201)
 - 디자인 예찬
 - 디자인 도구들
 - 디자인하기
 - 객치지향 프로그래밍에 대한 간략한 소개
 - 요약
 
-### 🐣 [Chapter 2: 단일 책임 원칙을 따르는 클래스 디자인하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%202)
+### 🐣 [Chapter 2: 단일 책임 원칙을 따르는 클래스 디자인하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%202)
 - 무엇을 클래스에 넣을지 결정하기
 - 하나의 책임만을 지는 클래스 만들기
 - 변화를 받아들일 수 있는 코드 작성하기
 - 드디어, 진짜 바퀴
 
 
-### 🐣 [Chapter 3: 의존성 관리하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%203)
+### 🐣 [Chapter 3: 의존성 관리하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%203)
 - 의존성 이해하기
 - 약하게 결합된 코드 작성하기
 - 의존성의 방향 관리하기
 
-### 🐣 [Chapter 4: 유연한 인터페이스 만들기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%204)
+### 🐣 [Chapter 4: 유연한 인터페이스 만들기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%204)
 - 인터페이스 이해하기
 - 인터페이스 정의하기
 - 퍼블릭 인터페이스 찾아내기
 - 자신의 인터페이스를 드러내는 코드 작성하기
 - 데메테르의 원칙
 
-### 🐣 [Chapter 5: 오리 타입으로 비용 줄이기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%205)
+### 🐣 [Chapter 5: 오리 타입으로 비용 줄이기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%205)
 - 오리 타입 이해하기
 - 오리 타입을 사용하는 코드 작성하기
 - 오리 타입을 무서워하지 않고 사용하기
 - 요약
 
-### 🐣 [Chapter 6: 상속을 이용해 새로운 행동 얻기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%206)
+### 🐣 [Chapter 6: 상속을 이용해 새로운 행동 얻기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%206)
 - 고전적 상속 이해하기
 - 상속을 사용해야 하는 지점을 알기
 - 상속의 잘못된 사용
@@ -48,18 +48,18 @@
 - 상위클래스와 하위클래스 사이의 커프링 관리하기
 - 요약
 
-### 🐣 [Chapter 7: 모듈을 통한 역할 공유](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%207)
+### 🐣 [Chapter 7: 모듈을 통한 역할 공유](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%207)
 - 역할 이해하기
 - 상속받을 수 있는 코드 작성하기
 
-### 🐣 [Chapter 8: 조합을 이용해 객체 통합하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%208)
+### 🐣 [Chapter 8: 조합을 이용해 객체 통합하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%208)
 - 자전거 부품 조합하기
 - `Parts` 객체 조합하기
 - `Parts` 생산하기
 - 조합된 `Bicycle`
 - 상속과 조합 중 하나 선택하기
 
-### 🐣 [Chapter 9: 비용-효율적인 테스트 디자인하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%209)
+### 🐣 [Chapter 9: 비용-효율적인 테스트 디자인하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8/Chapter%209)
 - 의도를 가지고 테스트하기
 - 들어오는 메시지 테스트하기
 - 프라이빗 메서드 테스트하기

@@ -1,6 +1,6 @@
 ## 🌈 Part 1 타입과 문법
 
-### ✌️ [Chapter 1: 타입](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%201)
+### ✌️ [Chapter 1: 타입](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%201)
 1. 타입, 그 실체를 이해하자
 2. 내장 타입
 3. 값은 타입을 가진다
@@ -8,7 +8,7 @@
     - 선언되지 않은 변수
 4. 정리하기
 
-### ✌️ [Chapter 2: 값](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%202)
+### ✌️ [Chapter 2: 값](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%202)
 1. 배열
     - 유사 배열
 2. 문자열
@@ -26,7 +26,7 @@
 5. 값 vs 레퍼런스
 6. 정리하기
 
-### ✌ [Chapter 3: 네이티브](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%203)
+### ✌ [Chapter 3: 네이티브](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%203)
 1. 내부 `[[Class]]`
 2. 래퍼 박싱하기
     - 객체 래퍼의 함정
@@ -39,7 +39,7 @@
     - 네이티브 프로토타입
 5. 정리하기
 
-### ✌ [Chapter 4: 강제변환](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%204)
+### ✌ [Chapter 4: 강제변환](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%204)
 
 1. 값 변환
 2. 추상 연산
@@ -72,7 +72,7 @@
 6. 추상 관계 비교
 7. 정리하기
 
-### ✌ [Chapter 5: 문법](https://github.com/saseungmin/reading_books_record_repository/tree/master/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%205)
+### ✌ [Chapter 5: 문법](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/You%20Don%E2%80%99t%20Know%20JS%201/PART1/Chapter%205)
 
 1. 문과 표현식
     - 문의 완료 값
