@@ -1550,6 +1550,11 @@
     "@emotion/weak-memoize" "^0.2.5"
     "stylis" "^4.0.3"
 
+"@emotion/core@^11.0.0":
+  "integrity" "sha512-w4sE3AmHmyG6RDKf6mIbtHpgJUSJ2uGvPQb8VXFL7hFjMPibE8IiehG8cMX3Ztm4svfCQV6KqusQbeIOkurBcA=="
+  "resolved" "https://registry.npmjs.org/@emotion/core/-/core-11.0.0.tgz"
+  "version" "11.0.0"
+
 "@emotion/hash@^0.8.0":
   "integrity" "sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow=="
   "resolved" "https://registry.npmjs.org/@emotion/hash/-/hash-0.8.0.tgz"
@@ -1567,7 +1572,7 @@
   "resolved" "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.5.tgz"
   "version" "0.7.5"
 
-"@emotion/react@^11.0.0-rc.0":
+"@emotion/react@^11.0.0-rc.0", "@emotion/react@^11.4.0":
   "integrity" "sha512-4XklWsl9BdtatLoJpSjusXhpKv9YVteYKh9hPKP1Sxl+mswEFoUe0WtmtWjxEjkA51DQ2QRMCNOvKcSlCQ7ivg=="
   "resolved" "https://registry.npmjs.org/@emotion/react/-/react-11.4.0.tgz"
   "version" "11.4.0"
