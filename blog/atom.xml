@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://saseungmin.github.io/reading_books_record_repository/blog</id>
-    <title>My Site Blog</title>
+    <title>Summary of Books Blog</title>
     <updated>2019-05-30T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://saseungmin.github.io/reading_books_record_repository/blog"/>
-    <subtitle>My Site Blog</subtitle>
+    <subtitle>Summary of Books Blog</subtitle>
     <icon>https://saseungmin.github.io/reading_books_record_repository/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>
