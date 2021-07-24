@@ -2,6 +2,8 @@ import React from 'react';
 
 import clsx from 'clsx';
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 import styled from '@emotion/styled';
 
 const BookInfoWrapper = styled.div`
@@ -9,6 +11,8 @@ const BookInfoWrapper = styled.div`
 `;
 
 function SummaryBookTemplate({ link, bookName, imgName }) {
+  const imgSrc = useBaseUrl(`/img/books/${imgName}`);
+
   return (
     <BookInfoWrapper className={clsx('col col--4')}>
       <div>
@@ -20,7 +24,7 @@ function SummaryBookTemplate({ link, bookName, imgName }) {
       </div>
       <div>
         <a href={link}>
-          <img src={`../../images/${imgName}`} width="300px" height="300px" alt={bookName} />
+          <img src={imgSrc} width="300px" height="300px" alt={bookName} />
         </a>
       </div>
     </BookInfoWrapper>
