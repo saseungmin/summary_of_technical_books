@@ -23,7 +23,7 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'summary',
           position: 'left',
           label: 'Summary',
         },
@@ -42,7 +42,7 @@ module.exports = {
           items: [
             {
               label: 'Summary',
-              to: '/docs/intro',
+              to: '/docs/summary',
             },
           ],
         },
@@ -75,7 +75,7 @@ module.exports = {
               href: 'https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown',
             },
             {
-              label: 'GitHub',
+              label: 'GitHub Repository',
               href: 'https://github.com/saseungmin/reading_books_record_repository',
             },
           ],
@@ -100,6 +100,13 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
+        },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+        },
+        gtag: {
+          trackingID: 'G-VJSDQ25SYT',
         },
       },
     ],
