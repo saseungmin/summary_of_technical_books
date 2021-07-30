@@ -96,7 +96,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/',
+            'https://github.com/saseungmin/reading_books_record_repository/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
