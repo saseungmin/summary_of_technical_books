@@ -1,4 +1,9 @@
-## 🌈 Chapter 10 : 컴포넌트 아키텍처를 이용해 관련 파일을 모아라.
+---
+sidebar_label: 10. 컴포넌트 아키텍처를 이용해 관련 파일을 모아라.
+sidebar_position: 11
+---
+
+# 🌈 Chapter 10 : 컴포넌트 아키텍처를 이용해 관련 파일을 모아라.
 
 ### 🎯 가져오기와 내보내기로 기능을 분리하라.
 
@@ -196,8 +201,7 @@ export default class Address {
 - `package.json` 파일에는 이름, 설명, 라이선스 등과 같은 프로젝트의 **메타데이터 정보뿐 아니라, 모든 외부 의존성 코드도 포함되어 있다.**
 - `npm init`은 단지 `package.json` 파일만을 생성하고 다른 숨긴 파일이나 디렉터리는 생성하지 않는다.
 
-```json
-// package.json
+```json title="package.json"
 {
   "name": "test",
   "version": "1.0.0",
@@ -220,7 +224,7 @@ export default class Address {
 - 끝으로, 설치하는 코드의 버전에 대한 세부 정보를 담은 `package-lock.json` 파일을 생성한다.
 - 갱신된 `package.json` 파일은 다음과 같으며, `dependencies` 필드가 추가된 것을 확인할 수 있다.
 
-```json
+```json title="package.json"
 {
   "name": "test",
   "version": "1.0.0",
@@ -240,8 +244,7 @@ export default class Address {
 - 코드를 가져오는 것은 import 문을 사용하여 가져올 수 있다.
 - 하지만 라이브러리를 설치했기 때문에 경로는 작성하지 않아도 된다.
 
-```javascript
-// ./src/merge.js
+```javascript title="./src/merge.js"
 import lodash, { fromPairs } from 'lodash';
 
 export function mapToObject(map) {
@@ -261,7 +264,7 @@ export function objectToMap(object) {
 - `npm install --save-dev [원하는 패키지]`로 `--save-dev` 플래그를 사용하여 설치할 수 있다.
 - `package.json`에 의존성을 추가하는 필드가 다르다. (`devDependencies`)
 
-```json
+```json title="package.json"
 {
   "name": "test",
   "version": "1.0.0",
@@ -283,7 +286,7 @@ export function objectToMap(object) {
 
 - `npm` 스크립트를 이용해서 `node_modules` 디렉터리에 설치한 패키지를 실행할 수 있다.
 - `npm run clean`을 실해하면 프로젝트에 설치한 `Prettier` 패키지를 `npm`이 실행해준다.
-```json
+```json title="package.json"
 {
   "name": "test",
   "version": "1.0.0",
@@ -450,7 +453,7 @@ export default Copyright;
 - 바벨은 ES6 이후의 문법으로 작성한 자바스크립트를 변환할 수 있을 뿐만 아니라, 아직 논의 단계에 있는 문법도 사용할 수 있도록 구성할 수 있다.
 - 바벨의 명령줄 인터페이스와 함께 ES6 이후의 문법을 변환할 때 필요한 `@babel/preset-env`, 리액트 코드를 변환하기 위한 `@babel/preset-react`를 설치한다.
 
-```
+```bash
 $ npm install --save-dev @babel/cli @babel/preset-env @babel/preset-react
 ```
 
@@ -458,8 +461,7 @@ $ npm install --save-dev @babel/cli @babel/preset-env @babel/preset-react
 - 이 파일은 바벨이 **다룰 코드의 종류와 변환 방법을 지정하기 위해 사용**한다.
 - `env`를 보고 ES6 코드가 있다는 것을 알 수 있고, `react`를 보고 리액트 코드도 변환한다는 것을 알 수 있다.
 
-```json
-// .babelrc
+```json title=".babelrc"
 {
   "presets": ["@babel/preset-env", "@babel/preset-react"]
 }
@@ -468,8 +470,7 @@ $ npm install --save-dev @babel/cli @babel/preset-env @babel/preset-react
 - 컴파일한 결과는 하나로 출력되어 `build` 디렉터리에 `bundle.js`로 저장된다.
 - 완성된 `package.json` 파일은 다음과 같다.
 
-```json
-// package.json
+```json title="package.json"
 {
   "name": "test",
   "version": "1.0.0",
@@ -493,7 +494,7 @@ $ npm install --save-dev @babel/cli @babel/preset-env @babel/preset-react
 ```
 - `index.html` 파일 수정
 
-```html
+```html title="index.html"
 <!DOCTYPE html>
 <html lang="en">
 
@@ -517,7 +518,7 @@ $ npm install --save-dev @babel/cli @babel/preset-env @babel/preset-react
 - 웹팩을 실행하려면 설치를 해야되고, 웹팩을 위한 바벨 로더도 설치해야 한다.
 - 바벨로 **코드를 컴파일하는 것은 브라우저에서 실행 가능한 자바스크립트를 생성하는 과정**이며, 이를 위해서 `babel-loader`가 필요하다.
 
-```
+```bash
 $ npm install --save-dev babel-loader webpack-cli
 ```
 - 그런 다음 `webpack.config.js` 파일을 생성한다.
@@ -526,7 +527,7 @@ $ npm install --save-dev babel-loader webpack-cli
 - 웹팩은 정규 표현식을 사용해 로더마다 처리해야 할 파일을 정한다.
 - 자바스크립트를 다루기 때문에 확장자가 .js인 파일만 처리할려고 설정해준다.
 
-```javascript
+```javascript title="webpack.config.js"
 const path = require('path');
 
 module.exports = {
@@ -557,8 +558,8 @@ module.exports = {
 ```
 
 - 수정된 스크립트를 실행하면 브라우저에서 코드가 실행된다.
-  
-```
+
+```bash
 $ npm run-script build
 ```
 - 웹팩으로는 자바스크립트를 컴파일할 수 있을 뿐만 아니라, CSS를 컴파일하고 이미지를 불러올 수 있다.
@@ -583,13 +584,13 @@ export default Copyright;
 
 - CSS 파일을 해석하기 위해 `css-loader`와 스타일을 페이지의 `<head>` 요소에 주입할 때 사용하는 `style-loader`이다.
 
-```
+```bash
 $ npm install --save-dev css-loader style-loader
 ```
 
 - `webpack.config.js`에 `style-loader`를 먼저 추가하고 나서 `css-loader`를 추가한다.
 
-```javascript
+```javascript title="webpack.config.js"
 const path = require('path');
 
 module.exports = {
@@ -625,7 +626,7 @@ module.exports = {
 - 객체에는 로더와 설정 옵션이 포함된다.
 - 필요한 옵션은 이미지를 옮길 디렉터리뿐이다.
 
-```javascript
+```javascript title="webpack.config.js"
 const path = require('path');
 
 module.exports = {
