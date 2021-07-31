@@ -91,7 +91,6 @@ module.exports = {
       trackingID: 'G-VJSDQ25SYT',
     },
   },
-  plugins: ['@docusaurus/plugin-google-gtag'],
   presets: [
     [
       '@docusaurus/preset-classic',
