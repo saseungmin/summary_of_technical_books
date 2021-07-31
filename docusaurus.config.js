@@ -87,7 +87,11 @@ module.exports = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    gtag: {
+      trackingID: 'G-VJSDQ25SYT',
+    },
   },
+  plugins: ['@docusaurus/plugin-google-gtag'],
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -104,9 +108,6 @@ module.exports = {
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
-        },
-        gtag: {
-          trackingID: 'G-VJSDQ25SYT',
         },
       },
     ],
