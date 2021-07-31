@@ -87,6 +87,9 @@ module.exports = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    gtag: {
+      trackingID: 'G-VJSDQ25SYT',
+    },
   },
   presets: [
     [
@@ -104,9 +107,6 @@ module.exports = {
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
-        },
-        gtag: {
-          trackingID: 'G-VJSDQ25SYT',
         },
       },
     ],
