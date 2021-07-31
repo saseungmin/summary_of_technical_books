@@ -96,7 +96,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/saseungmin/reading_books_record_repository/',
+            'https://github.com/saseungmin/reading_books_record_repository/tree/master/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
