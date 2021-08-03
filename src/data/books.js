@@ -14,7 +14,7 @@ const books = [
       imgName: 'the-nature-of-software-development.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC`,
+      link: `${PREFIX_DOCS_URL}/clean-agile/table-of-contents`,
       bookName: '클린 애자일: 새로운 세대를 위한 애자일 가치와 실천',
       imgName: 'Clean-Agile.jpeg',
     },
@@ -60,7 +60,7 @@ const books = [
       imgName: 'javascript-pattern-and-test.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0`,
+      link: `${PREFIX_DOCS_URL}/modern-javascript/table-of-contents`,
       bookName: '자바스크립트 코딩의 기술',
       imgName: 'modern-javascript.jpeg',
     },
