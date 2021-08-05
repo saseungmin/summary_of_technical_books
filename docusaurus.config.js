@@ -22,10 +22,14 @@ module.exports = {
       },
       items: [
         {
-          type: 'doc',
-          docId: 'summary',
+          to: '/docs/javascript/table-of-contents',
+          label: '자바스크립트',
           position: 'left',
-          label: 'Summary',
+        },
+        {
+          to: '/docs/agile/table-of-contents',
+          label: '애자일',
+          position: 'left',
         },
         {
           href: 'https://github.com/saseungmin/reading_books_record_repository',
@@ -41,8 +45,12 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Summary',
-              to: '/docs/summary',
+              label: '자바스크립트',
+              to: '/docs/javascript/table-of-contents',
+            },
+            {
+              label: '애자일',
+              to: '/docs/agile/table-of-contents',
             },
           ],
         },

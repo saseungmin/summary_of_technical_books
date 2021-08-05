@@ -14,7 +14,7 @@ const books = [
       imgName: 'the-nature-of-software-development.jpeg',
     },
     {
-      link: `${PREFIX_DOCS_URL}/clean-agile/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/agile/clean-agile/table-of-contents`,
       bookName: '클린 애자일: 새로운 세대를 위한 애자일 가치와 실천',
       imgName: 'Clean-Agile.jpeg',
     },
@@ -48,7 +48,7 @@ const books = [
       imgName: 'growing-object-oriented-software-guided-by-tests.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/LEAN-UX`,
+      link: `${PREFIX_DOCS_URL}/agile/lean-ux/table-of-contents`,
       bookName: '린 UX(LEAN UX)',
       imgName: 'Lean-UX.jpeg',
     },
@@ -60,7 +60,7 @@ const books = [
       imgName: 'javascript-pattern-and-test.jpeg',
     },
     {
-      link: `${PREFIX_DOCS_URL}/modern-javascript/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/javascript/modern-javascript/table-of-contents`,
       bookName: '자바스크립트 코딩의 기술',
       imgName: 'modern-javascript.jpeg',
     },
@@ -94,7 +94,7 @@ const books = [
       imgName: 'pro-git-2e.jpeg',
     },
     {
-      link: `${PREFIX_DOCS_URL}/core-javascript/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/javascript/core-javascript/table-of-contents`,
       bookName: '코어 자바스크립트',
       imgName: 'core-javascript.jpeg',
     },
