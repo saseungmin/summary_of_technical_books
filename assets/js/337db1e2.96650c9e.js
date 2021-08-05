@@ -1,1 +1,0 @@
-(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[7177],{9861:function(e){"use strict";e.exports=JSON.parse('{"allTagsPath":"/reading_books_record_repository/blog/tags","slug":"facebook","name":"facebook","count":1,"permalink":"/reading_books_record_repository/blog/tags/facebook"}')}}]);
