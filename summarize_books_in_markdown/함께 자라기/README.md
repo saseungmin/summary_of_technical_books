@@ -16,3 +16,7 @@
 - 실수는 예방하는 것이 아니라 관리하는 것이다
 - 뛰어난 선생에 대한 미신
 - 나홀로 전문가에 대한 미신
+
+### 🤔 [Chapter 2: 함께](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%202)
+- 소프트웨어 관리자의 개선 우선순위
+- 협력을 통한 추상화
