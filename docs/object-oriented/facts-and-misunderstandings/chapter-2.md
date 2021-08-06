@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # 🌈 Chapter 2: 이상한 나라의 객체
 
 ## ✌ 객체지향과 인지 능력

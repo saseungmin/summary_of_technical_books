@@ -52,10 +52,10 @@
 - 불안정한 재료: 기능
 - 재료 합치기: 기능과 구조의 통합
 
-### 🐣 [Chapter 7: 함께 모으기](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4/Chapter%207)
+### 🐣 [Chapter 7: 함께 모으기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4/Chapter%207)
 - 커피 전문점 도메인
 - 설계하고 구현하기
 - 코드와 세 가지 관점
 - 추상화 기법
 
-### 🐣 [전체적인 질문 정리](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4/etc)
+### 🐣 [전체적인 질문 정리](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4/etc)
