@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # 🌈 Chapter 3: 타입과 추상화
 
 ## ✌ 추상화를 통한 복잡성 극복

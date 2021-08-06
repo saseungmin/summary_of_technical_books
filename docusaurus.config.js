@@ -32,6 +32,11 @@ module.exports = {
           position: 'left',
         },
         {
+          to: '/docs/object-oriented/table-of-contents',
+          label: '객체지향',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/saseungmin/reading_books_record_repository',
           label: 'GitHub',
           position: 'right',
@@ -51,6 +56,10 @@ module.exports = {
             {
               label: '애자일',
               to: '/docs/agile/table-of-contents',
+            },
+            {
+              label: '객체지향',
+              to: '/docs/object-oriented/table-of-contents',
             },
           ],
         },
@@ -94,6 +103,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
+      additionalLanguages: ['java', 'ruby'],
     },
     gtag: {
       trackingID: 'G-VJSDQ25SYT',

@@ -21,7 +21,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%82%AC%EC%8B%A4%EA%B3%BC%20%EC%98%A4%ED%95%B4`,
+      link: `${PREFIX_DOCS_URL}/object-oriented/facts-and-misunderstandings/table-of-contents`,
       bookName: '객체지향의 사실과 오해: 역할, 책임, 협력 관점에서 본 객체지향',
       imgName: 'essence-of-object-orientation.jpeg',
     },
