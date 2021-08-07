@@ -11,3 +11,7 @@ sidebar_position: 1
 ### 👉 [린 UX](/docs/agile/lean-ux/table-of-contents)
 - [도서 정보](http://www.yes24.com/Product/Goods/11043345)
 - 저자: 제프 고델프, 조시 세이던
+
+### 👉 [The Nature of Software Development](/docs/agile/nature-of-software-development/table-of-contents)
+- [도서 정보](http://www.yes24.com/Product/Goods/34902704)
+- 저: 론 제프리스
