@@ -1,10 +1,9 @@
 ---
 sidebar_position: 1
+sidebar_label: 🚀 목차
 ---
 
-# 🚀 목차
-
-## 🚀 린 UX (LEAN UX)
+# 🚀 린 UX (LEAN UX)
 
 ### 📚 책 정보
 - [도서 정보](http://www.yes24.com/Product/Goods/11043345)

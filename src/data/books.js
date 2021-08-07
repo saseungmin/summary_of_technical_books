@@ -9,7 +9,7 @@ const books = [
       imgName: 'functional-javascript.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/The%20Nature%20of%20Software%20Development`,
+      link: `${PREFIX_DOCS_URL}/agile/nature-of-software-development/table-of-contents`,
       bookName: 'The Nature of Software Development',
       imgName: 'the-nature-of-software-development.jpeg',
     },
