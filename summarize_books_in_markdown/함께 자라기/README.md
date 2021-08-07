@@ -20,3 +20,6 @@
 ### 🤔 [Chapter 2: 함께](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%202)
 - 소프트웨어 관리자의 개선 우선순위
 - 협력을 통한 추상화
+- 신뢰를 깎는 공유인가 신뢰를 쌓는 공유인가
+- 객관성의 주관성
+- 이것도 모르세요?
