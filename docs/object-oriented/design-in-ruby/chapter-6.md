@@ -1,14 +1,8 @@
+---
+sidebar_position: 7
+---
+
 # ✌️ Chapter 6: 상속을 이용해 새로운 행동 얻기
-
-<details><summary>Table of Contents</summary>
-
-- 📚 고전적 상속 이해하기 [:link:](#-고전적-상속-이해하기)
-- 📚 상속을 사용해야 하는 지점을 알기 [:link:](#-상속을-사용해야-하는-지점을-알기)
-- 📚 상속의 잘못된 사용 [:link:](#-상속의-잘못된-사용)
-- 📚 상위클래스와 하위클래스 사이의 커플링 관리하기 [:link:](#-상위클래스와-하위클래스-사이의-커플링-관리하기)
-- 📚 요약 [:link:](#-요약)
-
-</details>
 
 ## 📚 고전적 상속 이해하기
 - 상속이란 **자동화된 메시지 전달**시스템이다.
@@ -122,8 +116,7 @@ bike.spares
 - 다음은 하위클래스 `MountainBike`를 만들어 보려는 첫 번째 시도이다.
 - `initialize`와 `spares` 메서드는 모두 `Bicycle`이 이미 구현하고 있다. 때문에 `MountainBike`에서는 재정의(override)되고 있다. 아래 코드에서 재정의된 메서드들은 `super`를 전송하고 있다.
 
-```ruby
-# MountainBike
+```ruby title="MountainBike"
 class MountainBike < Bicycle
   attr_reader :front_shock, :rear_shock
 
@@ -261,8 +254,7 @@ end
 - `Bicycle`이 이 메시지를 전송하는 궁극적인 목표는 하위클래스가 이 메서드를 재정의하는 것을 통해 하위클래스만의 특수한 행동을 추가할 수 있도록 하기 위함이다.
 - 기본 구조를 상위클래스가 정의하고 상위클래스에서 메시지를 전송하여 하위클래스의 특수한 값을 얻는 기술을 **템플릿 메서드** 페턴이라고 부른다.
 
-```ruby
-# TemplateBicycle.rb
+```ruby title="TemplateBicycle.rb"
 class Bicycle
   attr_reader :size, :chain, :tire_size
 
@@ -337,8 +329,7 @@ end
 - 체인과 타이어 크기를 얻어오는 부분을 `super`를 전송하는 방식으로 바꾸고 로드 자전거의 특수한 부분을 최종 결과 해시에 추가하면 된다.
 - 이 코드는 알아보기 쉬운 패턴을 가지고 있고 `Bicycle`이 전송하는 모든 템플릿 메서드는 `Bicycle` 내에서 구현되어 있다.
 
-```ruby
-# CoupleBicycle.rb
+```ruby title="CoupleBicycle.rb"
 class Bicycle
   attr_reader :size, :chain, :tire_size
 
@@ -474,8 +465,7 @@ end
 - 그저 자신의 `local_spares`가 언젠가 어떤 객체에 의해 호출될 것이라는 점만 알고 있다.
 - 다음 코드는 마지막 상속 관계 전체 코드이다.
 
-```ruby
-# LastBicycle.rb
+```ruby title="LastBicycle.rb"
 class Bicycle
   attr_reader :size, :chain, :tire_size
 

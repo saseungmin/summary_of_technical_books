@@ -26,7 +26,7 @@ const books = [
       imgName: 'essence-of-object-orientation.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%EB%A3%A8%EB%B9%84%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EB%94%94%EC%9E%90%EC%9D%B8`,
+      link: `${PREFIX_DOCS_URL}/docs/object-oriented/design-in-ruby/table-of-contents`,
       bookName: '루비로 배우는 객체지향 디자인',
       imgName: 'practical-object-oriented-design-in-ruby.jpeg',
     },

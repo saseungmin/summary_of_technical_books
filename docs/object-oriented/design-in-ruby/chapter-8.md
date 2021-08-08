@@ -1,14 +1,8 @@
+---
+sidebar_position: 9
+---
+
 # ✌️ Chapter 8: 조합을 이용해 객체 통합하기
-
-<details><summary>Table of Contents</summary>
-
-- 📚 자전거 부품 조합하기 [:link:](#-자전거-부품-조합하기)
-- 📚 Parts 객체 조합하기 [:link:](#-Parts-객체-조합하기)
-- 📚 Parts 생산하기 [:link:](#-Parts-생산하기)
-- 📚 조합된 Bicycle [:link:](#-조합된-Bicycle)
-- 📚 상속과 조합 중 하나 선택하기 [:link:](#-상속과-조합-중-하나-선택하기)
-
-</details>
 
 - 객체지향 조합을 이용하면 간단하고 독립적인 객체를 보다 크고 복합적인 것으로 통합할 수 있다. 조합에서 좀 더 큰 객체는 자신의 부분들을 가지고 있다. 즉, **가지고 있는**(**has-a**) 관계를 맺는다.
 
@@ -37,8 +31,7 @@ end
 ### 🎈 Parts의 상속 관계 만들기
 - 이제 `Bicycle`에서 제거했던 부품의 행동을 `Parts`로 옮겨본다.
 
-```ruby
-# BicycleParts.rb
+```ruby title="BicycleParts.rb"
 class Parts
   attr_reader :chain, :tire_size
   
@@ -109,8 +102,7 @@ end
 
 - 6장의 `Bicycle` 상속 관계와 거의 똑같다. 추상 클래스 `Parts`가 추가되었다.
 
-```ruby
-# BicycleParts.rb
+```ruby title="BicycleParts.rb"
 road_bike = Bicycle.new(
   size: 'L',
   parts: RoadBikeParts.new(tape_color: 'red')
@@ -143,8 +135,7 @@ puts mountain_bike.spare
 - `Bicycle`은 `Parts`에게 `spares`를 전송하고, 이어서 `parts`는 각각의 `Part`에서 `need_spare`를 전송한다.
 - 새로운 `Parts` 클래스는 `Part`들의 배열을 감싸는 단순한 래퍼에 불과했다.
 
-```ruby
-# PartsPart.rb
+```ruby title="PartsPart.rb"
 class Parts
   attr_reader :parts
 
@@ -184,8 +175,7 @@ front_shock = Parts.new(
 
 - 각각의 `Part`들을 묶어 `Parts`를 만들 수 있다.
 
-```ruby
-# PartsPart.rb
+```ruby title="PartsPart.rb"
 road_bike_parts = 
   Parts.new([chain, road_tire, tape])
 
@@ -309,8 +299,7 @@ mountain_config = [
 - 다른 객체를 생산하는 객체를 팩토리라고 한다.
 - 아래의 모듈은 나열된 배열 중 하나를 가지고 `Parts`를 생산한다. 이 모듈의 공개적인 책임은 `Parts`를 만드는 것이다.
 
-```ruby
-# PartsFactory.rb
+```ruby title="PartsFactory.rb"
 module PartsFactory
   def self.build(
     config,
@@ -332,8 +321,7 @@ end
 - `config`의 구조에 대한 지식을 팩토리 안에 넣어두면 `config`가 매우 간결하게 표현될 수 있다. `PartsFactory`가 `config`의 내부 구조를 알고 있기 떄문에, 해시가 아니라 배열의 형태로 `config`를 작성할 수 있다.
 - 또한, 한 번 `config`를 배열로 관리하기 시작하면 새로운 `Parts`를 만들 때는 언제나 팩토리를 사용해야 한다.
 
-```ruby
-# PartsFactory.rb
+```ruby title="PartsFactory.rb"
 road_parts = PartsFactory.build(road_config)
 mountain_parts = PartsFactory.build(mountain_config)
 ```
@@ -345,8 +333,7 @@ mountain_parts = PartsFactory.build(mountain_config)
 - 몇 개의 어트리뷰트를 하나의 객체 속에 묶을 수 있는 편리한 방법을 제공한다. `OpenStruct`는 해시를 초기화 인자로 받고 이 해시에서 어트리뷰트들을 읽어온다.
 - 이걸 이용해서 `Part`의 역할을 수행하는 객체를 만들고 `PartsFactory`는 이 객체를 사용할 수 있다
 
-```ruby
-# PartsFactoryOpenStruct.rb
+```ruby title="PartsFactoryOpenStruct.rb"
 require 'ostruct'
 module PartsFactory
   def self.build(config, parts_class = Parts)
