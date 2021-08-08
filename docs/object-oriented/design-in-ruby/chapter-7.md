@@ -1,11 +1,8 @@
+---
+sidebar_position: 8
+---
+
 # ✌️ Chapter 7: 모듈을 통한 역할 공유
-
-<details><summary>Table of Contents</summary>
-
-- 📚 역할 이해하기 [:link:](#-역할-이해하기)
-- 📚 상속받을 수 있는 코드 작성하기 [:link:](#-상속받을-수-있는-코드-작성하기)
-
-</details>
 
 ## 📚 역할 이해하기
 - 어떤 문제들은 이 문제를 해결하기 위해서가 아니라면 별로 연관이 없는 객체들이 공통의 행동을 공유하게 만든다. 이런 공통의 행동은 클래스와 아무런 상관이 없다. 이 행동은 객체가 수행하는 **역할**(**role**)이다.
@@ -66,8 +63,7 @@ end
 
 - 아래 코드는 `Bicycle`의 `schedulable?` 구현을 보여준다. `Bicycle`은 자신의 준비 시간(`lead time`)을 알고 있다. 그리고 `scheduled?` 메시지를 `Schedule`에게 전달한다.
 
-```ruby
-# Bicycle1.rb
+```ruby title="Bicycle1.rb"
 class Bicycle
   attr_reader :schedule, :size, :chain, :tire_size
 
@@ -116,8 +112,7 @@ b.schedulable?(starting, ending)
 - 이제 다른 클래스의 객체들도 이 코드를 공유할 수 있도록 코드를 재배치해야 한다.
 - 아래의 새로운 `Schedulable`모듈은 위의 `Bicycle` 클래스에서 공통해동을 뽑아내서 추상화한 것이다.
 
-```ruby
-# Schedulable.rb
+```ruby title="Schedulable.rb"
 module Schedulable
   attr_writer :schedule
 
@@ -169,8 +164,7 @@ b.schedulable?(starting, ending)
 - 메시지의 패턴은 `Bicycle`에게 `schedulable?`을 전송하는 것으로부터 `Schedulable`에게 `schedulable?`을 전송하는 것으로 바뀌었다.
 - 다음은 `Vehicle`과 `Mechanic`에 `Schedulable` 모듈을 인클루드하여 `schedulable?` 메시지에 반응할 수 있도록 변경한 것이다.
 
-```ruby
-# IncludeBicycle.rb
+```ruby title="IncludeBicycle.rb"
 class Vehicle
   include Schedulable
 

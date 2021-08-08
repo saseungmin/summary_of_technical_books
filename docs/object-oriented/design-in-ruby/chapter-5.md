@@ -1,14 +1,8 @@
+---
+sidebar_position: 6
+---
+
 # ✌️ Chapter 5: 오리 타입으로 비용 줄이기
-
-<details><summary>Table of Contents</summary>
-
-- 📚 오리 타입 이해하기 [:link:](#-오리-타입-이해하기)
-- 📚 오리 타입을 사용하는 코드 작성하기 [:link:](#-오리-타입을-사용하는-코드-작성하기)
-- 📚 오리 타입을 무서워하지 않고 사용하기 [:link:](#-오리-타입을-무서워하지-않고-사용하기)
-- 📚 요약 [:link:](#-요약)
-
-</details>
-
 
 - **오리 타입**(**duck typing**)은 특정 클래스에 종속되지 않은 퍼블릭 인터페이스이다.
 - 여러 클래스를 가로지르는 이런 인터페이스는 클래스에 대한 의존을 유연하게 만들어 준다.
@@ -93,8 +87,7 @@ end
 - 그 다음은 `prepare` 메서드가 `Preparer`에게 어떤 메시지를 전송할지 생각하는 것이다.
 - 다음 코드는 새로운 디자인을 적용한 결과로 `prepare` 메서드는 모든 인자가 모두 `Preparer`일 것이라 기대하고 인자의 클래스는 모두 새로운 인터페이스를 구현하고 있다.
 
-```ruby
-# Trip2.rb
+```ruby title="Trip2.rb"
 class Trip
   attr_reader :bicycles, :customers, :vehicle
 
