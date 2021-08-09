@@ -1,4 +1,8 @@
-## 🌈 Chapter 3: Employment
+---
+sidebar_position: 4
+---
+
+# 🌈 Chapter 3: Employment
 
 ### 🦄 5개 이하의 public 메서드만 노출하세요
 
@@ -628,7 +632,7 @@ class Cash {
 #### 🎈 객체 대 자료구조
 - 다음은 C로 구현한 자료구조이다.
 
-```C
+```c
 struct Cash {
   int dollars;
 }
@@ -638,7 +642,7 @@ printf("Cash value is %d", cash.dollars);
 
 - 다음은 C++에서 객체라고 불리는 요소이다.
 
-```C++
+```cpp
 #include <string>
 
 class Cash {

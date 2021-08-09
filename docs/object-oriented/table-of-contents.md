@@ -11,3 +11,7 @@ sidebar_position: 1
 ### 👉 [루비로 배우는 객체지향 디자인](/docs/object-oriented/design-in-ruby/table-of-contents)
 - [도서 정보](http://www.yes24.com/Product/Goods/15254976)
 - 저: 샌디 메츠
+
+### 👉 [엘레강트 오브젝트](/docs/object-oriented/elegant-object/table-of-contents)
+- [도서 정보](http://www.yes24.com/Product/Goods/96193044)
+- 저: Yegor Bugayenko

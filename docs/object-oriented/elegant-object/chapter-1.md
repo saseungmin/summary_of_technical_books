@@ -1,4 +1,8 @@
-## 🌈 Chapter 1: Birth
+---
+sidebar_position: 2
+---
+
+# 🌈 Chapter 1: Birth
 
 - 객체는 자신의 **가시성 범위**(**scope of visibility**) 안에서 살아간다.
 
