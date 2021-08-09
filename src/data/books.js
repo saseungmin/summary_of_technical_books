@@ -31,7 +31,7 @@ const books = [
       imgName: 'practical-object-oriented-design-in-ruby.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%EC%97%98%EB%A0%88%EA%B0%95%ED%8A%B8%20%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8`,
+      link: `${PREFIX_DOCS_URL}/docs/object-oriented/elegant-object/table-of-contents`,
       bookName: '엘리강트 오브젝트',
       imgName: 'elegant-object.jpeg',
     },

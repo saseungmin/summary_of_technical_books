@@ -103,7 +103,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['java', 'ruby', 'typescript'],
+      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp'],
     },
     gtag: {
       trackingID: 'G-VJSDQ25SYT',
