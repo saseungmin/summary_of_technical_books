@@ -1,3 +1,7 @@
+---
+sidebar_position: 11
+---
+
 # 🌈 Chapter 10: 상속과 코드 재사용
 
 ## 📚 상속과 중복 코드

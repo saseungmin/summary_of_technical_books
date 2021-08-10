@@ -8,6 +8,10 @@ sidebar_position: 1
 - [도서 정보](http://www.yes24.com/Product/Goods/18249021)
 - 저: 조영호
 
+### 👉 [오브젝트](/docs/object-oriented/object/table-of-contents)
+- [도서 정보](http://www.yes24.com/Product/Goods/74219491)
+- 저: 조영호
+
 ### 👉 [루비로 배우는 객체지향 디자인](/docs/object-oriented/design-in-ruby/table-of-contents)
 - [도서 정보](http://www.yes24.com/Product/Goods/15254976)
 - 저: 샌디 메츠

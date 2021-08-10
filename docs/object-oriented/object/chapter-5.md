@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # 🌈 Chapter 5: 책임 할당하기
   
 ## 📚 책임 주도 설계를 향해

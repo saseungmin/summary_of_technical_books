@@ -38,7 +38,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8`,
+      link: `${PREFIX_DOCS_URL}/docs/object-oriented/object/table-of-contents`,
       bookName: '오브젝트',
       imgName: 'objects.jpeg',
     },

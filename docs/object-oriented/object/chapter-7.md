@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # 🌈 Chapter 7: 객체 분해
 
 ## 📚 프로시저 추상화와 데이터 추상화
