@@ -15,3 +15,7 @@ sidebar_position: 1
 ### 👉 [The Nature of Software Development](/docs/agile/nature-of-software-development/table-of-contents)
 - [도서 정보](http://www.yes24.com/Product/Goods/34902704)
 - 저: 론 제프리스
+
+### 👉 [함께 자라기](/docs/agile/growing-up-together/table-of-contents)
+- [도서 정보](http://www.yes24.com/Product/Goods/67350256)
+- 저: 김창준
