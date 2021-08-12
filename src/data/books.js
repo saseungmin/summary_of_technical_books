@@ -106,7 +106,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_DOCS_URL}/javascript/growing-up-together/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/agile/growing-up-together/table-of-contents`,
       bookName: '함께 자라기',
       imgName: 'thinking-together.jpeg',
     },
