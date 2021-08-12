@@ -28,3 +28,9 @@
 - 구글이 밝힌 탁월한 팀의 비밀
 - 쾌속 학습팀
 - 프로젝트 확률론
+
+### 🤔 [Chapter 3: 애자일](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%203)
+- 애자일의 씨앗
+- 애자일 도입 성공 요인 분석
+- 당신의 조직에 새 방법론이 먹히지 않는 이유
+- 애자일을 애자일스럽게 도입하기
