@@ -26,24 +26,24 @@ const books = [
       imgName: 'essence-of-object-orientation.jpeg',
     },
     {
-      link: `${PREFIX_DOCS_URL}/docs/object-oriented/design-in-ruby/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/object-oriented/design-in-ruby/table-of-contents`,
       bookName: '루비로 배우는 객체지향 디자인',
       imgName: 'practical-object-oriented-design-in-ruby.jpeg',
     },
     {
-      link: `${PREFIX_DOCS_URL}/docs/object-oriented/elegant-object/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/object-oriented/elegant-object/table-of-contents`,
       bookName: '엘리강트 오브젝트',
       imgName: 'elegant-object.jpeg',
     },
   ],
   [
     {
-      link: `${PREFIX_DOCS_URL}/docs/object-oriented/object/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/object-oriented/object/table-of-contents`,
       bookName: '오브젝트',
       imgName: 'objects.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A3%BC%EB%8F%84%20%EA%B0%9C%EB%B0%9C%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EA%B0%9D%EC%B2%B4%20%EC%A7%80%ED%96%A5%20%EC%84%A4%EA%B3%84%EC%99%80%20%EC%8B%A4%EC%B2%9C`,
+      link: `${PREFIX_DOCS_URL}/object-oriented/growing-object-oriented-software-guided-by-tests/table-of-contents`,
       bookName: '테스트 주도 개발로 배우는 객체 지향 설계와 실천',
       imgName: 'growing-object-oriented-software-guided-by-tests.jpeg',
     },
