@@ -37,6 +37,11 @@ module.exports = {
           position: 'left',
         },
         {
+          to: '/docs/typescript/table-of-contents',
+          label: '타입스크립트',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/saseungmin/reading_books_record_repository',
           label: 'GitHub',
           position: 'right',
@@ -60,6 +65,10 @@ module.exports = {
             {
               label: '객체지향',
               to: '/docs/object-oriented/table-of-contents',
+            },
+            {
+              label: '타입스크립트',
+              to: '/docs/typescript/table-of-contents',
             },
           ],
         },
