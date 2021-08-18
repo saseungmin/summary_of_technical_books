@@ -82,7 +82,7 @@ const books = [
       imgName: 'you-dont-know-js-1.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/Do%20it%20TypeScript%20Programming`,
+      link: `${PREFIX_DOCS_URL}/typescript/do-it-typescript/table-of-contents`,
       bookName: 'Do it! 타입스크립트 프로그래밍',
       imgName: 'do-it-typescript.jpeg',
     },
