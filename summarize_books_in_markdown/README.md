@@ -1,7 +1,7 @@
 # ✌️ Summarize books in Markdown
 - 읽은 책들을 기록하고 정리하는 repository입니다.
 
-#### 👉 [사이트에서 읽기](https://saseungmin.github.io/reading_books_record_repository) (작성중..)
+### 👉 [웹 사이트에서 읽기](https://saseungmin.github.io/reading_books_record_repository)
 
 ### 💻 스터디를 진행한 책 목록
 #### 기간 내에 정해진 분량의 책을 읽고 스터디를 진행합니다.
