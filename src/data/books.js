@@ -110,6 +110,11 @@ const books = [
       bookName: '함께 자라기',
       imgName: 'thinking-together.jpeg',
     },
+    {
+      link: `${PREFIX_SUMMARIZE_URL}/%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81%202%ED%8C%90`,
+      bookName: '리팩터링 2판',
+      imgName: 'refactoring.jpeg',
+    },
   ],
 ];
 
