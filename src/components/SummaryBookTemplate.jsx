@@ -1,10 +1,10 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
+
 import clsx from 'clsx';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
-
-import styled from '@emotion/styled';
 
 const BookInfoWrapper = styled.div`
   margin-top: 1rem;
