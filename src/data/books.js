@@ -115,6 +115,11 @@ const books = [
       bookName: '리팩터링 2판',
       imgName: 'refactoring.jpeg',
     },
+    {
+      link: '#',
+      bookName: '스칼라로 배우는 함수형 프로그래밍',
+      imgName: 'functional-programming-in-scala.jpeg',
+    },
   ],
 ];
 
