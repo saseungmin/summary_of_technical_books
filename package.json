@@ -1,7 +1,6 @@
 {
-  "name": "website",
-  "version": "0.0.0",
-  "private": true,
+  "name": "reading_books_record_repository",
+  "version": "1.0.0",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -20,33 +19,21 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@mdx-js/react": "^1.6.21",
-    "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
-    "file-loader": "^6.2.0",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "url-loader": "^4.1.1",
     "uuid": "^3.4.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
     "eslint": "^7.31.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
+    "url-loader": "^4.1.1"
   }
 }
