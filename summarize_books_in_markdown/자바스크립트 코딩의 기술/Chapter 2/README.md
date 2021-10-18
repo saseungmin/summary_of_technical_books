@@ -35,9 +35,9 @@ function displayShipping(sections){
 ### 🎯 펼침 연산자로 배열을 본떠라.
 - 배열은 데이터를 다룰 때 많은 유연성을 제공하지만 배열에는 수많은 메서드가 있으므로 혼란스럽거나 조작과 부수 효과(side effect)로 인한 문제에 맞닥뜨릴 수 있다.
 - 그렇기 때문에 [펼침 연산자(Spread syntax)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Spread_syntax)를 사용하여 최소한의 코드로 배열을 빠르게 생성하고 조작할 수 있다.
-- 펼침 연산자는 배열에만 국한되지 않고 맵 컬렉션에서도 사용가능하고 함수에서는 펼침 연산자의 다른 형태인 나머지 매개변수를 사용할 수 있다.
+- 펼침 연산자는 배열에만 국한되지 않고 맵 컬렉션에서도 사용 가능하고 함수에서는 펼침 연산자의 다른 형태인 나머지 매개변수를 사용할 수 있다.
 - 또한, 펼침 연산자는 제너레이터를 이용하는 데이터 구조나 클래스 속성에도 사용할 수 있다.
-- 펼침 연산자는 단독으로 사용할 수는 없다. 정보를 어디든 펼처 넣어야 한다.
+- 펼침 연산자는 단독으로 사용할 수는 없다. 정보를 어디든 펼쳐 넣어야 한다.
 
 ```javascript
 const cart = ['My Name is SeungMin', 'Helloooooo'];
@@ -45,7 +45,7 @@ const cart = ['My Name is SeungMin', 'Helloooooo'];
 const copyCart = [...cart]; //  ['My Name is SeungMin', 'Helloooooo']
 ```
 
-- 다음 예시는 배열에서 항목을 제거하려고 할때 반복문만 사용한 것이다.
+- 다음 예시는 배열에서 항목을 제거하려고 할 때 반복문만 사용한 것이다.
 
 ```javascript
 function removeItem(items, removable){
@@ -89,7 +89,7 @@ function removeItem(items, removable){
     return [...items.slice(0, index), ...items.slice(index + 1)];
 }
 ```
-- 위 코드를 보면 원본 배열을 조작하지도 않고, 읽기 쉽고 간결할 뿐아니라 재사용할 수 있으며 예측 가능하다.
+- 위 코드를 보면 원본 배열을 조작하지도 않고, 읽기 쉽고 간결할 뿐 아니라 재사용할 수 있으며 예측 가능하다.
 - **의도를 가장 잘 전달하는 방법을 선택하자.**
 - 함수의 인수 목록을 생성할 때 펼침 연산자를 사용할 수 있다.
 ```javascript
@@ -206,7 +206,7 @@ family.sort(sortByYears);
 // {name: "Joe", years: 10}
 // {name: "Dyan", years: 10}
 ```
-- 정렬 된 `family`를 이름 순으로 정렬해보자.
+- 정렬된 `family`를 이름 순으로 정렬해보자.
 
 ```javascript
 family.sort(sortByName);
@@ -215,7 +215,7 @@ family.sort(sortByName);
 // {name: "Theo", years: 5}
 ```
 
-- 다시 정렬 된 `family`를 나이 순으로 정렬해보면 처음 나이 순으로 정렬한 결과와 전혀 다른 결과가 나오게 된다.
+- 다시 정렬된 `family`를 나이 순으로 정렬해보면 처음 나이 순으로 정렬한 결과와 전혀 다른 결과가 나오게 된다.
 
 ```javascript
 family.sort(sortByYears);

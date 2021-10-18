@@ -34,9 +34,9 @@ log('ending?'); // ending?
 // DUSK
 ```
 
-- 콜백 함수는 비동기 데이터를 다루는 좋은 방법이고 오랫동안 표준적인 방법이였다.
+- 콜백 함수는 비동기 데이터를 다루는 좋은 방법이고 오랫동안 표준적인 방법이었다.
 - 하지만, 문제는 비동기 함수에서 또 비동기 함수를 호출하고, 거기서 또 비동기 함수를 호출해 마침내 너무나 많은 콜백이 중첩되는 경우가 생기는 것이다.
-- 이런 경우를 아래 사진과 같이 **콜백 지옥(Callback Hell)** 이라고 한다.
+- 이런 경우를 아래 사진과 같이 **콜백 지옥(Callback Hell)**이라고 한다.
 
 ![callback_hell](../img/callback%20hell.jpeg)
 
@@ -153,7 +153,7 @@ getUserPreferences()
 // {type: "네트워크 오류"}
 ```
 
-- 프라미스가 담긴 배열을 받아 모든 프라미스가 종료되었을 때의 성공 또는 실패 결과를 반환하는 `Promise.all` 이라는 메서드도 있다. ([MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all), [모던 javascript 튜토리얼](https://ko.javascript.info/promise-api#ref-566))
+- 프라미스가 담긴 배열을 받아 모든 프라미스가 종료되었을 때의 성공 또는 실패 결과를 반환하는 `Promise.all`이라는 메서드도 있다. ([MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all), [모던 javascript 튜토리얼](https://ko.javascript.info/promise-api#ref-566))
 
 ### 🎯 async/await로 함수를 명료하게 생성하라.
 
@@ -230,12 +230,12 @@ getArtistByPreference()
 
 - `fetch()`를 이용해서 원격 데이터를 가져올 수 있다.
 - API를 이용하면 네이티브 소프트웨어처럼 작동하는 매우 빠른 애플리케이션을 만들어낼 수 있다.
-- [AJAX(Asynchronous JavaScript And XML)](https://developer.mozilla.org/ko/docs/Web/Guide/AJAX/Getting_Started)(비동기 자바스크르비트와 XML)로 데이터를 가져오는 것은 꽤 번거로웠다.
+- [AJAX(Asynchronous JavaScript And XML)](https://developer.mozilla.org/ko/docs/Web/Guide/AJAX/Getting_Started)(비동기 자바스크립트와 XML)로 데이터를 가져오는 것은 꽤 번거로웠다.
 - AJAX 호출을 처리할 수 있는 `fetch()`라는 간단한 도구가 생겼다.
 - `fetch()`는 자바스크립트 명세의 일부가 아니라 `fetch()` 명세는 WHATWG(Web Hypertext Application Technology Working Group)가 [정의](https://fetch.spec.whatwg.org/)한다.
 - 따라서 대부분의 최신 브라우저에서 지원되지만 Node.js에서는 기본적으로 지원되지 않는다.
 - Node.js에서 `fetch()`를 사용하려면 [node-fetch 패키지](https://www.npmjs.com/package/node-fetch)를 사용해야 한다.
-- `fetch()`를 사용하려면 API 끝점(endpoint)가 필요하다. 
+- `fetch()`를 사용하려면 API 끝점(endpoint)이 필요하다. 
 - typicode는 [JSONPlaceholder](https://jsonplaceholder.typicode.com/)를 통해 가상 블로그 데이터를 제공하고 있다.
 - 또한, typicode에서 제공하는 [JSON 서버](https://github.com/typicode/json-server)라는 도구를 이용하면 로컬 환경에서 모의 API를 만들 수 있다.
 - 다음은 `fetch()`를 사용한 `GET` 요청이다.
@@ -256,7 +256,7 @@ fetch('https://jsonplaceholder.typicode.com/posts/1');
 
 - `then()` 메서드에 응답을 처리하는 콜백 함수를 추가한다.
 - `fetch()`는 다양한 믹스인을 포함하고 있어서 **응답 본문 데이터를 자동으로 변환해준다.**
-- `then()` 메서드의 콜백에서 파싱된 데이터를 처리할 수 있다.
+- `then()` 메서드의 콜백에서 파싱 된 데이터를 처리할 수 있다.
 
 ```javascript
 fetch('https://jsonplaceholder.typicode.com/posts/1')
@@ -336,11 +336,11 @@ fetch('https://jsonplaceholder.typicode.com/posts', options)
 
 ### 🎯 localStorage로 상태를 장기간 유지하라.
 
-- `localStorage`를 이요하면 사용자 정보를 쉽게 저장할 수 있다.
+- `localStorage`를 이용하면 사용자 정보를 쉽게 저장할 수 있다.
 - `localStorage`는 브라우저에만 존재하는 작은 데이터베이스와 같다.
 - `localStorage`에 정보를 추가하거나 가져올 수 있지만, **브라우저의 자바스크립트에서 직접적으로 접근할 수는 없다.**
-- 값을 저장할려면 `localStorage` 객체에 `setItem()` 메서드를 사용해서 값을 설정하면 된다.
-- 첫번째 인수에는 키, 두 번째 인수에는 값을 전달한다.
+- 값을 저장하려면 `localStorage` 객체에 `setItem()` 메서드를 사용해서 값을 설정하면 된다.
+- 첫 번째 인수에는 키, 두 번째 인수에는 값을 전달한다.
 
 ```javascript
 function saveBreed(breed) {
