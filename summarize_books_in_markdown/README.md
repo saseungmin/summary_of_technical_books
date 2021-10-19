@@ -16,6 +16,8 @@
 |[**자바스크립트 패턴과 테스트**](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%ED%8C%A8%ED%84%B4%EA%B3%BC%20%ED%85%8C%EC%8A%A4%ED%8A%B8)|[**리팩터링 2판**](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81%202%ED%8C%90)|**스칼라로 배우는 함수형 프로그래밍**|
 |<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%ED%8C%A8%ED%84%B4%EA%B3%BC%20%ED%85%8C%EC%8A%A4%ED%8A%B8"><img src="../images/javascript-pattern-and-test.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81%202%ED%8C%90"><img src="../images/refactoring.jpeg" width="400px" height="300px"/></a>|<a href="#"><img src="../images/functional-programming-in-scala.jpeg" width="400px" height="300px"/></a>|
 
+
+
 ### 📚 읽은 책 목록
 #### 책을 읽고 정리합니다. 읽은 책 혹은 읽고 있는 책 목록입니다.
 
