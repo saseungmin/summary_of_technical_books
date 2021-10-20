@@ -125,7 +125,7 @@ const books = [
     {
       link: `${PREFIX_SUMMARIZE_URL}/clean-code`,
       bookName: '클린 코드',
-      imgName: 'claen-code.jpeg',
+      imgName: 'clean-code.jpeg',
     },
   ],
 ];
