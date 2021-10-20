@@ -116,9 +116,16 @@ const books = [
       imgName: 'refactoring.jpeg',
     },
     {
-      link: '#',
+      link: `${PREFIX_SUMMARIZE_URL}/%EC%8A%A4%EC%B9%BC%EB%9D%BC%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D`,
       bookName: '스칼라로 배우는 함수형 프로그래밍',
       imgName: 'functional-programming-in-scala.jpeg',
+    },
+  ],
+  [
+    {
+      link: `${PREFIX_SUMMARIZE_URL}/clean-code`,
+      bookName: '클린 코드',
+      imgName: 'claen-code.jpeg',
     },
   ],
 ];
