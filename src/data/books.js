@@ -123,7 +123,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_SUMMARIZE_URL}/clean-code`,
+      link: `${PREFIX_DOCS_URL}/clean/clean-code/table-of-contents`,
       bookName: '클린 코드',
       imgName: 'clean-code.jpeg',
     },
