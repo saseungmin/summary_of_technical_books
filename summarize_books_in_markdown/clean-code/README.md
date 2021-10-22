@@ -5,3 +5,5 @@
 - 저: 로버트 C. 마틴
 
 ### 🤔 [Chapter 1: 깨끗한 코드](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%201)
+
+### 🤔 [Chapter 2: 의미있는 이름](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%202)
