@@ -31,7 +31,7 @@
 ### 🐣 기존 저장소를 Clone 하기
 - 다른 프로젝트에 참여하거나(contribute) Git 저장소를 복사하고 싶을 때 `git clone` 명령을 사용한다.
 - Git이 SVN과 가장 큰 차이점은 ㅅ버에 있는 거의 모든 데이터를 복사한다.
-- `git clone`을 실행햐면 프로젝트 히스토리를 전부 받아온다.
+- `git clone`을 실행하면 프로젝트 히스토리를 전부 받아온다.
 
 ```bash
 > git clone [url]
@@ -47,7 +47,7 @@
 - 파일을 수정하다가 저장하고 싶으면 **스냅샷을 커밋**한다.
 - 워킹 디렉터리의 모든 파일은 크게 **Tracked**(관리대상임)와 **Untracked**(관리대상이 아님)로 나눈다.
 - Tracked 파일은 이미 스냅샷에 포함돼 있던 파일이고 Tracked 파일은 또 **Unmodified**(수정하지 않음)와 **Modified**(수정함) 그리고 **Staged**(커밋으로 저장소에 기록할) 상태 중 하나이다.
-- 처음에 저장소를 `Clone`하면 모둔 파일은 `Tracked`이면서 `Unmodified` 상태이다. 이후 어떤 파일을 수정하면 Git은 그 파일을 `Modified` 상태로 인식한다.
+- 처음에 저장소를 `Clone`하면 모든 파일은 `Tracked`이면서 `Unmodified` 상태이다. 이후 어떤 파일을 수정하면 Git은 그 파일을 `Modified` 상태로 인식한다.
 - 실제로 수정한 파일을 `Staged` 상태로 만들고, `Staged` 상태의 파일을 커밋한다. (사이클 반복)
 
 ### 🐣 파일의 상태 확인하기
@@ -125,7 +125,7 @@ M "Pro Git 2\355\214\220/Chapter 1/README.md"
 - Staged 상태인 파일은 `git diff --cached` 옵션으로 확인한다. `--staged`와 `--cached`는 같은 옵션이다.
 
 ### 🐣 변경사항 커밋하기
-- Git은 생성하거나 수정하고나서 `git add` 명령으로 추가하지 않은 파일은 커밋하지 않는다.
+- Git은 생성하거나 수정하고 나서 `git add` 명령으로 추가하지 않은 파일은 커밋하지 않는다.
 - `git commit`을 실행하여 커밋한다.
 
 ```bash
@@ -141,17 +141,17 @@ M "Pro Git 2\355\214\220/Chapter 1/README.md"
  1 file changed, 7 insertions(+), 1 deletion(-)
 ```
 ### 🐣 Staging Area 생략하기
-- Staging Area를 생략할려면 `git commit` 명령을 실행할 때 `-a` 옵션을 추가하면 Git은 Tracked 상태의 파일을 자동으로 Staging Area에 넣는다.
+- Staging Area를 생략하려면 `git commit` 명령을 실행할 때 `-a` 옵션을 추가하면 Git은 Tracked 상태의 파일을 자동으로 Staging Area에 넣는다.
 
 ```bash
 > git commit -a
 ```
 
 ### 🐣 파일 삭제하기
-- Git에서 파일을 제거하려면 `git rm` 명령으로 Tracked 상태의 파일을 삭제한 후에 커밋해야 한다. 이 명령은 워킹 디렉터리에 있는 파일도 삭제하기 떄문에 실제로 파일도 지워진다.
-- 커밋하면 파일은 삭제되고 Git은 이 파일은 더는 추적하지 앟는다.
+- Git에서 파일을 제거하려면 `git rm` 명령으로 Tracked 상태의 파일을 삭제한 후에 커밋해야 한다. 이 명령은 워킹 디렉터리에 있는 파일도 삭제하기 때문에 실제로 파일도 지워진다.
+- 커밋하면 파일은 삭제되고 Git은 이 파일은 더는 추적하지 않는다.
 - 이미 파일을 수정했거나, 수정한 파일을 Index에 추가했다면 `-f` 옵션을 주어 강제로 삭제해야 한다.
-- 또한, Staging Area에서만 제거하고 워킹 디렉터리에 있는 파일은 지우지 않고 남겨둘려면 `--cached` 옵션을 사용한다.
+- 또한, Staging Area에서만 제거하고 워킹 디렉터리에 있는 파일은 지우지 않고 남겨두려면 `--cached` 옵션을 사용한다.
 
 ```bash
 > git rm --cached README
@@ -179,7 +179,7 @@ M "Pro Git 2\355\214\220/Chapter 1/README.md"
 > git add file_to
 ```
 
-- `git mv`는 일종의 단축 명령어이다. Git의 `mv` 명령은 편리하게 명령을 세번 실행햐주는 것뿐이다.
+- `git mv`는 일종의 단축 명령어이다. Git의 `mv` 명령은 편리하게 명령을 세 번 실행해주는 것뿐이다.
 
 ## 🦄 커밋 히스토리 조회하기
 - Git에는 히스토리를 조회하는 명령어인 `git log`가 있다.
@@ -269,7 +269,7 @@ de4b5af - SeungMin, 26시간 전 : Merge pull request #24 from saseungmin/object
 ```bash
 > git commit --amend
 ```
-- 이 명령은 Staging Area를 사용하여 커밋한다. 만약 마지막으로 커밋하고나서 수정한 것이 없다면 조금 전에 한 커밋과 모든 것이 같고, 커밋 메시지만 수정한다.
+- 이 명령은 Staging Area를 사용하여 커밋한다. 만약 마지막으로 커밋하고 나서 수정한 것이 없다면 조금 전에 한 커밋과 모든 것이 같고, 커밋 메시지만 수정한다.
 - 커밋을 했는데 Stage하는 것을 깜빡하고 빠트린 파일이 있으면 아래와 같이 고칠 수 있다.
 
 ```bash
@@ -284,7 +284,7 @@ de4b5af - SeungMin, 26시간 전 : Merge pull request #24 from saseungmin/object
 - `git reset` 명령을 `--hard` 옵션과 함께 사용하면 워킹 디렉터리 파일까지 수정되기 때문에 조심해야 한다. `hard` 옵션을 사용하지 않으면 Staging Area의 파일만 조작하기 때문에 위험하지 않다.
 
 ### 🐣 Modified 파일 되돌리기
-- 파일을 수정하고 나서 다시 되돌리기 위해서는 즉, 최근 커밋된 버전으로 되돌리는 방법은 `git status`의 메시지가 친철하게 알려준다.
+- 파일을 수정하고 나서 다시 되돌리기 위해서는 즉, 최근 커밋된 버전으로 되돌리는 방법은 `git status`의 메시지가 친절하게 알려준다.
 
 ```bash
 > git checkout -- README.md
@@ -329,12 +329,12 @@ origin  https://github.com/saseungmin/reading_books_record_repository.git (push)
 > git fetch [remote-name]
 ```
 
-- 이 명령은 로컬에는 없지만, 리뫁트 저장소에는 있는 데이터를 모두 가져온다.
-- `git fetch` 명령은 리모트 저장소의 데이터를 모두 로컬로 가져오지만, 자동으로 Merge하지는 않는다. 그렇기 떄문에 수동으로 Merge를 해주어야 한다.
-- `git pull` 명령은 리모트 저장소의 브랜치에서 데이터를 가져올 뿐만 아니라 자동으로 로컬 브랜치와 Merge 시킬 수 있따.
+- 이 명령은 로컬에는 없지만, 리모트 저장소에는 있는 데이터를 모두 가져온다.
+- `git fetch` 명령은 리모트 저장소의 데이터를 모두 로컬로 가져오지만, 자동으로 Merge하지는 않는다. 그렇기 때문에 수동으로 Merge를 해주어야 한다.
+- `git pull` 명령은 리모트 저장소의 브랜치에서 데이터를 가져올 뿐만 아니라 자동으로 로컬 브랜치와 Merge 시킬 수 있다.
 
 ### 🐣 리모트 저장소에 Push 하기
-- 프로젝트를 공유하고 싶을 떄 Upstream 저장소에 Push할 수 있다.
+- 프로젝트를 공유하고 싶을 때 Upstream 저장소에 Push할 수 있다.
 - 이 명령은 `git push [리모트 저장소 이름] [브랜치 이름]` 으로 수행한다.
 
 ```bash
@@ -389,7 +389,7 @@ origin
 ### 🐣 태그 붙이기
 - Git 태그는 `Lightweight` 태그와 `Annotated` 태그로 두 종류가 있다.
 - `Lightweight` 태그는 브랜치와 비슷한데 브랜치처럼 가리키는 지점을 최신 커밋으로 이동시키지 않는다. 단순히 특정 커밋에 대한 포인터일 뿐이다.
-- `Annotated` 태그는 Git 데이터베이스에 태그를 만든 사람이 이름, 이메일과 태그를 만든 날짜, 그리고 태그 메시지도 저장한다. GPG로 서명도ㅗ 할 수 있다. 이러한 모든 정보를 저장할 때만 이 태그를 추천한다.
+- `Annotated` 태그는 Git 데이터베이스에 태그를 만든 사람이 이름, 이메일과 태그를 만든 날짜, 그리고 태그 메시지도 저장한다. GPG로 서명도 할 수 있다. 이러한 모든 정보를 저장할 때만 이 태그를 추천한다.
 
 ### 🐣 Annotated 태그
 - `tag` 명령을 실행할 때 `-a` 옵션을 추가한다.

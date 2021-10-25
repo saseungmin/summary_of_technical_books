@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
 import Layout from '@theme/Layout';
@@ -9,6 +8,7 @@ import SummaryBooks from '../components/SummaryBooks';
 
 function Home() {
   const { siteConfig } = useDocusaurusContext();
+
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}

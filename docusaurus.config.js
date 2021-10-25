@@ -42,6 +42,11 @@ module.exports = {
           position: 'left',
         },
         {
+          to: '/docs/clean/table-of-contents',
+          label: '클린코드',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/saseungmin/reading_books_record_repository',
           label: 'GitHub',
           position: 'right',
@@ -69,6 +74,10 @@ module.exports = {
             {
               label: '타입스크립트',
               to: '/docs/typescript/table-of-contents',
+            },
+            {
+              label: '클린코드',
+              to: '/docs/clean/table-of-contents',
             },
           ],
         },

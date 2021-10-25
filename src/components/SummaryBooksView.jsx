@@ -1,13 +1,12 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
+
 import clsx from 'clsx';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import styled from '@emotion/styled';
-
 import books from '../data/books';
-
 import MountainSvg from '../../static/img/undraw_docusaurus_mountain.svg';
 
 import RowSummaryBooksWrapper from './RowSummaryBooksWrapper';

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
-import styles from '../pages/index.module.css';
+import styles from '../css/index.module.css';
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();

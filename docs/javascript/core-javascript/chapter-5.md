@@ -215,7 +215,7 @@ var alertFruit = function (fruit) {
 fruits.forEach(function (fruit) { // A
   var li = document.createElement('li');
   li.innerText = fruit;
-  // 첫 번째 인자에 이벤트 객체를 주입하기 떄문에 bind 메서드를 할용
+  // 첫 번째 인자에 이벤트 객체를 주입하기 때문에 bind 메서드를 할용
   li.addEventListener('click', alertFruit.bind(null, fruit));
 
   ul.appendChild(li);
@@ -238,7 +238,7 @@ var alertFruitBuilder = function (fruit) {
 fruits.forEach(function (fruit) { // A
   var li = document.createElement('li');
   li.innerText = fruit;
-  // 첫 번째 인자에 이벤트 객체를 주입하기 떄문에 bind 메서드를 할용
+  // 첫 번째 인자에 이벤트 객체를 주입하기 때문에 bind 메서드를 할용
   li.addEventListener('click', alertFruitBuilder(fruit));
 
   ul.appendChild(li);
