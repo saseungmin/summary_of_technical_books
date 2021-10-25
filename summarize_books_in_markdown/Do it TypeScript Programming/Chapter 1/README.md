@@ -114,7 +114,7 @@ export function writeFile(filepath: string, content: any) {}
 `yield`문은 **반복자**를 의미하는 **반복기**(**iterator**)를 생성할 때 사용한다. 그런데 반복기는 독립적으로 존재하지 않고 반복기 제공자(iterable)를 통해 얻는다.   
 이처럼 `yield`문을 이용해 반복기를 만들어 내는 반복기 제공자를 **생성기**(**generator**)라고 부른다.   
 생성기는 `function` 키워드에 별표(`*`)를 결합한 `function*`과 `yield` 키워드를 이용해 만든다.   
-타입스크립트에서 `yield`는 반드시 `function*`으로 만들어진 함수 내붕에서만 사용할 수 있다.
+타입스크립트에서 `yield`는 반드시 `function*`으로 만들어진 함수 내부에서만 사용할 수 있다.
 
 ```ts
 function* gen() {
