@@ -218,7 +218,7 @@ def size
   parts.size
 end
 ```
-- 하지만 `Array`의 모든 행동을 기대하기 떄문에 배열이게 만들어준다.
+- 하지만 `Array`의 모든 행동을 기대하기 때문에 배열이게 만들어준다.
 
 ```ruby
 class Parts < Array
@@ -318,7 +318,7 @@ module PartsFactory
   end
 end
 ```
-- `config`의 구조에 대한 지식을 팩토리 안에 넣어두면 `config`가 매우 간결하게 표현될 수 있다. `PartsFactory`가 `config`의 내부 구조를 알고 있기 떄문에, 해시가 아니라 배열의 형태로 `config`를 작성할 수 있다.
+- `config`의 구조에 대한 지식을 팩토리 안에 넣어두면 `config`가 매우 간결하게 표현될 수 있다. `PartsFactory`가 `config`의 내부 구조를 알고 있기 때문에, 해시가 아니라 배열의 형태로 `config`를 작성할 수 있다.
 - 또한, 한 번 `config`를 배열로 관리하기 시작하면 새로운 `Parts`를 만들 때는 언제나 팩토리를 사용해야 한다.
 
 ```ruby title="PartsFactory.rb"
