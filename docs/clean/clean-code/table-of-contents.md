@@ -11,3 +11,5 @@ sidebar_position: 1
 ### 🤔 [Chapter 1: 깨끗한 코드](/docs/clean/clean-code/chapter-1)
 
 ### 🤔 [Chapter 2: 의미있는 이름](/docs/clean/clean-code/chapter-2)
+
+### 🤔 [Chapter 3: 함수](/docs/clean/clean-code/chapter-3)
