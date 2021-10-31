@@ -51,9 +51,7 @@
 |<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8"><img src="images/core-javascript.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%89%BD%EA%B2%8C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><img src="images/algorism-book.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0"><img src="images/thinking-together.jpeg" width="400px" height="300px"/></a>|
 
 ### 🎯 읽을 책 목록
-- 스칼라로 배우는 함수형 프로그래밍
 - You Don’t Know JS this와 객체 프로토타입, 비동기와 성능
-- Clean Code 클린 코드 애자일 소프트웨어 장인 정신
 - 클린 아키텍처 소프트웨어 구조와 설계의 원칙
 - HTTP 완벽 가이드
 - 테스트 주도 개발
