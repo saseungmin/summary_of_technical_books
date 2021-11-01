@@ -1,7 +1,7 @@
 # ✌️ Reading books record repository
 - 읽은 책들을 기록하고 정리하는 repository입니다.
 
-### 🔥 hacktoberfest 2021 컨트리뷰션 방법
+### 🔥 컨트리뷰션 방법
 
 #### 첫 번째 방법
 1. 책이 정리된 [웹 사이트](https://saseungmin.github.io/reading_books_record_repository/)에 접속한다.
