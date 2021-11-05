@@ -27,6 +27,11 @@ module.exports = {
           position: 'left',
         },
         {
+          to: '/docs/typescript/table-of-contents',
+          label: '타입스크립트',
+          position: 'left',
+        },
+        {
           to: '/docs/agile/table-of-contents',
           label: '애자일',
           position: 'left',
@@ -37,8 +42,8 @@ module.exports = {
           position: 'left',
         },
         {
-          to: '/docs/typescript/table-of-contents',
-          label: '타입스크립트',
+          to: '/docs/functional/table-of-contents',
+          label: '함수형',
           position: 'left',
         },
         {
@@ -64,6 +69,10 @@ module.exports = {
               to: '/docs/javascript/table-of-contents',
             },
             {
+              label: '타입스크립트',
+              to: '/docs/typescript/table-of-contents',
+            },
+            {
               label: '애자일',
               to: '/docs/agile/table-of-contents',
             },
@@ -72,8 +81,8 @@ module.exports = {
               to: '/docs/object-oriented/table-of-contents',
             },
             {
-              label: '타입스크립트',
-              to: '/docs/typescript/table-of-contents',
+              label: '함수형',
+              to: '/docs/functional/table-of-contents',
             },
             {
               label: '클린코드',
@@ -121,7 +130,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp'],
+      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala'],
     },
     gtag: {
       trackingID: 'G-VJSDQ25SYT',
