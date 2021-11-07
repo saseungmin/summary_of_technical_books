@@ -11,3 +11,5 @@
 ### 🤔 [Chapter 3: 함수](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%203)
 
 ### 🤔 [Chapter 4: 주석](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%204)
+
+### 🤔 [Chapter 5: 형식 맞추기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%205)
