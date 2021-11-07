@@ -17,3 +17,5 @@ sidebar_position: 1
 ### 🤔 [Chapter 4: 주석](/docs/clean/clean-code/chapter-4)
 
 ### 🤔 [Chapter 5: 형식 맞추기](/docs/clean/clean-code/chapter-5)
+
+### 🤔 [Chapter 6: 객체와 자료 구조](/docs/clean/clean-code/chapter-6)
