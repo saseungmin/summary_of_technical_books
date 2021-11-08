@@ -17,3 +17,5 @@
 ### 🤔 [Chapter 6: 객체와 자료 구조](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%206)
 
 ### 🤔 [Chapter 7: 오류 처리](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%207)
+
+### 🤔 [Chapter 8: 경계](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%208)
