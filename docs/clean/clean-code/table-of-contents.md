@@ -21,3 +21,5 @@ sidebar_position: 1
 ### 🤔 [Chapter 6: 객체와 자료 구조](/docs/clean/clean-code/chapter-6)
 
 ### 🤔 [Chapter 7: 오류 처리](/docs/clean/clean-code/chapter-7)
+
+### 🤔 [Chapter 8: 경계](/docs/clean/clean-code/chapter-8)
