@@ -11,3 +11,5 @@ sidebar_position: 1
 ### 🤔 [Chapter 1: 함수형 프로그래밍이란 무엇인가?](/docs/functional/in-scala/chapter-1)
 
 ### 🤔 [Chapter 2: 스칼라로 함수형 프로그래밍 시작하기](/docs/functional/in-scala/chapter-2)
+
+### 🤔 [Chapter 3: 함수적 자료구조](/docs/functional/in-scala/chapter-3)

@@ -11,3 +11,5 @@
 ### 🤔 [Chapter 1: 함수형 프로그래밍이란 무엇인가?](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8A%A4%EC%B9%BC%EB%9D%BC%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/Chapter%201)
 
 ### 🤔 [Chapter 2: 스칼라로 함수형 프로그래밍 시작하기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8A%A4%EC%B9%BC%EB%9D%BC%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/Chapter%202)
+
+### 🤔 [Chapter 3: 함수적 자료구조](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8A%A4%EC%B9%BC%EB%9D%BC%EB%A1%9C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%ED%95%A8%EC%88%98%ED%98%95%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/Chapter%203)
