@@ -19,3 +19,5 @@
 ### 🤔 [Chapter 7: 오류 처리](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%207)
 
 ### 🤔 [Chapter 8: 경계](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%208)
+
+### 🤔 [Chapter 9: 단위 테스트](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%209)
