@@ -1,11 +1,13 @@
 # ✌️ Reading books record repository
-- 읽은 책들을 기록하고 정리하는 repository입니다.
+읽은 책들을 기록하고 정리하는 repository입니다.   
+
+누구나 쉽게 기여할 수 있습니다! 🙏  ([여기](https://github.com/saseungmin/reading_books_record_repository#-%EC%BB%A8%ED%8A%B8%EB%A6%AC%EB%B7%B0%EC%85%98-%EB%B0%A9%EB%B2%95)를 참고해 주세요!)
 
 ## 📚 어디서 읽을까요?
 #### 👉 [웹 사이트에서 읽기](https://saseungmin.github.io/reading_books_record_repository)
 #### 👉 [Github MarkDown](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown)
 
-### 💻 스터디를 진행한 책 목록
+## 💻 스터디를 진행한 책 목록
 #### 기간 내에 정해진 분량의 책을 읽고 스터디를 진행합니다.
 
 |[함수형 자바스크립트](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EC%88%98%ED%98%95%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8)|[The Nature of Software Development](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/The%20Nature%20of%20Software%20Development)|[클린 애자일: 새로운 세대를 위한 애자일 가치와 실천](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%81%B4%EB%A6%B0%20%EC%95%A0%EC%9E%90%EC%9D%BC)|
@@ -20,7 +22,7 @@
 |[**Clean Code(클린 코드)**](https://saseungmin.github.io/reading_books_record_repository/docs/clean/clean-code/table-of-contents)|||
 |<a href="https://saseungmin.github.io/reading_books_record_repository/docs/clean/clean-code/table-of-contents"><img src="images/clean-code.jpeg" width="400px" height="300px"/></a>|||
 
-### 📚 읽은 책 목록
+## 📚 읽은 책 목록
 #### 책을 읽고 정리합니다. 읽은 책 혹은 읽고 있는 책 목록입니다.
 
 |[자바스크립트 코딩의 기술](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0)|[Node.js 교과서](https://github.com/saseungmin/Node.js-tutorial)|[리액트를 다루는 기술](https://github.com/saseungmin/react-tutorial)|
@@ -31,14 +33,14 @@
 |[**코어 자바스크립트**](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8)|[**쉽게 배우는 알고리즘**](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%89%BD%EA%B2%8C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)|[**함께 자라기**](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0)|
 |<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%BD%94%EC%96%B4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8"><img src="images/core-javascript.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%89%BD%EA%B2%8C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><img src="images/algorism-book.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0"><img src="images/thinking-together.jpeg" width="400px" height="300px"/></a>|
 
-### 🎯 읽을 책 목록
+## 🎯 읽을 책 목록
 - You Don’t Know JS this와 객체 프로토타입, 비동기와 성능
 - 클린 아키텍처 소프트웨어 구조와 설계의 원칙
 - HTTP 완벽 가이드
 - 테스트 주도 개발
 - 실용주의 프로그래머
 
-### 🔥 컨트리뷰션 방법
+## 🔥 컨트리뷰션 방법
 
 #### 첫 번째 방법
 1. 책이 정리된 [웹 사이트](https://saseungmin.github.io/reading_books_record_repository/)에 접속한다.
@@ -56,3 +58,6 @@
 3. 오탈자를 수정 후 PR을 보낸다!
 
 오탈자가 많아서 쉽게 찾으실 수 있을겁니다. 🙏
+
+## 🔒 LICENSE
+This Project is [MIT licensed](https://github.com/saseungmin/reading_books_record_repository/blob/master/LICENSE).
