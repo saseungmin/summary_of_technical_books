@@ -13,3 +13,5 @@ sidebar_position: 1
 ### 🤔 [Chapter 2: 스칼라로 함수형 프로그래밍 시작하기](/docs/functional/in-scala/chapter-2)
 
 ### 🤔 [Chapter 3: 함수적 자료구조](/docs/functional/in-scala/chapter-3)
+
+### 🤔 [Chapter 4: 예외를 이용하지 않은 오류 처리](/docs/functional/in-scala/chapter-4)
