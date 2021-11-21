@@ -27,3 +27,5 @@
 ### 🤔 [Chapter 11: 시스템](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%2011)
 
 ### 🤔 [Chapter 12: 창발성](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%2012)
+
+### 🤔 [Chapter 13: 동시성](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/clean-code/Chapter%2013)
