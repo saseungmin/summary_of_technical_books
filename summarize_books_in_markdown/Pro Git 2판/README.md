@@ -1,7 +1,7 @@
 ## 🚀 Pro Git 2판: 그림으로 이해하는 Git의 작동 원리와 사용법
 
 ### 📚 책 정보
-- [도서 정보](http://www.yes24.com/Product/Goods/24841824?OzSrank=5)
+- [도서 정보](http://www.yes24.com/product/goods/24841824)
 - 저: 스캇 샤콘, 벤 스트라웁
 
 ### 🎯 진행 방법

@@ -89,7 +89,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_SUMMARIZE_URL}/Pro%20Git%202%ED%8C%90`,
+      link: `${PREFIX_DOCS_URL}/git/pro-git-2/table-of-contents`,
       bookName: '프로 Git 2판: 그림으로 이해하는 Git의 작동 원리와 사용법',
       imgName: 'pro-git-2e.jpeg',
     },
