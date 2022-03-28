@@ -24,3 +24,8 @@
 5. 리모트 저장소
 6. 태그
 7. Git Alias
+
+### ✌️ [Chapter 3: Git 브랜치](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/Pro%20Git%202%ED%8C%90/Chapter%203)
+1. 브랜치란 무엇인가
+2. 브랜치와 Merge의 기초
+3. 브랜치 관리
