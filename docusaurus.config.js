@@ -57,6 +57,11 @@ module.exports = {
           position: 'left',
         },
         {
+          to: '/docs/etc/table-of-contents',
+          label: '기타',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/saseungmin/reading_books_record_repository',
           label: 'GitHub',
           position: 'right',
@@ -96,6 +101,10 @@ module.exports = {
             {
               label: 'Git',
               to: '/docs/git/table-of-contents',
+            },
+            {
+              label: '기타',
+              to: '/docs/etc/table-of-contents',
             },
           ],
         },
