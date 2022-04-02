@@ -127,6 +127,11 @@ const books = [
       bookName: '클린 코드',
       imgName: 'clean-code.jpeg',
     },
+    {
+      link: `${PREFIX_DOCS_URL}/etc/pragmatic-programmer/table-of-contents`,
+      bookName: '실용주의 프로그래머 20주년 기념판',
+      imgName: 'pragmatic-programmer.jpeg',
+    },
   ],
 ];
 
