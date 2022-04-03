@@ -12,3 +12,8 @@
 5. 적당히 괜찮은 소프트웨어
 6. 지식 포트폴리오
 7. 소통하라!
+
+### [🤔 Chapter 2: 실용주의 접근법](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%202)
+8. 좋은 설계의 핵심
+9. DRY: 중복의 해악
+10. 직교성
