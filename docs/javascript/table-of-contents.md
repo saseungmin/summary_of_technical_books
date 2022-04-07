@@ -11,3 +11,7 @@ sidebar_position: 1
 ### 👉 [자바스크립트 코딩의 기술](/docs/javascript/modern-javascript/table-of-contents)
 - [도서 정보](http://www.yes24.com/Product/Goods/85019231)
 - 저: 조 모건
+
+### 👉 [자바스크립트 패턴과 테스트](/docs/javascript/javascript-pattern-and-test/table-of-contents)
+- [도서 정보](http://www.yes24.com/Product/Goods/33211518)
+- 저: 래리 스펜서, 세스 리처즈
