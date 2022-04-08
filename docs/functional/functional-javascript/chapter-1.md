@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-## 🌈 Chapter 1: 함수형 길들이기
+# 🌈 Chapter 1: 함수형 길들이기
 
 - 최근에 유행하기 시작한 **리액티브 프로그래밍**은 데이터 흐름(data flow)과 변경 전파(propagation of change)에 초점을 둔다.
 - 자바스크립트로 비동기 또는 이벤트 중심 코드를 다룰 때도 이런 부분이 아주 중요하다.
