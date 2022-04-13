@@ -22,3 +22,10 @@
 13. 프로토타입과 포스트잇
 14. 도메인 언어
 15. 추정
+
+
+### [🤔 Chapter 3: 기본 도구](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%203)
+16. 일반 텍스트의 힘
+17. 셀 가지고 놀기
+18. 파워 에디팅
+19. 버전 관리
