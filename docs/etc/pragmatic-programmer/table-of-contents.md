@@ -26,3 +26,9 @@ sidebar_position: 1
 13. 프로토타입과 포스트잇
 14. 도메인 언어
 15. 추정
+
+### [🤔 Chapter 3: 기본 도구](/docs/etc/pragmatic-programmer/chapter-3)
+16. 일반 텍스트의 힘
+17. 셀 가지고 놀기
+18. 파워 에디팅
+19. 버전 관리
