@@ -23,7 +23,6 @@
 14. 도메인 언어
 15. 추정
 
-
 ### [🤔 Chapter 3: 기본 도구](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%203)
 16. 일반 텍스트의 힘
 17. 셀 가지고 놀기
@@ -32,3 +31,6 @@
 20. 디버깅
 21. 텍스트 처리
 22. 엔지니어링 일지
+
+### [🤔 Chapter 4: 실용주의 편집증](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%204)
+23. 계약에 의한 설계
