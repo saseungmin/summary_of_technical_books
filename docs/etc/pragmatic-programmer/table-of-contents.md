@@ -38,3 +38,7 @@ sidebar_position: 1
 
 ### [🤔 Chapter 4: 실용주의 편집증](/docs/etc/pragmatic-programmer/chapter-4)
 23. 계약에 의한 설계
+24. 죽은 프로그램은 거짓말을 하지 않는다
+25. 단정적 프로그래밍
+26. 리소스 사용의 균형
+27. 헤드라이트를 앞서가지 말라
