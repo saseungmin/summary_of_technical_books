@@ -42,3 +42,6 @@ sidebar_position: 1
 25. 단정적 프로그래밍
 26. 리소스 사용의 균형
 27. 헤드라이트를 앞서가지 말라
+
+### [🤔 Chapter 5: 구부러지거나 부러지거나](/docs/etc/pragmatic-programmer/chapter-5)
+28. 결합도 줄이기
