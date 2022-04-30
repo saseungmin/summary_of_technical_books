@@ -41,3 +41,5 @@
 
 ### [🤔 Chapter 5: 구부러지거나 부러지거나](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%205)
 28. 결합도 줄이기
+29. 실세계를 갖고 저글링하기
+30. 변환 프로그래밍
