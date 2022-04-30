@@ -45,3 +45,5 @@ sidebar_position: 1
 
 ### [🤔 Chapter 5: 구부러지거나 부러지거나](/docs/etc/pragmatic-programmer/chapter-5)
 28. 결합도 줄이기
+29. 실세계를 갖고 저글링하기
+30. 변환 프로그래밍
