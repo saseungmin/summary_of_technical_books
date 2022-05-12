@@ -55,3 +55,7 @@ sidebar_position: 1
 34. 공유 상태는 틀린 상태
 35. 액터와 프로세스
 36. 칠판
+
+### [🤔 Chapter 7: 코딩하는 동안](/docs/etc/pragmatic-programmer/chapter-7)
+37. 파충류의 뇌에 귀 기울이기
+38. 우연에 맡기는 프로그래밍
