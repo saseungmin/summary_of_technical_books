@@ -51,3 +51,8 @@
 34. 공유 상태는 틀린 상태
 35. 액터와 프로세스
 36. 칠판
+
+
+### [🤔 Chapter 7: 코딩하는 동안](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%207)
+37. 파충류의 뇌에 귀 기울이기
+38. 우연에 맡기는 프로그래밍
