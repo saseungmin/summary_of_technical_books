@@ -59,3 +59,6 @@ sidebar_position: 1
 ### [🤔 Chapter 7: 코딩하는 동안](/docs/etc/pragmatic-programmer/chapter-7)
 37. 파충류의 뇌에 귀 기울이기
 38. 우연에 맡기는 프로그래밍
+39. 알고리즘의 속도
+40. 리팩터링
+41. 테스트로 코딩하기
