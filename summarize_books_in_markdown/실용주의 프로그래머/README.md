@@ -56,3 +56,6 @@
 ### [🤔 Chapter 7: 코딩하는 동안](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%207)
 37. 파충류의 뇌에 귀 기울이기
 38. 우연에 맡기는 프로그래밍
+39. 알고리즘의 속도
+40. 리팩터링
+41. 테스트로 코딩하기
