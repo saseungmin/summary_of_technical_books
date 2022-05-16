@@ -65,3 +65,7 @@ sidebar_position: 1
 42. 속성 기반 테스트
 43. 바깥에서는 안전에 주의하라
 44. 이름 짓기
+
+### [🤔 Chapter 8: 프로젝트 전에](/docs/etc/pragmatic-programmer/chapter-8)
+45. 요구 사항의 구렁텅이
+46. 불가능한 퍼즐 풀기
