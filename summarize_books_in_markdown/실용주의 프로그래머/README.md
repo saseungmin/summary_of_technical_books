@@ -65,3 +65,5 @@
 ### [🤔 Chapter 8: 프로젝트 전에](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%208)
 45. 요구 사항의 구렁텅이
 46. 불가능한 퍼즐 풀기
+47. 함께 일하기
+48. 애자일의 핵심

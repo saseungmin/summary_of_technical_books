@@ -69,3 +69,6 @@ sidebar_position: 1
 ### [🤔 Chapter 8: 프로젝트 전에](/docs/etc/pragmatic-programmer/chapter-8)
 45. 요구 사항의 구렁텅이
 46. 불가능한 퍼즐 풀기
+47. 함께 일하기
+48. 애자일의 핵심
+
