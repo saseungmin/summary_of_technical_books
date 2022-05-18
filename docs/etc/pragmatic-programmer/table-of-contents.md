@@ -72,3 +72,6 @@ sidebar_position: 1
 47. 함께 일하기
 48. 애자일의 핵심
 
+### [🤔 Chapter 9: 실용주의 프로젝트](/docs/etc/pragmatic-programmer/chapter-9)
+49. 실용주의 팀
+
