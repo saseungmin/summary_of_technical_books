@@ -132,6 +132,11 @@ const books = [
       bookName: '실용주의 프로그래머 20주년 기념판',
       imgName: 'pragmatic-programmer.jpeg',
     },
+    {
+      link: `${PREFIX_DOCS_URL}/etc/inspired/table-of-contents`,
+      bookName: '인스파이어드',
+      imgName: 'inspired.jpeg',
+    },
   ],
 ];
 
