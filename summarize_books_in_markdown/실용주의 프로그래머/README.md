@@ -70,3 +70,7 @@
 
 ### [🤔 Chapter 9: 실용주의 프로젝트](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%8B%A4%EC%9A%A9%EC%A3%BC%EC%9D%98%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8/Chapter%209)
 49. 실용주의 팀
+50. 코코넛만으로는 부족하다
+51. 실용주의 시작 도구
+52. 사용자를 기쁘게 하라
+53. 오만과 편견
