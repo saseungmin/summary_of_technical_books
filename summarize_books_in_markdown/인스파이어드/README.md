@@ -13,3 +13,8 @@
 6. 실패한 제품의 근본 원인
 7. 린과 애자일을 넘어
 8. 핵심 개념
+
+
+### [🤔 Part 2: 사람](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C/Part%202)
+9. 강한 제품팀의 원칙
+10. 제품 관리자

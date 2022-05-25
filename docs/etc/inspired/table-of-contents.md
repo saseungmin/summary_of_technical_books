@@ -17,3 +17,7 @@ sidebar_position: 1
 6. 실패한 제품의 근본 원인
 7. 린과 애자일을 넘어
 8. 핵심 개념
+
+### [🤔 Part 2: 사람](/docs/etc/inspired/part-2)
+9. 강한 제품팀의 원칙
+10. 제품 관리자
