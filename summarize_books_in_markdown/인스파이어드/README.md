@@ -18,3 +18,9 @@
 ### [🤔 Part 2: 사람](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C/Part%202)
 9. 강한 제품팀의 원칙
 10. 제품 관리자
+11. 제품 디자이너
+12. 엔지니어
+13. 제품 마케팅 매니저
+14. 지원 역할 (생략)
+15. 세례 소개: 제인 매닝, 구글 (생략)
+16. 리더십의 역할
