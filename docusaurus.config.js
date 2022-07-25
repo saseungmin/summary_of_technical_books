@@ -52,11 +52,6 @@ module.exports = {
           position: 'left',
         },
         {
-          to: '/docs/git/table-of-contents',
-          label: 'Git',
-          position: 'left',
-        },
-        {
           to: '/docs/etc/table-of-contents',
           label: '기타',
           position: 'left',
@@ -97,10 +92,6 @@ module.exports = {
             {
               label: '클린코드',
               to: '/docs/clean/table-of-contents',
-            },
-            {
-              label: 'Git',
-              to: '/docs/git/table-of-contents',
             },
             {
               label: '기타',
