@@ -7,7 +7,7 @@ import SummaryBooksView from './SummaryBooksView';
 const BooksInfoSection = styled.section`
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  padding: 2rem 0 5rem 0;
   width: 100%;
 `;
 

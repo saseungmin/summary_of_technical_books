@@ -6,11 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import SummaryBookTemplate from './SummaryBookTemplate';
 
-const BooksInfoWrapper = styled.div`
-  text-align: center;
-  align-items: flex-end;
-`;
-
 function RowSummaryBooksWrapper({ booksInfo }) {
   return (
     <BooksInfoWrapper className="row">
@@ -27,3 +22,8 @@ function RowSummaryBooksWrapper({ booksInfo }) {
 }
 
 export default RowSummaryBooksWrapper;
+
+const BooksInfoWrapper = styled.div`
+  text-align: center;
+  align-items: flex-end;
+`;

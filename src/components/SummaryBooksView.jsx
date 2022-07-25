@@ -11,11 +11,6 @@ import MountainSvg from '../../static/img/undraw_docusaurus_mountain.svg';
 
 import RowSummaryBooksWrapper from './RowSummaryBooksWrapper';
 
-const MountainImg = styled(MountainSvg)`
-  height: 200px;
-  width: 200px;
-`;
-
 function SummaryBooksView({ title }) {
   return (
     <div className={clsx('col')}>
@@ -38,3 +33,8 @@ function SummaryBooksView({ title }) {
 }
 
 export default SummaryBooksView;
+
+const MountainImg = styled(MountainSvg)`
+  height: 200px;
+  width: 200px;
+`;
