@@ -117,7 +117,7 @@ public class FeeRule {
 }
 ```
 
-- `FeePerDuration` 클래스는 단위 시간당 요금이라는 개념을 표현하고 이 정보를 이용해 일정 기간의 요금을 계산하는 `calculate` 메서드를 구현한다.
+- `FeePerDuration` 클래스는 단위 시간당 요금이라는 개념을 표현하고 이 정보를 이용해 일정 기간 동안의 요금을 계산하는 `calculate` 메서드를 구현한다.
 
 ```java
 public class FeePerDuration {
@@ -169,7 +169,7 @@ public class BasicRatePolicy implements RatePolicy {
 - `FeeCondition` 인터페이스를 실체화하는 클래스에 따라 기본 정책의 종류가 달라진다.
 
 #### 🐶 시간대별 정책
-- `TimeOfDayFeeCondition`의 인스턴스는 협력안에서 `FeeCondition`을 대체할 수 있어야 한다. 따라서 `FeeCondition`의 인터페이스를 구현하는 서브타입으로 만들어야 한다.
+- `TimeOfDayFeeCondition`의 인스턴스는 협력 안에서 `FeeCondition`을 대체할 수 있어야 한다. 따라서 `FeeCondition`의 인터페이스를 구현하는 서브타입으로 만들어야 한다.
 
 ```java
 public class TimeOfDayFeeCondition implements FeeCondition {
