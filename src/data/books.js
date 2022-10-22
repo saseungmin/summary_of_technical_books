@@ -138,6 +138,23 @@ const books = [
       imgName: 'inspired.jpeg',
     },
   ],
+  [
+    {
+      link: `${PREFIX_DOCS_URL}/test/test-driven-development/table-of-contents`,
+      bookName: '테스트 주도 개발',
+      imgName: 'tdd.jpeg',
+    },
+    {
+      link: `${PREFIX_DOCS_URL}/test/unit-test/table-of-contents`,
+      bookName: '단위 테스트',
+      imgName: 'unit-test.jpeg',
+    },
+    {
+      link: `${PREFIX_DOCS_URL}/typescript/effective-typescript/table-of-contents`,
+      bookName: '이펙티브 타입스크립트',
+      imgName: 'effective-typescript.jpeg',
+    },
+  ],
 ];
 
 export default books;

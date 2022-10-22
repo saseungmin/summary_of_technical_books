@@ -52,6 +52,11 @@ module.exports = {
           position: 'left',
         },
         {
+          to: '/docs/test/table-of-contents',
+          label: '테스트',
+          position: 'left',
+        },
+        {
           to: '/docs/etc/table-of-contents',
           label: '기타',
           position: 'left',
@@ -92,6 +97,10 @@ module.exports = {
             {
               label: '클린코드',
               to: '/docs/clean/table-of-contents',
+            },
+            {
+              label: '테스트',
+              to: '/docs/test/table-of-contents',
             },
             {
               label: '기타',

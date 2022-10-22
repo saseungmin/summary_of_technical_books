@@ -22,7 +22,7 @@
 |[**Clean Code(클린 코드)**](https://saseungmin.github.io/reading_books_record_repository/docs/clean/clean-code/table-of-contents)|||
 |<a href="https://saseungmin.github.io/reading_books_record_repository/docs/clean/clean-code/table-of-contents"><img src="images/clean-code.jpeg" width="400px" height="300px"/></a>|||
 
-## 📚 읽은 책 목록
+## 📚 읽은 책 / 읽을 책 목록
 #### 책을 읽고 정리합니다. 읽은 책 혹은 읽고 있는 책 목록입니다.
 
 |[자바스크립트 코딩의 기술](https://saseungmin.github.io/reading_books_record_repository/docs/javascript/modern-javascript/table-of-contents)|[Node.js 교과서](https://github.com/saseungmin/Node.js-tutorial)|[리액트를 다루는 기술](https://github.com/saseungmin/react-tutorial)|
@@ -32,16 +32,15 @@
 |<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/You%20Don%E2%80%99t%20Know%20JS%201"><img src="images/you-dont-know-js-1.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/typescript/do-it-typescript/table-of-contents"><img src="images/do-it-typescript.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/git/pro-git-2/table-of-contents"><img src="images/pro-git-2e.jpeg" width="400px" height="300px"/></a>|
 |[**코어 자바스크립트**](https://saseungmin.github.io/reading_books_record_repository/docs/javascript/core-javascript/table-of-contents)|[**쉽게 배우는 알고리즘**](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%89%BD%EA%B2%8C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)|[**함께 자라기**](https://saseungmin.github.io/reading_books_record_repository/docs/agile/growing-up-together/table-of-contents)|
 |<a href="https://saseungmin.github.io/reading_books_record_repository/docs/javascript/core-javascript/table-of-contents"><img src="images/core-javascript.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%89%BD%EA%B2%8C%20%EB%B0%B0%EC%9A%B0%EB%8A%94%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><img src="images/algorism-book.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/agile/growing-up-together/table-of-contents"><img src="images/thinking-together.jpeg" width="400px" height="300px"/></a>|
-|[**실용주의 프로그래머**](https://saseungmin.github.io/reading_books_record_repository/docs/etc/pragmatic-programmer/table-of-contents)|[**인스파이어드**](https://saseungmin.github.io/reading_books_record_repository/docs/etc/inspired/table-of-contents)||
-|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/etc/pragmatic-programmer/table-of-contents"><img src="images/pragmatic-programmer.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/etc/inspired/table-of-contents"><img src="images/inspired.jpeg" width="400px" height="300px"/></a>||
+|[**실용주의 프로그래머**](https://saseungmin.github.io/reading_books_record_repository/docs/etc/pragmatic-programmer/table-of-contents)|[**인스파이어드**](https://saseungmin.github.io/reading_books_record_repository/docs/etc/inspired/table-of-contents)|[**테스트 주도 개발**](https://saseungmin.github.io/reading_books_record_repository/docs/test/test-driven-development/table-of-contents)|
+|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/etc/pragmatic-programmer/table-of-contents"><img src="images/pragmatic-programmer.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/etc/inspired/table-of-contents"><img src="images/inspired.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/test/test-driven-development/table-of-contents"><img src="images/tdd.jpeg" width="400px" height="300px"/></a>|
+|[**단위 테스트**](https://saseungmin.github.io/reading_books_record_repository/docs/test/unit-test/table-of-contents)|[**이펙티브 타입스크립트**](https://saseungmin.github.io/reading_books_record_repository/docs/typescript/effective-typescript/table-of-contents)||
+|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/test/unit-test/table-of-contents"><img src="images/unit-test.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/reading_books_record_repository/docs/typescript/effective-typescript/table-of-contents"><img src="images/effective-typescript.jpeg" width="400px" height="300px"/></a>||
 
 ## 🎯 읽을 책 목록
 - You Don’t Know JS this와 객체 프로토타입, 비동기와 성능
 - 클린 아키텍처 소프트웨어 구조와 설계의 원칙
 - HTTP 완벽 가이드
-- 테스트 주도 개발 (TDD)
-- 이펙티브 타입스크립트
-- 단위 테스트
 
 ## 🔥 컨트리뷰션 방법
 
