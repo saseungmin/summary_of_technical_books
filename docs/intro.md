@@ -17,4 +17,6 @@ sidebar_position: 1
 
 ## [클린코드](/docs/clean/table-of-contents)
 
+## [테스트](/docs/test/table-of-contents)
+
 ## [기타](/docs/etc/table-of-contents)
