@@ -263,3 +263,204 @@ const twelve = add('1', '2');
 
 - '런타임' 오버헤드가 없는 대신, 타입스크립트 컴파일러는 '빌드타임' 오버헤드가 있습니다. 타입스크립트 팀은 컴파일러 성능을 매우 중요하게 생각합니다. 따라서 컴파일은 일반적으로 상당히 빠른 편이며 특히 증분 빌드 시에 더욱 체감됩니다.
 - 타입스크립트가 컴파일하는 코드는 오래된 런타임 환경을 지원하기 위해 호환성을 높이고 성능 오버헤드를 감안할지, 호환성을 포기하고 성능 중심의 네이티브 구현체를 선택할지의 문제에 맞닥뜨릴 수도 있습니다. 예를 들어 제너레이터 함수가 ES5 타깃으로 컴파일되려면, 타입스크립트 컴파일러는 호환성을 위한 특정 헬퍼 코드를 추가할 것입니다. 이런 경우가 제너레이터의 호환성을 위한 오버헤드 또는 성능을 위한 네이티브 구현체 선택의 문제입니다. 어떤 경우든지 호환성과 성능 사이의 선택은 컴파일 타깃과 언어 레벨의 문제이며 여전히 타입과는 무관합니다.
+
+## 🥕 아이템 4. 구조적 타이핑에 익숙해지기
+자바스크립트는 본질적으로 덕 타이핑 기반입니다. 만약 어떤 함수의 매개변수 값이 모두 제대로 주어진다면, 그 값이 어떻게 만들어졌는지 신경 쓰지 않고 사용합니다. 타입스크립트는 이런 동작, 즉 매개변수 값이 요구사항을 만족한다면 타입이 무엇인지 신경 쓰지 않는 동작을 그대로 모델링합니다.
+
+> 덕 타이핑이란, 객체가 어떤 타입에 부합하는 변수와 메서드를 가질 경우 객체를 해당 타입에 속하는 것으로 간주하는 방식입니다. 덕 테스트에서 유래되었는데, 다음과 같은 명제로 정의됩니다. "먄약 어떤 새가 오리처럼 걷고, 헤엄치고, 꽥꽥거리는 소리를 낸다면 나는 그 새를 오리라고 부를 것이다."
+
+물리 라이브러리와 2D 벡터 타입을 다루는 경우를 가정해 보겠습니다.
+
+```ts
+interface Vector2D {
+  x: number;
+  y: number;
+}
+```
+
+벡터의 길이를 계산하는 함수는 다음과 같습니다.
+
+```ts
+function calculateLength(v: Vector2D) {
+  return Math.sqrt(v.x * v.x + v.y * v.y);
+}
+```
+
+이제 이름이 들어간 벡터를 추가합니다.
+
+```ts
+interface NamedVector {
+  name: string;
+  x: number;
+  y: number;
+}
+```
+
+`NamedVector`는 `number` 타입의 `x`와 `y`속성이 있기 때문에 `calculateLength` 함수로 호출 가능합니다. 타입스크립트는 다음 코드를 이해할 수 있을 정도로 충분히 열리합니다.
+
+```ts
+const v: NamedVector = { x: 3, y: 4, name: 'Zee' };
+calculateLength(v);
+```
+
+흥미로운 점은 `Vector2D`와 `NamedVector`의 관계를 전혀 선언하지 않았다는 것입니다. 그리고 `NamedVector`를 위한 별도의 `calculateLength`를 구현할 필요도 없습니다. 타입스크립트 타입 시스템은 자바스크립트의 런타임 동작을 모델링합니다. `NamedVector`의 구조가 `Vector2D`와 호환되기 떄문에 `calculateLength` 호출이 가능합니다. 여기서 "구조적 타이핑(structural typing)"이라는 용어가 사용됩니다.   
+
+구조적 타이핑 떄문에 문제가 발생하기도 합니다.
+
+```ts
+interface Vector3D {
+  x: number;
+  y: number;
+  z: number;
+}
+```
+
+그리고 벡터의 길이를 1로 만드는 정규화 함수를 작성합니다.
+
+```ts
+function normalize(v: Vector3D) {
+  const length = calculateLength(v);
+
+  return {
+    x: v.x / length,
+    y: v.y / length,
+    z: v.z / length,
+  };
+}
+```
+
+그러나 이 함수는 1보다 조금 더 긴(1.41) 길이를 가진 결과를 출력할 것입니다.
+
+```ts
+normalize({ x: 3, y: 4, z: 5});
+// { x: 0.6, y: 0.8, z: 1 }
+```
+
+`calculateLength`는 2D 벡터를 기반으로 연산하는데, 버그로 인해 `normalize`가 3D 벡터로 연산되었습니다. `z`가 정규화에서 무시된 것입니다. 그런데 타입 체커가 이 문제를 잡아내지 못했습니다. `calculateLength`가 2D 벡터를 받도록 선언되었음에도 불구하고 3D 벡터를 받는 데 문제가 없었던 이유는 무엇일까요?   
+
+`Vector3D`와 호환되는 `{ x, y, z }` 객체로 `calculateLength`를 호출하면, 구조적 타이핑 관점에서 `x`, `y`가 있어서 `Vector2D`와 호환됩니다. 따라서 오류가 발생하지 않았고, 타입 체커가 문제로 인신하지 않았습니다. (이런 경우를 오류로 처리하기 위한 설정이 존재합니다. 아이템 37 참고)   
+
+함수를 작성할 때, 호출에 사용되는 매개변수의 속성들이 매개변수의 타입에 선언된 속성만을 가질 거라 생각하기 쉽습니다. 이러한 타입은 "봉인된" 또는 "정확한" 타입이라고 불리며, 타입스크립트 타입 시스템에서는 표현할 수 없습니다. 좋든 싫든 타입은 "열려"있습니다. (타입의 확장에 열려 있다)   
+
+테스트를 작성할 떄는 구조적 타이핑이 유리합니다. 데이터베이스에 쿼리하고 결과를 처리하는 함수를 가정해 보겠습니다.
+
+```ts
+interface Author {
+  first: string;
+  last: string;
+}
+
+function getAuthors(database: PostgresDB): Author[] {
+  const authorRows = database.runQuery(`SELECT FIRST, LAST FROM AUTHORS`);
+  return authorRows.map((row) => ({ first: row[], last: row[1] }));
+}
+```
+
+`getAuthors` 함수를 테스트하기 위해서는 모킹한 `PostgresDB`를 생성해야 합니다. 그러나 구조적 타이핑을 활용하여 더 구체적인 인터페이스를 정의하는 것이 더 나은 방법입니다.
+
+```ts
+interface DB {
+  runQuery: (sql: string) => any[];
+}
+
+function getAuthors(database: DB): Author[] {
+  const authorRows = database.runQuery(`SELECT FIRST, LAST FROM AUTHORS`);
+  return authorRows.map((row) => ({ first: row[], last: row[1] }));
+}
+```
+
+`runQuery` 메서드가 있기 떄문에 실제 환경에서도 `getAuthors`에 `PostgresDB`를 사용할 수 있습니다. 구조적 타이핑 덕분에, `PostgresDB`가 `DB` 인터페이스를 구현하는지 명확히 선언할 필요가 없습니다. 테스트를 작성할 때, 더 간단한 객체를 매개변수로 사용할 수도 있습니다.
+
+```ts
+test('getAuthors', () => {
+  const authors = getAuthors({
+    runQuery(sql: string) {
+      return [['Toni', 'Morrison'], ['Maya', 'Angelou']];
+    }
+  });
+
+  expect(authors).toEqual([
+    { first: 'Toni', last: 'Morrison' },
+    { first: 'Maya', last: 'Angelou' },
+  ]);
+});
+```
+
+테스트 코드에는 실제 환경의 데이터베이스에 대한 정보가 불필요합니다. 심지어 모킹 라이브러리도 필요 없습니다. 추상화(DB)를 함으로써, 로직과 테스트를 특정한 구현(`PostgresDB`)으로부터 분리한 것입니다.   
+테스트 이외에 구조적 타이핑의 또 다른 장점은 라이브러리 간의 의존성을 완벽히 분리할 수 있다는 것입니다.
+
+## 🥕 아이템 5. `any` 타입 지양하기
+타입스크립트의 타입 시스템은 점진적이고 선택적입니다.   
+코드에 타입을 조금씩 추가할 수 있기 떄문에 점진적이며, 언제든지 타입 체커를 해제할 수 있기 때문에 선택적입니다. 이 기능들의 핵심은 `any`타입입니다.
+
+```ts
+let age: number;
+age = '12'; // 형식은 number이기 떄문에 할당할 수 없습니다.
+age = '12' as any; // OK
+```
+
+일부 특별한 경우를 제외하고는 `any`를 사용하면 타입스크립트의 수많은 장점을 누릴 수 없습니다. 부득이하게 `any`를 사용하더라도 그 위험성을 알고 있어야 합니다.
+
+### `any` 타입에는 타입 안전성이 없습니다.
+타입 체거는 선언에 따라 `number` 타입으로 판단할 것이고 혼돈은 걷잡을 수 없게 됩니다.
+
+```ts
+age += 1; // 런타임에 정상, age는 "121"
+```
+
+### `any`는 함수 시그니처를 무시해 버립니다.
+함수를 작성할 때는 시그니처를 명시해야 합니다. 호출하는 쪽은 약속된 타입의 입력을 제공하고, 함수는 약속된 타입의 출력을 반환합니다. 그러나 `any`타입을 사용하면 이런 약속을 어길 수 있습니다.
+
+```ts
+function calculateAge(birthDate: Date): number {
+  // ...
+}
+
+let birthDate: any = '1990-01-19';
+calculateAge(birthDate); // 정상
+```
+
+`any`타입을 사용하면 `calculateAge`의 시그니처를 무시하게 됩니다.
+
+### `any`타입에는 언어 서비스가 적용되지 않습니다.
+어떤 심벌에 타입이 있다면 타입스크립트 언어 서비스는 자동완성 기능과 적절한 도움말을 제공합니다. 그러나 `any`타입인 심벌을 사용하면 아무런 도움을 받지 못합니다.   
+타입스크립트의 모토는 "확장 가능한 자바스크립트"입니다. "확장"의 중요한 부분은 바로 타입스크립트 경험의 핵심 요소인 언어 서비스입니다. 언어 서비스를 제대로 누려야 독자 여러분과 동료의 생산성이 향상됩니다.
+
+### `any`타입은 코드 리팩터링 때 버그를 감춥니다.
+어떤 아이템을 선택할 수 있는 웹 애플리케이션을 만든다고 가정해 보겠습니다.
+
+```ts
+interface ComponentProps {
+  onSelectItem: (item: any) => void;
+}
+```
+
+다음과 같이 `onSelectItem` 콜백이 있는 컴포넌트를 사용하는 코드도 있을 겁니다.
+
+```ts
+function renderSelector(props: ComponentProps) { /* ... */ }
+
+let selectedId: number = 0;
+
+function handleSelectItem(item: any) {
+  selectedId = item.id;
+}
+
+renderSelector({ onSelectItem: handleSelectItem });
+```
+
+`onSelectItem`에 아이템 객체를 필요한 부분만 전달하도록 컴포넌트를 개선해 보겠습니다. 여기서는 `id`만 필요합니다. `ComponentProps`의 시그니처를 다음처럼 변경합니다.
+
+```ts
+interface ComponentProps {
+  onSelectItem: (id: number) => void;
+}
+```
+
+`handleSelectItem`은 `any` 매개변수를 받습니다. 따라서 `id`를 전달받아도 문제가 없다고 나옵니다. `id`를 전달받으면, 타입 체커를 통과함에도 불구하고 런타임에는 오류가 발생할 겁니다. `any`가 아니라 구체적인 타입을 사용했다면, 타입 체커가 오류를 발견했을 겁니다.
+
+### `any`는 타입 설계를 감춰버립니다.
+객체를 정의할 때 특히 문제가 되는데, 상태 객체의 설계를 감춰버리기 때문입니다. 깔끔하고 정확하고 명료한 코드 작성을 위해 제대로 된 타입 설계는 필수입니다. `any` 타입을 사용하면 타입 설계가 불분명해집니다. 설계가 잘 되었는지, 설계가 어떻게 되어 있는지 전혀 할 수 없습니다. 만약 동료가 코드를 검토해야 한다면, 동료는 애플리케이션의 상태를 어떻게 변경했는지 코드부터 재구성해 봐야 할 겁니다. 그러므로 설계가 명확히 보이도록 타입을 일일이 작성하는 것이 좋습니다.
+
+### `any`는 타입시스템의 신뢰도를 떨어뜨립니다.
+사람은 항상 실수를 합니다. 보통은 타입 체커가 실수를 잡아주고 코드의 신뢰도가 높아집니다. 그러나 런타임에 타입 오류를 발견하게 된다면 타입 체커를 신뢰할 수 없을 겁니다. `any` 타입을 쓰지 않으면 런타임에 발견될 오류를 미리 잡을 수 있고 신뢰도를 높일 수 있습니다.   
