@@ -103,7 +103,7 @@ const v2 = typeof email; // 값은 "function"
 - `extends`는 서브클래스(`class A extends B`) 또는 서브타입(`interface A extends B`) 또는 제너릭 타입 한정자(`Generic<T extends number>`)를 정의할 수 있습니다.
 - `in`은 루프 또는 매핑된 타입에 등장합니다.
 
-### 🥕 아이템 9. 타입 단언보다는 타입 선언을 사용하기
+## 🥕 아이템 9. 타입 단언보다는 타입 선언을 사용하기
 타입스크립트에서 변수에 값을 할당하고 타입을 부여하는 방법은 두 가지입니다.
 
 ```ts
@@ -168,7 +168,7 @@ document.querySelector('#myButton').addEventListener('click', (e) => {
 
 타입스크립트는 DOM에 접근할 수 없기 때문에 `#myButton`이 버튼 엘리먼트인지 알지 못합니다. 그리고 이벤트의 `currentTarget`이 같은 버튼이어야 하는 것도 알지 못합니다. 우리는 타입스크립트가 알지 못하는 정보를 가지고 있기 때문에 여기서는 타입 단언문을 쓰는 것이 타당합니다.
 
-### 🥕 아이템 10. 객체 래퍼 타입 피하기
+## 🥕 아이템 10. 객체 래퍼 타입 피하기
 기본형들은 불변이며 메서드를 가지지 않는다는 점에서 객체와 구분됩니다. 그런데 기본형인 `string`의 경우 메서드를 가지고 있는 것처럼 보입니다. 하지만 사실 `string`의 메서드가 아니며, `string`을 사용할 때 자바스크립트 내부적으로 많은 동작이 일어납니다. `string` 기본형에는 메서드가 없지만, 자바스크립트에는 메서드를 가지는 `String` 객체 타입이 정의되어 있습니다. 자바스크립트는 기본형과 객체 타입을 서로 자유롭게 변환합니다. `string` 기본형에 `charAt` 같은 메서드를 사용할 때, 자바스크립트는 기본형을 `String` 객체로 래핑하고, 메서드를 호출하고, 마지막에 래핑한 객체를 버립니다.   
 
 만약 `String.prototype`을 몽키-패치한다면 앞서 설명한 내부적인 동작들을 관찰할 수 있습니다.
@@ -182,7 +182,7 @@ document.querySelector('#myButton').addEventListener('click', (e) => {
 new String("hello") === new String("hello"); // false
 ```
 
-### 🥕 아이템 11. 잉여 속성 체크의 한계 인지하기
+## 🥕 아이템 11. 잉여 속성 체크의 한계 인지하기
 타입이 명시된 변수에 객체 리터럴을 할당할 때 타입스크립트는 해당 타입의 속성이 있는지, 그리고 '그 외의 속성은 없는지' 확인합니다.
 
 ```ts
@@ -218,7 +218,7 @@ const r: Room = obj; // 정상
 
 잉여 속성 체크에는 한계가 있습니다. 임시 변수를 도입하면 잉여 속성 체크를 건너뛸 수 있다는 점을 기억해야 합니다.
 
-### 🥕 아이템 12. 함수 표현식에 타입 적용하기
+## 🥕 아이템 12. 함수 표현식에 타입 적용하기
 자바스크립트에서는 함수 문장과 함수 표현식을 다르게 인식합니다.
 
 ```ts
@@ -246,3 +246,486 @@ const add: BinaryFn = (a, b) => a + b;
 이 예제는 함수 타입 선언을 이용했던 예제보다 타입 구문이 적습니다. 함수 구현부도 분리되어 있어 로직이 보다 분명해집니다. 만약 여러분이 라이브러리를 직접 만들고 있다면, 공통 콜백 함수를 위한 타입 선언을 제공하는 것이 좋습니다.   
 
 함수의 매개변수에 타입 선언을 하는 것보다 함수 표현식 전체 타입을 정의하는 것이 코드도 간결하고 안전합니다. 다른 함수의 시그니처와 동일한 타입을 가지는 새 함수를 작성하거나, 동일한 타입 시그니처를 가지는 여러 개의 함수를 작성할 때는 매개변수의 타입과 반환 타입을 반복해서 작성하지 말고 함수 전체의 타입 선언을 적용해야 합니다.
+
+## 🥕 아이템 13. 타입과 인터페이스의 차이점 알기
+타입스크립트에서 명명된 타입을 정의하는 방법은 두 가지가 있습니다.
+
+```ts
+type TState = {
+  name: string;
+  capital: string;
+}
+
+interface IState {
+  name: string;
+  capital: string;
+}
+```
+
+타입과 인터페이스 사이에 존재하는 차이를 분명하게 알고, 같은 상황에서는 동일한 방법으로 명명된 타입을 정의해 일관성을 유지해야 합니다.   
+
+먼저, 인터페이스 선언과 타입 선언의 비슷한 점에 대해 알아보겠습니다. 명명된 타입은 인터페이스로 정의하든 타입으로 정의하든 상태에는 차이가 없습니다. 만약 `IState`와 `TState`를 추가 속성과 함께 할당한다면 동일한 오류가 발생합니다.   
+
+인덱스 시그니처는 인터페이스와 타입에서 모두 사용할 수 있습니다.
+
+```ts
+type TDict = {
+  [key: string]: string
+};
+
+interface IDict {
+  [key: string]: string;
+}
+```
+
+또한 함수 타입도 인터페이스나 타입으로 정의할 수 있습니다.
+
+```ts
+type TFn = (x: number) => string;
+interface IFn {
+  (x: number): string;
+}
+
+const toStrT: TFn = (x) => '' + x;
+const toStrT: IFn = (x) => '' + x;
+```
+
+타입 별칭과 인터페이스는 모두 제너릭이 가능합니다.
+
+```ts
+type TPair<T> = {
+  first: T;
+  second: T;
+}
+
+interface IPair<T> {
+  first: T;
+  second: T;
+}
+```
+
+인터페이스는 타입을 확장할 수 있으며, 타입은 인터페이스를 확장할 수 있습니다.
+
+```ts
+interface IStateWithPop extends TState {
+  population: number;
+}
+
+type TStateWithPop = IState & { population: number; };
+```
+
+여기서 주의할 점은 인터페이스는 유니온 타입 같은 복잡한 타입을 확장하지 못한다는 것입니다. 복잡한 타입을 확장하고 싶다면 타입과 `&`를 사용해야 합니다.   
+한편 클래스를 구현할 때는, 타입과 인터페이스 둘 다 사용할 수 있습니다.
+
+```ts
+class StateT implements TState {
+  name: string = '';
+  capital: string = '';
+}
+
+class StateI implements IState {
+  name: string = '';
+  capital: string = '';
+}
+```
+
+이제부터는 타입과 인터페이스의 다른 점들을 알아보겠습니다.   
+
+유니온 타입은 있지만 유니온 인터페이스라는 개념은 없습니다.
+
+```ts
+type AorB = 'a' | 'b';
+```
+
+인터페이스는 타입을 확장할 수 있지만, 유니온은 할 수 없습니다. 그런데 유니온 타입을 확장하는 게 필요할 때가 있습니다.
+
+```ts
+type Input = { /* ... */};
+type Output = { /* ... */};
+interface VariableMap {
+  [name: string]: Input | Output;
+}
+```
+
+또는 유니온 타입에 `name` 속성을 붙인 타입을 만들 수도 있습니다. 다음과 같습니다.
+
+```ts
+type NamedVariable = (Input | Output) & { name: string };
+```
+
+이 타입은 인터페이스로 표현할 수 없습니다. `type` 키워드는 일반적으로 `interface`보다 쓰임새가 많습니다. `type` 키워드는 유니온이 될 수도 있고, 매핑된 타입 또는 조건부 타입 같은 고급 기능에 활용되기도 합니다.   
+튜플과 배열 타입도 `type` 키워드를 이용해 더 간결하게 표현할 수 있습니다.
+
+```ts
+type Pair = [number, number];
+type StringList = string[];
+type NamedNums = [string, ...number[]];
+```
+
+인터페이스로도 튜플과 비슷하게 구현할 수 있기는 합니다.
+
+```ts
+interface Tuple {
+  0: number;
+  1: number;
+  length: 2;
+}
+const t: Tuple = [10, 20]; // 정상
+```
+
+그러나 인터페이스로 튜플과 비슷하게 구현하면 튜플에서 사용할 수 있는 `concat` 같은 메서드들을 사용할 수 없습니다. 그러므로 튜플은 `type` 키워드로 구현하는 것이 낫습니다.   
+
+반면 인터페이스는 타입에 없는 몇 가지 기능이 있습니다. 그중 하나로 바로 **보강**(**augment**)이 가능하다는 것입니다. 이번 아이템 처음에 등장했던 `State` 예제에 `population` 필드를 추가할 때 보강 기법을 사용할 수 있습니다.
+
+```ts
+interface IState {
+  name: string;
+  capital: string;
+}
+
+interface IState {
+  population: number;
+}
+
+const wyoming: IState = {
+  name: 'Wyoming',
+  capital: 'Cheyenne',
+  population: 500_000
+}; // 정상
+```
+
+이 예제처럼 속성을 확장하는 것을 **선언 병합**(**declaration merging**)이라고 합니다. 선언 병합은 주로 타입 선언 파일에서 사용됩니다. 따라서 타입 선언 파일을 작성할 때는 선언 병합을 지원하기 위해 반드시 인터페이스를 사용해야 하며 표준을 따라야 합니다. 타입 선언에는 사용자가 채워야 하는 빈틈이 있을 수 있는데, 바로 이 선언 병합이 그렇습니다.   
+
+병합은 선언처럼 일반적인 코드라서 언제든지 가능하다는 것을 알고 있어야합니다. 그러므로 프로퍼티가 추가되는 것을 원하지 않는다면 인터페이스 대신 타입을 사용해야 합니다.   
+
+이번 아이템의 처음 질문으로 돌아가 타입과 인터페이스 중 어느 것을 사용해야 할지 결론을 내려 보겠습니다. 복잡한 타입이라면 고민할 것도 없이 타입 별칭을 사용하면 됩니다. 그러나 타입과 인터페이스, 두 가지 방법으로 모두 표현할 수 있는 간단한 객체 타입이라면 일관성과 보강의 관정에서 고려해 보야 합니다. 알관되게 인터페이스를 사용하는 코드베이스에서 작업하고 있다면 인터페이스를 사용하고, 일관되게 타입을 사용 중이라면 타입을 사용하면 됩니다.   
+아직 스타일이 확립되지 않은 프로젝트라면, 향우에 보강의 가능성이 있을지 생각해 봐야 합니다. 어떤 API에 대한 타입 선언을 작성해야 한다면 인터페이스를 사용하는 게 좋습니다. API가 변경될 때 사용자가 인터페이스를 통해 새로운 필드를 병합할 수 있어 유용하기 때문입니다. 그러나 프로젝트 내부적으로 사용되는 타입에 선언 병합이 발생하는 것은 잘못된 설계입니다. 따라서 이럴 때는 타입을 사용해야 합니다.
+
+## 🥕 아이템 14. 타입 연산과 제너릭 사용으로 반복 줄이기
+타입 중복은 코드 중복만큼 많은 문제를 발생시킵니다. 타입에서 중복이 더 흔한 이유 중 하나는 공유된 패턴을 제거하는 메커니즘이 기존 코드에서 하던 것과 비교해 덜 익숙하기 때문입니다. 그러나 타입 간에 매핑하는 방법을 익히면, 타입 정의에서도 DRY의 장점은 적용할 수 있습니다.   
+반복을 줄이는 가장 간단한 방법은 타입에 이름을 붙이는 것입니다. 다음 예제의 거리 계산 함수에는 타입이 반복적으로 등장합니다.
+
+```ts
+function distance(a: { x: number. y: number }, b: { x: number, y: number }) {
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+}
+```
+
+코드를 수정해 타입에 이름을 붙여 보겠습니다.
+
+```ts
+interface Point2D {
+  x: number;
+  y: number;
+}
+
+function distance(a: Point2D, b: Point2D) { /* ... */}
+```
+
+중복된 타입은 종종 문법에 의해서 가려지기도 합니다. 예를 들어, 몇몇 함수가 같은 타입 시그니처를 공유하고 있다고 해 보겠습니다.
+
+```ts
+function get(url: string, opts: Options): Promise<Response> { /* ... */ }
+function post(url: string, opts: Options): Promise<Response> { /* ... */ }
+```
+
+그러면 해당 시그니처를 명명된 타입으로 분리해 낼 수 있습니다.
+
+```ts
+type HTTPFunction = (url: string, opts: Options) => Promise<Response>;
+const get: HTTPFunction(url, opts) => { /* ... */ };
+const post: HTTPFunction(url, opts) => { /* ... */ };
+```
+
+만걍 두 인터페이스가 필드의 부분 집합을 공유한다면, 공통 필드만 골라서 기반 클래스로 분리해 낼 수 있습니다.   
+이미 존재하는 타입을 확장하는 경우에, 일반적이지는 않지만 이터섹션 연산자(&)을 쓸 수도 있습니다.
+
+```ts
+type PersonWithBirthDate = Person & { birth: Date };
+```
+
+이런 기법은 유니온 타입(확장할 수 없는)에 속성을 추가하려고 할 때 특히 유용합니다.   
+
+전체 애플리케이션의 상태를 표현하는 `State`타입과 단지 부분만 표현하는 `TopNavState`가 있는 경우를 살펴보겠습니다.
+
+```ts
+interface State {
+  userId: string;
+  pageTitle: string;
+  recentFiles: string[];
+  pageContents: string;
+}
+
+interface TopNavState {
+  userId: string;
+  pageTitle: string;
+  recentFiles: string[];
+}
+```
+
+`TopNavState`를 확장하여 `State`를 구성하기보다, `State`의 부분 집합으로 `TopNavState`를 정의하는 것이 바람직해 보입니다. 이 방법이 전체 앱의 상태를 하나의 인터페이스로 유지할 수 있게 해줍니다. `State`를 인덱싱하여 속성의 타입에서 중복을 제거할 수 있습니다.
+
+```ts
+type TopNavState = {
+  userId: State['userId'];
+  pageTitle: State['pageTitle'];
+  recentFiles: State['recentFiles'];
+}
+```
+
+그러나 여전히 반복되는 코드가 존재합니다. 이때 **매핑된 타입**을 사용하면 좀 더 나아집니다.
+
+```ts
+type TopNavState = {
+  [k in 'userId' | 'pageTitle' | 'recentFiles']: State[k]
+};
+```
+
+매핑된 타입은 배열의 필드를 루프 도는 것과 같은 방식입니다. 이 패턴은 표준 라이브러리에서도 일반적으로 찾을 수 있으며, `Pick`이라고 합니다.
+
+```ts
+type Pick<T, K> = { [k in K]: T[k] };
+
+type TopNavState = Pick<State, 'userId' | 'pageTitle' | 'recentFiles'>;
+```
+
+태그된 유니온에서도 다른 형태의 중복이 발생할 수 있습니다. 그런데 단순히 태그를 붙이기 위해서 타입을 사용한다면 어떨지 생각해 보겠습니다.
+
+```ts
+interface SaveAction {
+  type: 'save';
+  // ...
+}
+
+interface LoadAction {
+  type: 'load';
+  // ...
+}
+
+type Action = SaveAction | LoadAction;
+type ActionType = 'save' | 'load'; // 타입의 반복!
+```
+
+`Action` 유니온을 인덱싱하면 타입 반복 없이 `ActionType`은 자동적으로 그 타입을 포합합니다. `ActionType`은 `Pick`을 사용하여 얻게 되는, `type` 속성을 가지는 인터페이스와는 다릅니다.
+
+```ts
+type ActionRec = Pick<Action, 'type'>; // { type: "save" | "load" }
+```
+
+한편 생성하고 난 다음에 업데이트가 되는 클래스를 정의한다면, `update` 메서드 매개변수의 타입은 생성자와 동일한 매개변수이면서, 타입 대부분의 선택적 필드가 됩니다.
+
+```ts
+interface Options {
+  width: number;
+  height: number;
+  color: string;
+  label: string;
+}
+
+interface OptionsUpdate {
+  width?: number;
+  height?: number;
+  color?: string;
+  label?: string;
+}
+
+class UIWidget {
+  constructor(init: Options) { /* ... */ }
+  update(options: OptionsUpdate) { /* ... */ }
+}
+```
+
+매핑된 타입과 `keyof`를 사용하면 `Options`으로부터 `OptionsUpdate`를 만들 수 있습니다.
+
+```ts
+type OptionsUpdate = { [k in keyof Options]?: Options[k] };
+```
+
+이 패턴 역시 아주 일반적이며 표준 라이브러리에 Partial이라는 이름으로 포함되어 있습니다.
+
+```ts
+class UIWidget {
+  constructor(init: Options) { /* ... */ }
+  update(options: Partial<Options>) { /* ... */ }
+}
+```
+
+값의 형태에 해당하는 타입을 정의하고 싶을 때도 있습니다.
+
+```ts
+const INIT_OPTIONS = {
+  width: 640,
+  height: 400,
+  color: '#00FF00',
+  label: 'VGA',
+};
+
+interface Options {
+  width: number;
+  height: number;
+  color: string;
+  label: string;
+}
+```
+
+이런 경우 `typeof`를 사용하면 됩니다.
+
+```ts
+type Options = typeof INIT_OPTIONS;
+```
+
+이 코드는 자바스크립트의 런타임 연산자 `typeof`를 사용한 것처럼 보이지만, 실제로는 타입스크립트 단계에서 연산되며 훨씬 더 정확하게 타입을 표현합니다. 그런데 값으로부터 타입을 만들어낼 때는 선언의 순서에 중의해야 합니다. 그렇게 해야 타입이 더 명확해지고, 예상하기 어려운 타입 변동을 방지할 수 있습니다.   
+
+함수나 메서드의 반환 값에 명명된 타입을 만들고 싶을 수도 있습니다.
+
+```ts
+function getUserInfo(userId: string) {
+  // ...
+  return {
+    userId,
+    name,
+    age,
+    height,
+    weight,
+    favoriteColor,
+  };
+}
+```
+
+이때는 조건부 타입이 필요합니다. 표준 라이브러리에는 이러한 일반적인 패턴의 제너릭 타입이 정의되어 있습니다.
+
+```ts
+type UserInfo = ReturnType<typeof getUserInfo>;
+```
+
+제너릭 타입은 타입을 위한 함수와 같습니다. 그리고 함수에는 코드에 대한 DRY 원칙을 지킬 때 유용하게 사용됩니다. 함수에서 매개변수로 매핑할 수 있는 값을 제한하기 위해 타입 시스템을 사용하는 것처럼 제너릭 타입에서 매개변수를 제한할 수 있는 방법이 필요합니다.   
+
+제너릭 타입에서 매개변수를 제한할 수 있는 방법은 `extends`를 사용하는 것입니다. `extends`를 이용하면 제너릭 매개변수가 특정 타입을 확장한다고 선헌할 수 있습니다.
+
+```ts
+interface Name {
+  first: string;
+  last: string;
+}
+
+type DancingDuo<T extends Name> = [T, T];
+
+const couple1: DancingDuo<Name> = [
+  { first: 'Fred', last: 'Astaire' },
+  { first: 'Ginger', last: 'Rogers' }
+]; // OK
+
+const couple2: DancingDuo<{ first: string }> = [ // "Name" 타입에 필요한 "last" 속성이 없습니다.
+  { first: 'Sonny' },
+  { first: 'Cher' },
+]
+```
+
+`{ first: string }`은 `Name`을 확장하지 않기 때문에 오류가 발생합니다.   
+
+점점 더 추상적인 타입을 다루고 있지만, 원래의 목표를 잊으면 안 됩니다. 원래의 목표는 유효한 프로그램은 통과시키고 무효한 프로그램에는 오류를 발생시키는 것입니다. 값 공간에서와 마찬가지로 반복적인 코드는 타입 공간에서도 좋지 않습니다. 반복하지 않도록 주의해야 합니다.
+
+## 🥕 아이템 15. 동적 데이터에 인덱스 시그니처 사용하기
+자바스크립트 객체는 문자열 키를 타입의 값에 관계없이 매핑합니다. 타입스크립트에서는 타입에 **인덱스 시그니처**를 명시하여 유연하게 매핑을 표현할 수 있습니다.
+
+```ts
+type Rocket = {
+  [property: string]: string
+};
+
+const rocket: Rocket = {
+  name: 'Falcon 9',
+  variant: 'v1.0',
+  thrust: '4,940 kN',
+}; // 정상
+```
+
+`[property: string]: string`이 인덱스 시그니처이며, 다음 세 가지 의미를 담고 있습니다.
+- 키의 이름: 키의 위치만 표시하는 용도입니다. 타입 체커에서는 사용하지 않기 때문에 무시할 수 있는 참고 정보라고 생각해도 됩니다.
+- 키의 타입: `string`이나 `number` 또는 `symbol`의 조합이어야 하지만, 보통은 `string`을 사용합니다.
+- 값의 타입: 어떤 것이든 될 수 있습니다.
+
+이렇게 타입 체크가 수행되면 네 가지 단점이 드러납니다.
+- 잘못된 키를 포함해 모든 키를 허용합니다.
+- 특정 키가 필요하지 않습니다. `{}`도 유효한 `Rocket`입니다.
+- 키마다 다른 타입을 가질 수 없습니다.
+- 타입스크립트 언어 서비스는 다음과 같은 경우에 도움이 되지 못합니다. 키는 무엇이든 가능하기 때문에 자동 완성 기능이 동작하지 않습니다.
+
+인덱스 시그니처는 부정확하므로 더 나은 방법을 찾아야 합니다.
+
+```ts
+interface Rocket {
+  name: string;
+  variant: string;
+  thrust_kN: number;
+}
+
+const falconHeavy: Rocket = {
+  name: 'Falcon Heavy',
+  variant: 'v1',
+  thrust_kN: 15_200,
+};
+```
+
+인덱스 시그니처는 동적 데이터를 표현할 때 사용합니다.   
+어떤 타입에 가능한 필드가 제한되어 있는 경우라면 인덱스 시그니처로 모델링하지 말아야 합니다. 예를 들어 데이터에 A, B, C, D 같은 키가 있지만, 얼마나 많이 있는지 모른다면 선택적 필드 또는 유니온 타입으로 모델링하면 됩니다.   
+
+`string` 타입이 너무 광범위해서 인덱스 시그니처를 사용하는 데 문제가 있다면, 두 가지 다른 대안을 생각해 볼 수 있습니다.   
+첫 번째, `Record`를 사용하는 방법이니다. `Record`는 키 타입에 유연성을 제공하는 제너릭 타입입니다. 특히, `string`의 부분 집합을 사용할 수 있습니다.
+
+```ts
+type Vec3D = Record<'x' | 'y' | 'z', number>;
+// Type Vec3D = {
+//   x: number;
+//   y: number;
+//   z: number;
+// }
+```
+
+두 번째, 매핑된 타입을 사용하는 방법입니다. 매핑된 타입은 키마다 별도의 타입을 사용하게 해 줍니다.
+
+```ts
+type Vec3D = {
+  [k in 'x' | 'y' | 'z']: number
+};
+// Type Vec3D = {
+//   x: number;
+//   y: number;
+//   z: number;
+// }
+
+type ABC = {
+  [k in 'a' | 'b' | 'c']: k extends 'b' ? string : number
+};
+// Type ABC = {
+//   a: number;
+//   b: string;
+//   c: number;
+// }
+```
+
+## 🥕 아이템 16. number 인덱스 시그니처보다는 Array, 튜플, ArrayLike를 사용하기
+어떤 길이를 가지는 배열과 비슷한 형태의 튜플을 사용하고 싶다면 타입스크립트에 있는 `ArrayLike` 타입을 사용합니다.
+
+```ts
+function checkedAccess<T>(xs: ArrayLike<T>, i: number): T {
+  if (i < xs.length) {
+    return xs[i];
+  }
+
+  throw new Error(`배열의 끝을 지나서 ${i}를 접근하려고 했습니다.`);
+}
+```
+
+이 예제는 길이와 숫자 인덱스 시그니처만 있습니다. 이런 경우가 실제로는 드물기는 하지만 필요하다면 `ArrayLike`를 사용해야 합니다. 그러나 `ArrayLike`를 사용하더라도 키는 여전히 문자열이라는 점을 잊지 말아야 합니다.
+
+```ts
+const tupleLike: ArrayLike<string> = {
+  '0': 'A',
+  '1': 'B',
+  length: 2,
+}; // 정상
+```
+
+배열은 객체이므로 키는 숫자가 아니라 문자열입니다. 인덱스 시그니처로 사용된 `number` 타입은 버그를 잡기 위한 순수 타입스크립트 코드입니다.   
+인덱스 시그니처에 `number`를 사용하기보다 `Array`나 튜플, 또는 `ArrayLike` 타입을 사용하는 것이 좋습니다.
