@@ -150,9 +150,6 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala'],
     },
-    gtag: {
-      trackingID: 'G-VJSDQ25SYT',
-    },
   },
   presets: [
     [
@@ -170,6 +167,9 @@ module.exports = {
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
+        },
+        gtag: {
+          trackingID: 'G-VJSDQ25SYT',
         },
       },
     ],
