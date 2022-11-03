@@ -729,3 +729,144 @@ const tupleLike: ArrayLike<string> = {
 
 배열은 객체이므로 키는 숫자가 아니라 문자열입니다. 인덱스 시그니처로 사용된 `number` 타입은 버그를 잡기 위한 순수 타입스크립트 코드입니다.   
 인덱스 시그니처에 `number`를 사용하기보다 `Array`나 튜플, 또는 `ArrayLike` 타입을 사용하는 것이 좋습니다.
+
+## 🥕 아이템 17. 변경 관련된 오류 방지를 위해 `readonly` 사용하기
+`readonly number[]`는 "타입"이고, `number[]`와 구분되는 몇 가지 특징이 있습니다.
+- 배열의 요소를 읽을 수 있지만, 쓸 수는 없습니다.
+- `length`를 읽을 수 있지만, 바꿀 수는 없습니다.(배열을 변경함)
+- 배열을 변경하는 `pop`을 비롯한 다른 메서드를 호출할 수 없습니다.
+
+`number[]`는 `readonly number[]`보다 기능이 많기 때문에, `readonly number[]`의 서브타입이 됩니다. 따라서 변경 가능한 배열을 `readonly` 배열에 할당할 수 있습니다. 하지만 그 반대는 불가능합니다.
+
+```ts
+const a: number[] = [1, 2, 3];
+const b: readonly number[] = a;
+const c: number[] = b; // "readonly number[]" 타입은 "readonly"이므로 변경 가능한 "number[]" 타입엥 할당될 수 없습니다.
+```
+
+타입 단언문 없이 `readonly` 접근제어자를 제거할 수 있다면 `readonly`는 쓸모없을 것이므로 여기서 오류가 발생하는 게 이치에 맞습니다.   
+매개변수를 `readonly`로 선언하면 다음과 같은 일이 생깁니다.
+- 타입스크립트는 매개변수가 함수 내에서 변경이 일어나는지 체크합니다.
+- 호출하는 쪽에서는 함수가 매개변수를 변경하지 않는다는 보장을 받게 됩니다.
+- 호출하는 쪽에서 함수에 `readonly` 배열을 매개변수로 넣을 수도 있습니다.
+
+자바스크립트에서는(타입스크립트에서도 마찬가지) 명시적으로 언급하지 않는 한, 함수가 매개변수를 변경하지 않는다고 가정합니다. 그러나 이러한 암묵적인 방법은 타입 체크에 문제를 일으킬 수 있습니다. 명시적인 방법을 사용하는 것이 컴파일러와 사람 모두에게 좋습니다.   
+
+만약 함수가 매개변수를 변경하지 않는다면, `readonly`로 선언해야 합니다. 이로 인한 단점을 굳이 찾아보자면 매개변수가 `readonly`로 선언되지 않은 함수를 호출해야 할 경우도 잇다는 것입니다. 만약 함수가 매개변수를 변경하지 않고도 제어가 가능하다면 `readonly`로 선언하면 됩니다. 만약 다른 라이브러리에 있는 함수를 호출하는 경우라면, 타입 선언을 바꿀 수 없으므로 타입 단언문을 사용해야 합니다. `readonly`를 사용하면 지역 변수와 관련된 모든 종류의 변경 오류를 방지할 수 있습니다.   
+
+`readonly`는 얕게(shallow) 동작한다는 것에 유의하며 사용해야 합니다. 만약 객체의 `readonly` 배열이 있다면, 그 객체 자체는 `readonly`가 아닙니다.   
+비슷한 경우가 `readonly`의 사촌 격이자 객체에 사용되는 `Readonly` 제너릭에도 해당됩니다.
+
+```ts
+interface Outer {
+  inner: {
+    x: number;
+  }
+}
+
+const o: Readonly<Outer> = {
+  inner: {
+    x: 0
+  }
+};
+
+o.inner = { x: 1 }; // 읽기 전용 속성이기 때문에 inner에 할당할 수 없습니다.
+o.inner.x = 1; // 정상
+```
+
+타입 별칭을 만든 다음에 정확히 무슨 일이 일어나는지 편집기에서 살펴볼 수 있습니다.
+
+```ts
+type T = Readonly<Outer>;
+// Type T = {
+//   readonly inner: {
+//     x: number;
+//   };
+// }
+```
+
+중요한 점은 `readonly` 접근제어자는 `inner`에 적용되는 것이지 `x`는 아니라는 것입니다. 현재 시점에는 깊은(deep) `readonly` 타입이 기본적으로 지원되지 않지만, 제너릭을 만들면 깊은 `readonly` 타입을 사용할 수 있습니다. 그러나 제너릭은 만들기 까다롭기 때문에 라이브러리를 사용하는 게 낫습니다. 예를 들어 [ts-essentials](https://github.com/ts-essentials/ts-essentials)에 있는 [DeepReadonly](https://github.com/ts-essentials/ts-essentials#Deep-wrapper-types) 제너릭을 사용하면 됩니다.
+
+## 🥕 아이템 18. 매핑된 타입을 사용하여 값을 동기화하기
+산점도를 그리기 위한 UI 컴포넌트를 작성한다고 가정해 보겠습니다. 여기에는 디스플레이와 동작을 제어하기 위한 몇 가지 다른 타입의 속성이 포함됩니다.
+
+```ts
+interface ScatterProps {
+  // The data
+  xs: number[];
+  ys: number[];
+
+  // Display
+  xRange: [number, number];
+  yRange: [number, number];
+  color: string;
+
+  // Events
+  onClick: (x: number, y: number, index: number) => void;
+}
+```
+
+불필요한 작업을 피하기 위해, 필요할 때에만 차트를 다시 그릴 수 있습니다. 데이터나 디스플레이 속성이 변경되면 다시 그려야 하지만, 이벤트 핸들러가 변경되면 다시 그릴 필요가 없습니다. 렌더링할 때마다 이벤트 핸들러 `Prop`이 새 화살표 함수로 설정됩니다.   
+
+최적화를 두 가지 방법으로 구현해 보겠습니다. 다음 에제는 첫 번째 방법입니다.
+
+```ts
+function shouldUpdate(oldProps: ScatterProps, newProps: ScatterProps) {
+  let k: keyof ScatterProps;
+
+  for (k in oldProps) {
+    if (oldProps[k] !== newProps[k]) {
+      if (k !== 'onClick') return true;
+    }
+  }
+
+  return false;
+}
+```
+
+만약 새로운 속성이 추가되면 `shouldUpdate` 함수는 값이 변경될 때마다 차트를 다시 그릴 것입니다. 이렇게 처리하는 것을 **보수적(conservative) 접근법** 또는 **실패에 닫힌(fail close) 접근법**이라고 합니다. 이 접근법을 이용하면 차트가 정확하지만 너무 자주 그려질 가능성이 있습니다.   
+
+두 번째 최적화 방법은 다음과 같습니다. **실패에 열린 접근법**을 사용했습니다.
+
+```ts
+function shouldUpdate(oldProps: ScatterProps, newProps: ScatterProps) {
+  return (
+    oldProps.xs !== newProps.xs ||
+    oldProps.ys !== newProps.ys ||
+    oldProps.xRange !== newProps.xRange ||
+    oldProps.yRange !== newProps.yRange ||
+    oldProps.color !== newProps.color
+    // no check for onClick
+  )
+}
+```
+
+이 코드는 차트를 불필요하게 다시 그리는 단점을 해결헀습니다. 하지만 실제로 차트를 다시 그려야 할 경우에 누락되는 일이 생길 수 있습니다. 앞선 두 가지 최적화 방법은 모두 이상적이이 않습니다. 새로운 속성이 추가될 때 직접 `shouldUpdate`를 고치도록 하는 게 낫습니다.   
+
+다음은 타입 체커가 동작하도록 개선한 코드입니다. 핵심은 매핑된 타임과 객체를 사용하는 것입니다.
+
+```ts
+const REQUIRES_UPDATE: { [k in keyof ScatterProps]: boolean} = {
+  xs: true,
+  ys: true,
+  xRange: true,
+  yRange: true,
+  color: true,
+  onClick: false,
+};
+
+function shouldUpdate(oldProps: ScatterProps, newProps: ScatterProps) {
+  let k: keyof ScatterProps;
+
+  for (k in oldProps) {
+    if (oldProps[k] !== newProps[k] && REQUIRES_UPDATE[k]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+```
+
+여기서 우리는 앞에서 다루었던 최적화 예제에서처럼 실패에 열린 방법을 선택할지, 닫힌 방법을 선택할지 정해야 합니다.   
+매핑된 타입은 한 객체가 또 다른 객체와 정확히 같은 속성을 가지게 할 때 이상적입니다. 이번 예제처럼 매핑된 타입을 사용해 타입스크립트가 코드에 제약을 강제하도록 할 수 있습니다.
