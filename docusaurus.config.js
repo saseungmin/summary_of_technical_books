@@ -1,5 +1,5 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const darkCodeTheme = require('prism-react-renderer/themes/palenight');
 require('dotenv').config();
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
@@ -9,6 +9,10 @@ module.exports = {
   url: 'https://saseungmin.github.io',
   baseUrl: '/reading_books_record_repository/',
   onBrokenLinks: 'throw',
+  i18n: {
+    defaultLocale: 'ko',
+    locales: ['ko'],
+  },
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'saseungmin', // Usually your GitHub org/user name.
@@ -175,9 +179,15 @@ module.exports = {
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
+          filename: 'sitemap.xml',
+        },
+        googleAnalytics: {
+          trackingID: 'G-VJSDQ25SYT',
+          anonymizeIP: true,
         },
         gtag: {
           trackingID: 'G-VJSDQ25SYT',
+          anonymizeIP: true,
         },
       },
     ],
