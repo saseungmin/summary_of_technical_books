@@ -1,5 +1,6 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+require('dotenv').config();
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -149,6 +150,13 @@ module.exports = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
       additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala'],
+    },
+    algolia: {
+      appId: process.env.ALGOLIA_APP_ID,
+      apiKey: process.env.ALGOLIA_API_KEY,
+      indexName: 'prod_SUMMARY_OF_BOOKS',
+      contextualSearch: true,
+      externalUrlRegex: 'external\\.com|domain\\.com',
     },
   },
   presets: [
