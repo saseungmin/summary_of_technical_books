@@ -13,3 +13,5 @@ sidebar_position: 1
 ### 🐣 [Chapter 1: 다중 통화를 지원하는 Money 객체](/docs/test/test-driven-development/chapter-1)
 
 ### 🐣 [Chapter 2: 타락한 객체](/docs/test/test-driven-development/chapter-2)
+
+### 🐣 [Chapter 3: 모두를 위한 평등](/docs/test/test-driven-development/chapter-3)

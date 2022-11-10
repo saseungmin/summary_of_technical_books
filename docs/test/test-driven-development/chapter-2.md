@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-sidebar_label: 1. 타락한 객체
+sidebar_label: 2. 타락한 객체
 ---
 
 # 🌈 Chapter 2: 타락한 객체
