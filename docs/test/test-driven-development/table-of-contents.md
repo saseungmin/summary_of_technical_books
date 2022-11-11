@@ -15,3 +15,5 @@ sidebar_position: 1
 ### 🐣 [Chapter 2: 타락한 객체](/docs/test/test-driven-development/chapter-2)
 
 ### 🐣 [Chapter 3: 모두를 위한 평등](/docs/test/test-driven-development/chapter-3)
+
+### 🐣 [Chapter 4: 프라이버시](/docs/test/test-driven-development/chapter-4)
