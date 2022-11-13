@@ -19,3 +19,5 @@ sidebar_position: 1
 ### 🐣 [Chapter 4: 프라이버시](/docs/test/test-driven-development/chapter-4)
 
 ### 🐣 [Chapter 5: 솔직히 말하자면](/docs/test/test-driven-development/chapter-5)
+
+### 🐣 [Chapter 6: 돌아온 "모두를 위한 평등"](/docs/test/test-driven-development/chapter-6)
