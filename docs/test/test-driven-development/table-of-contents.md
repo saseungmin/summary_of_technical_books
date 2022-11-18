@@ -23,3 +23,5 @@ sidebar_position: 1
 ### 🐣 [Chapter 6: 돌아온 "모두를 위한 평등"](/docs/test/test-driven-development/chapter-6)
 
 ### 🐣 [Chapter 7: 사과와 오렌지](/docs/test/test-driven-development/chapter-7)
+
+### 🐣 [Chapter 8: 객체 만들기](/docs/test/test-driven-development/chapter-8)
