@@ -27,3 +27,5 @@ sidebar_position: 1
 ### 🐣 [Chapter 8: 객체 만들기](/docs/test/test-driven-development/chapter-8)
 
 ### 🐣 [Chapter 9: 우리가 사는 시간](/docs/test/test-driven-development/chapter-9)
+
+### 🐣 [Chapter 10: 흥미로운 시간](/docs/test/test-driven-development/chapter-10)
