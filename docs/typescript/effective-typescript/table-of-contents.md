@@ -33,3 +33,6 @@ sidebar_position: 1
 16. number 인덱스 시그니처보다는 Array, 튜플, ArrayLike를 사용하기
 17. 변경 관련된 오류 방지를 위해 `readonly` 사용하기
 18. 매핑된 타입을 사용하여 값을 동기화하기
+
+#### [🎈 Chapter 3: 타입 추론](/docs/typescript/effective-typescript/chapter-3)
+19. 추론 가능한 타입을 사용해 장황한 코드 방지하기
