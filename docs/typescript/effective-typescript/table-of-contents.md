@@ -36,3 +36,6 @@ sidebar_position: 1
 
 #### [🎈 Chapter 3: 타입 추론](/docs/typescript/effective-typescript/chapter-3)
 19. 추론 가능한 타입을 사용해 장황한 코드 방지하기
+20. 다른 타입에는 다른 변수 사용하기
+21. 타입 넓히기
+
