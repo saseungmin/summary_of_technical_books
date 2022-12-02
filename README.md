@@ -5,7 +5,7 @@
 
 ## 📚 어디서 읽을까요?
 #### 👉 [웹 사이트에서 읽기](https://saseungmin.github.io/reading_books_record_repository)
-#### 👉 [Github MarkDown](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown)
+#### 👉 [Github MarkDown](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown) (더 이상 업데이트되지 않아요. 🥲)
 
 ## 💻 스터디를 진행한 책 목록
 #### 기간 내에 정해진 분량의 책을 읽고 스터디를 진행합니다.
