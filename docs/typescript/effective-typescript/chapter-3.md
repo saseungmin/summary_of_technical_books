@@ -289,3 +289,144 @@ const a2 = [1, 2, 3] as const; // 타입이 readonly [1, 2, 3]
 ```
 
 넓히기로 인해 오류가 발생한다고 생각되면, 명시적 타입 구문 또는 `const` 단언문을 추가하는 것을 고려해야 합니다. 단언문으로 인해 추론이 어떻게 변화하는지 편집기에서 주기적으로 타입을 살펴보기 바랍니다.(아이템 6)
+
+## 🥕 아이템 22. 타입 좁히기
+타입 좁히기는 타입스크립트가 넓은 타입으로부터 좁은 타입으로 진행하는 과정을 말합니다. 아마도 가장 일반적인 예시는 `null` 체크일 겁니다.
+
+```ts
+const el = document.getElementById('foo'); // 타입이 HTMLElement | null
+if (el) {
+  el // 타입이 HTMLElement
+  el.innerHTML = 'Party Time'.blink();
+} else {
+  el // 타입이 null
+  alert('No element #foo');
+}
+```
+
+타입 체커는 일반적으로 이러한 조건문에서 타입 좁히기를 잘 해내지만, 타입 별칭이 존재한다면 그러지 못할 수도 있습니다. 타입 별칭에 대한 내용은 아이템 24에서 다루겠습니다.   
+
+분기문에서 예외를 던지거나 함수를 반환하여 블록의 나머지 부분에서 변수의 타입을 좁힐 수도 있습니다.
+
+```ts
+const el = document.getElementById('foo'); // 타입이 HTMLElement | null
+if (!el) throw new Error('Unable to find #foo');
+el; // 이제 타입은 HTMLElement
+el.innerHTML = 'Party Time'.blink();
+```
+
+이 외에도 타입을 좁히는 방법은 많이 있습니다. 다음은 `instanceof`를 사용해서 타입을 좁히는 예제입니다.
+
+```ts
+function contains(text: string, search: string | RegExp) {
+  if (search instanceof RegExp) {
+    search // 타입이 RegExp
+    return !!search.exec(text);
+  }
+
+  search // 타입이 string
+  return text.includes(search);
+}
+```
+
+속성 체크로도 타입을 좁힐 수 있습니다.
+
+```ts
+interface A { a: number }
+interface B { b: number }
+function pickAB(ab: A | B) {
+  if ('a' in ab) {
+    ab // 타입이 A
+  } else {
+    ab // 타입이 B
+  }
+  ab // 타입이 A | B
+}
+```
+
+`Array.isArray` 같은 일부 내장 함수로도 타입을 좁힐 수 있습니다.
+
+```ts
+function contains(text: string, terms: string|string[]) {
+  const termList = Array.isArray(terms) ? terms : [terms];
+  termList // 타입이 string[]
+  // ...
+}
+```
+
+타입을 섣불리 판단하는 실수를 저지르기 쉬우므로 다시 한번 꼼꼼히 따져 봐야 합니다.
+
+```ts
+function foo(x?: number|string|null) {
+  if (!x) {
+    x; // 타입이 string | number | null | undefined
+  }
+}
+```
+
+빈 문자열 `''`와 `0` 모두 `false`가 되기 때문에, 타입은 전혀 좁혀지지 않았고 `x`는 여전히 블록 내에서 `string` 또는 `number`가 됩니다.   
+
+타입을 좁히는 또 다른 일반적인 방법은 명시적 '태그'를 붙이는 것입니다.
+
+```ts
+interface UploadEvent { type: 'upload'; filename: string; contents: string }
+interface DownloadEvent { type: 'download'; filename: string; }
+type AppEvent = UploadEvent | DownloadEvent;
+function handleEvent(e: AppEvent) {
+  switch (e.type) {
+    case 'download':
+      e // 타입이 DownloadEvent
+      break;
+    case 'upload':
+      e; // 타입이 UploadEvent
+      break;
+  }
+}
+```
+
+이 패턴은 '태그된 유니온' 또는 '구별된 유니온'이라고 불리며, 타입스크립트 어디에서나 찾아볼 수 있습니다.   
+만약 타입스크립트가 타입을 식별하지 못한다면, 식별을 돕기 위해 커스텀 함수를 도입할 수 있습니다.   
+
+```ts
+function isInputElement(el: HTMLElement): el is HTMLInputElement {
+  return 'value' in el;
+}
+
+function getElementContent(el: HTMLElement) {
+  if (isInputElement(el)) {
+    el; // 타입이 HTMLInputElement
+    return el.value;
+  }
+  el; // 타입이 HTMLElement
+  return el.textContent;
+}
+```
+
+이러한 기법을 '사용자 정의 타입 가드'라고 합니다. 반환 타입의 `el is HTMLInputElement`는 함수의 반환이 `true`인 경우, 타입 체커에게 매개변수의 타입을 좁힐 수 있다고 알려 줍니다.   
+어떤 함수들은 타입 가드를 사용하여 배열과 객체의 타입 좁히기를 할 수 있습니다. 예를 들어, 배열에서 어떤 탐색을 수행할 때 `undefined`가 될 수 있는 타입을 사용할 수 있습니다.
+
+```ts
+const jackson5 = ['Jackie', 'Tito', 'Jermaine', 'Marlon', 'Michael'];
+const members = ['Janet', 'Michael'].map(
+  who => jackson5.find(n => n === who)
+); // 타입이 (string | undefined)[]
+```
+
+`filter` 함수를 사용해 `undefined`를 걸러 내려고 해도 잘 동작하지 않을 겁니다.
+
+```ts
+const members = ['Janet', 'Michael'].map(
+  who => jackson5.find(n => n === who)
+).filter(who => who !== undefined); // 타입이 (string | undefined)[]
+```
+
+이럴 때 타입 가드를 사용하면 타입을 좁힐 수 있습니다.
+
+```ts
+function isDefined<T>(x: T | undefined): x is T {
+  return x !== undefined;
+}
+const members = ['Janet', 'Michael'].map(
+  who => jackson5.find(n => n === who)
+).filter(isDefined); // 타입이 string[]
+```
