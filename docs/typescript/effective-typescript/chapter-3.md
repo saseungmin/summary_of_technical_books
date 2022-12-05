@@ -430,3 +430,211 @@ const members = ['Janet', 'Michael'].map(
   who => jackson5.find(n => n === who)
 ).filter(isDefined); // 타입이 string[]
 ```
+
+## 🥕 아이템 23. 한꺼번에 객체 생성하기
+객체를 생성할 때는 속성을 하나씩 추가하기보다는 여러 속성을 포함해서 한꺼번에 생성해야 타입 추론에 유리합니다.
+
+```ts
+interface Point { x: number; y: number; }
+
+const pt: Point = {
+  x: 3,
+  y: 4,
+}
+```
+
+작은 객체들을 조합해서 큰 객체를 맏늘어야 하는 경우에도 여러 단계를 거치는 것은 좋지 않은 생각입니다.   
+다음과 같이 객체 전개 연산자 `...`를 사용하면 큰 객체를 한꺼번에 만들어 낼 수 있습니다.
+
+```ts
+const pt = { x: 3, y: 4 };
+const id = { name: 'Pythagoras' };
+const namedPoint = { ...pt, ...id };
+namedPoint.name; // 정상.
+```
+
+객체 전개 연산자를 사용하면 타입 걱정 없이 필드 단위로 객체를 생성할 수도 있습니다. 이때 모든 업데이트마다 새 변수를 사용하여 각각 새로운 타입을 얻도록 하는 게 중요합니다.
+
+```ts
+const pt0 = {};
+const pt1 = { ...pt0, x: 3 };
+const pt: Point = { ...pt1, y: 4 }; // 정상
+```
+
+타입에 안전한 방식으로 조건부 속성을 추가하려면, 속성을 추가하지 않는 `null` 또는 `{}`으로 객체 전개를 사용하면 됩니다.
+
+```ts
+declare let hasMiddle: boolean;
+const firstLast = { first: 'Harry', last: 'Truman' };
+const president = { ...firstLast, ...(hasMiddle ? { middle: 'S' } : {})};
+```
+
+편집기에서 `president` 심벌에 마우스를 올려 보면, 타입이 선택적 속성을 가진 것으로 추론된다는 것을 확인할 수 있습니다.
+
+```ts
+const president: {
+  middle?: string;
+  first: string;
+  last: string;
+}
+```
+
+전개 연산자로 한꺼번에 여러 속성을 추가할 수도 있습니다.
+
+```ts
+declare let hasDates: boolean;
+const nameTitle = { name: 'Khufu', title: 'Pharaoh' };
+const pharaoh = {
+  ...nameTitle,
+  ...(hasDates ? { start: -2589, end: -2566 } : {})
+};
+```
+
+편집기에서 `pharaoh` 심벌에 마우스를 올려 보면, 이제는 타입이 유니온으로 추론됩니다.
+
+```ts
+const pharaoh: {
+  start: number;
+  end: number;
+  name: string;
+  title: string;
+} | {
+  name: string;
+  title: string;
+}
+```
+
+`start`와 `end`가 선택적 필드이기를 원했다면 이런 결과가 당황스러울 수 있습니다. 이 타입에서는 `start`를 읽을 수 없습니다.   
+이 경우에는 `start`와 `end`가 항상 함께 정의됩니다. 이 점을 고려하면 유니온을 사용하는 게 가능한 값의 집합을 더 정확히 표현할 수 있습니다.(아이템 32) 그런데 유니온보다는 선택적 필드가 다루기에는 더 쉬울 수 있습니다. 선택적 필드 방식으로 표현하려면 다음처럼 헬퍼 함수를 사용하면 됩니다.
+
+```ts
+function addOptional<T extends object, U extends object>(
+  a: T, b: U | null
+): T & Partial<U> {
+  return { ...a, ...b };
+}
+
+const pharaoh = addOptional(
+  nameTitle,
+  hasDates ? { start: -2589, end: -2566 } : null
+);
+pharaoh.start // 정상, 타입이 number | undefined
+```
+
+가끔 객체나 배열을 변환해서 새로운 객체나 배열을 생성하고 싶을 수 있습니다. 이런 경우 루프 대신 내장된 함수형 기법 또는 로대시 같은 유틸리티 라이브러리를 사용하는 것이 '한꺼번에 객체 생성하기' 관점에서 보면 옳습니다.
+
+## 🥕 아이템 24. 일관성 있는 별칭 사용하기
+별칭을 남발해서 사용하면 제어 흐름을 분석하기 어렵습니다. 모든 언어의 컴파일러 개발자들은 무분별한 별칭 사용으로 골치를 썩고 있습니다. 타입스크립트에서도 마찬가지로 별칭을 신중하게 사용해야 합니다. 그래야 코드를  잘 이해할 수 있고, 오류도 쉽게 찾을 수 있습니다.   
+
+다각형을 표현하는 자료구조를 가정해 보겠습니다.
+
+```ts
+interface Coordinate {
+  x: number;
+  y: number;
+}
+
+interface BoundingBox {
+  x: [number, number];
+  y: [number, number];
+}
+
+interface Polygon {
+  exterior: Coordinate[];
+  holes: Coordinate[][];
+  bbox?: BoundingBox;
+}
+```
+
+`bbox` 속성을 사용하면 어떤 점이 다각형에 포함되는지 빠르게 체크할 수 있습니다.
+
+```ts
+function isPointInPolygon(polygon: Polygon, pt: Coordinate) {
+  if (polygon.bbox) {
+    if (pt.x < polygon.bbox.x[0] || pt.x > polygon.bbox.x[1] || pt.y < polygon.bbox.y[0] || pt.y > polygon.bbox.y[1]) {
+      return false;
+    }
+  }
+
+  // ...
+}
+```
+
+이 코드는 잘 작동하지만 반복되는 부분이 존재합니다. 특히 `polygon.bbox`는 3줄에 걸쳐 5번이나 등장합니다. 다음 코드는 중복을 줄이기 위해 임시 변수를 뽑아낸 모습입니다.
+
+```ts
+function isPointInPolygon(polygon: Polygon, pt: Coordinate) {
+  const box = polygon.bbox;
+  if (polygon.bbox) {
+    if (pt.x < box.x[0] || pt.x > box.x[1] || pt.y < box.y[0] || pt.y > box.y[1]) {
+      // error: 객체가 'undefined'일 수 있습니다.
+      return false;
+    }
+  }
+
+  // ...
+}
+```
+
+(`strictNullChecks`를 활성화했다고 가정했습니다.) 이 코드는 동작하지만 편집기에서 오류로 표시됩니다. 그 이유는 `polygon.bbox`를 별도의 `box`라는 별칭을 만들었고, 첫 번째 예시에서는 잘 동작했던 제어 흐름 분석을 방해했기 때문입니다.   
+속성 체크는 `polygon.bbox`의 타입을 정제했지만 `box`는 그렇지 않았기 때문에 오류가 발생했습니다. 이러한 오류는 "별칭은 일관성 있게 사용한다"는 기본 원칙을 지키면 방지할 수 있습니다.   
+
+속성 체크에 `box`를 사용하도록 코드를 바꿔 보겠습니다.
+
+```ts
+function isPointInPolygon(polygon: Polygon, pt: Coordinate) {
+  const box = polygon.bbox;
+  if (box) {
+    if (pt.x < box.x[0] || pt.x > box.x[1] || pt.y < box.y[0] || pt.y > box.y[1]) {
+      return false;
+    }
+  }
+
+  // ...
+}
+```
+
+타입 체커의 문제는 해결되었지만 코드를 읽는 사람에게는 문제가 남아 있습니다. `box`와 `bbox`는 같은 값인데 다른 이름을 사용한 것입니다. 객체 비구조화를 이용하면 보다 간결한 문법으로 일관된 이름을 사용할 수 있습니다. 배열과 중첩된 구조에서도 역시 사용할 수 있습니다.
+
+```ts
+function isPointInPolygon(polygon: Polygon, pt: Coordinate) {
+  const { bbox } = polygon;
+  if (bbox) {
+    const { x, y } = bbox;
+    if (pt.x < x[0] || pt.x > x[1] || pt.y < y[0] || pt.y > y[1]) {
+      return false;
+    }
+  }
+
+  // ...
+}
+```
+
+그러나 객체 비구조화를 이용할 때는 두 가지를 주의해야 합니다.
+- 전체 `bbox` 속성이 아니라 `x`와 `y`가 선택적 속성인 경우에 속성 체크가 더 필요합니다. 따라서 타입의 경계에 `null` 값을 추가하는 것이 좋습니다.
+- `bbox`에는 선택적 속성이 적합했지만 `holes`는 그렇지 않습니다. `holes`가 선택적이라면, 값이 없거나 빈 배열이었을 겁니다. 차이가 없는데 이름을 구별한 것입니다. 빈 배열은 '`holes` 없음'을 나타내는 좋은 방법입니다.
+
+별칭은 타입 체커뿐만 아니라 런타임에도 혼동을 야기할 수 있습니다.
+
+```ts
+const { bbox } = polygon;
+if (!bbox) {
+  calculatePolygonBbox(polygon); // polygon.bbox가 채워집니다.
+  // 이제 polygon.bbox와 bbox는 다른 값을 참조합니다!
+}
+```
+
+타입스크립트의 제어 흐름 분석은 지역 변수에는 꽤 잘 동작합니다. 그러나 객체 속성에는 주의해야 합니다.
+
+```ts
+function fn(p: Polygon) { /* ... */ }
+
+polygon.bbox // 타입이 BoundingBox | undefined
+if (polygon.bbox) {
+  polygon.bbox // 타입이 BoundingBox
+  fn(polygon);
+  polygon.bbox // 타입이 BoundingBox
+}
+```
+
+`fn(polygon)` 호출은 `polygon.bbox`를 제거할 가능성이 있으므로 타입을 `BoundingBox | undefined`로 되돌리는 것이 안전할 것입니다. 그러나 함수를 호출할 때마다 속성 체크를 반복해야 하기 때문에 좋지 않습니다. 그래서 타입스크립트는 함수가 타입 정제를 무효화하지 않는다고 가정합니다. 그러나 실제로는 무효화될 가능성이 있습니다. `polygon.bbox`로 사용하는 대신 `bbox` 지역 변수로 뽑아내서 사용하면 `bbox`의 타입은 정확히 유지되지만, `polygon.bbox`의 값과 같게 유지되지 않을 수 있습니다.
