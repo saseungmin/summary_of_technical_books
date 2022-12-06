@@ -13,6 +13,7 @@ module.exports = {
     defaultLocale: 'ko',
     locales: ['ko'],
   },
+  scripts: ['https://cdn.jsdelivr.net/npm/@docsearch/js@3'],
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'saseungmin', // Usually your GitHub org/user name.
