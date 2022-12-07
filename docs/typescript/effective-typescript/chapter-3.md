@@ -724,3 +724,165 @@ async function getJSON(url: string) {
   return jsonPromise;
 }
 ```
+
+## 🥕 아이템 26. 타입 추론에 문맥이 어떻게 사용되는지 이해하기
+문맥을 고려해 타입을 추론하면 가끔 이상한 결과가 나옵니다.   
+
+자바스크립트는 코드의 동작과 실행 순서를 바꾸지 않으면서 표현식을 상수로 분리해 낼 수 있습니다. 예를 들어, 다음 두 문장은 동일합니다.
+
+```ts
+// 인라인 형태
+setLanguage('JavaScript');
+
+// 참조 형태
+let language = 'JavaScript';
+setLanguage(language);
+```
+
+타입스크립트에서는 다음 리팩터링이 여전히 동작합니다.
+
+```ts
+function setLanguage(language: string) { /* ... */ }
+
+setLanguage('JavaScript');
+
+let language = 'JavaScript';
+setLanguage(language);
+```
+
+이제 문자열 타입을 더 특정해서 문자열 리터럴 타입의 유니온으로 바꾼다고 가정해 보겠습니다.
+
+```ts
+type Language = 'JavaScript' | 'TypeScript' | 'Python';
+function setLanguage(language: Language) { /* ... */ }
+
+setLanguage('JavaScript'); // 정상
+
+let language = 'JavaScript';
+setLanguage(language); // string 형식의 인수는 Language 형식의 매개변수에 할당될 수 없습니다.
+```
+
+인라인 형태에서 타입스크립트는 함수 선언을 통해 매개변수가 `Language` 타입이어야 한다는 것을 알고 있습니다. 해당 타입에 문자열 리터럴 `JavaScript`는 할당 가능하므로 정상입니다. 그러나 이 값을 변수로 분리해내면, 타입스크립트는 할당 시점에 타입을 추론합니다. 이번 경우는 `string`으로 추론했고, `Language` 타입으로 할당이 불가능하므로 오류가 발생했습니다.   
+
+이런 문제를 해결하는 두 가지 방법이 있습니다. 첫 번째 해법은 타입 선언에서 `language`의 가능한 값을 제한하는 것입니다.
+
+```ts
+let language: Language = 'JavaScript';
+setLanguage(language); // 정상
+```
+
+두 번째 해법은 `language`를 상수로 만드는 것입니다.
+
+```ts
+const language = 'JavaScript';
+setLanguage(language); // 정상
+```
+
+`const`를 사용하여 타입 체커에게 `language`는 변경할 수 없다고 알려 줍니다. 따라서 타입스크립트는 `language`에 대해서 더 정확한 타입인 문자열 리터럴 `JavaScript`로 추론할 수 있습니다.   
+
+그런데 이 과정에서 사용되는 문맥으로부터 값을 분리했습니다. 문맥과 값을 분리하면 추후에 근본적인 문제를 발생시킬 수 있습니다.
+
+### 튜플 사용 시 주의점
+이동이 가능한 지도를 보여 주는 프로그램을 작성한다고 생각해 보겠습니다.
+
+```ts
+// 매개변수는 (latitude, longitude) 쌍입니다.
+function panTo(where: [number, number]) { /* ... */ }
+
+panTo([10, 20]); // 정상
+
+const loc = [10, 20];
+panTo(loc); // number[] 형식의 인수는 [number, number] 형식의 매개변수에 할당될 수 없습니다.
+```
+
+`any`를 사용하지 않고 오류를 고칠 수 있는 방법을 생각해 보겠습니다. `any` 대신 `const`로 선언하면 된다는 답이 떠오를 수도 있겠지만 `loc`은 이미 `const`로 선언한 상태입니다. 그보다는 타입스크립트가 의도를 정확히 파악할 수 있도록 타입 선언을 제공하는 방법을 시도해 보겠습니다.
+
+```ts
+const loc: [number, number] = [10, 20];
+panTo(loc); // 정상
+```
+
+`any`를 사용하지 않고 오류를 고칠 수 있는 또 다른 방법은 상수 문맥을 제공하는 것입니다. `const`는 단지 값이 가리키는 참조가 변하지 않는 얕은 상수인 반면, `as const`는 그 값이 내부까지 상수라는 사실을 타입스크립트에게 알려 줍니다.
+
+```ts
+const loc = [10, 20] as const;
+panTo(loc); // readonly [10, 20] 형식은 readonly이며 변경 가능한 형식 [number, number]에 할당할 수 없습니다.
+```
+
+편집기에서 `loc`에 마우스를 올려보면, 타입은 이제 `number[]`가 아니라 `readonly[10, 20]`으로 추론됨을 알 수 있습니다. 그런데 안타깞게도 이 추론은 `panTo`의 타입 시그니처는 `where`의 내용이 불변이라고 보장하지 않습니다. 즉, `loc` 매개변수가 `readonly` 타입이므로 동작하지 않습니다.   
+따라서 `any`를 사용하지 않고 오류를 고칠 수 있는 최선의 해결책은 `panTo` 함수에 `readonly` 구문을 추가하는 것입니다.
+
+```ts
+function panTo(where: readonly [number, number]) { /* ... */ }
+const loc = [10, 20] as const;
+panTo(loc); // 정상
+```
+
+타입 시그니처를 수정할 수 없는 경우라면 타입 구문을 사용해야 합니다.   
+`as const`는 문맥 손실과 관련한 문제를 깔끔하게 해결할 수 있지만, 한 가지 단점을 가지고 있습니다. 만약 타입 정의에 실수가 있다면(예를 들어, 튜플에 세 번째 요소를 추가한다면) 오류는 타입 정의가 아니라 호출되는 곳에서 발생한다는 것입니다. 특히 여러 겹 중첩된 객체에서 오류가 발생한다면 근본적인 원인을 파악하기 어렵습니다.
+
+```ts
+const loc = [10, 20, 30] as const; // 실제 오류는 여기서 발생합니다.
+panTo(loc); // 에러 로그가 여기서 나타납니다.
+```
+
+### 객체 사용 시 주의점
+문맥에서 값을 분리하는 문제는 무자열 리터럴이나 튜플을 포함하는 큰 객체에서 상수를 뽑아낼 때도 발생합니다.
+
+```ts
+type Language = 'JavaScript' | 'TypeScript' | 'Python';
+interface GovernedLanguage {
+  language: Language;
+  organization: string;
+}
+
+function complain(language: GovernedLanguage) { /* ... */ }
+
+complain({ language: 'TypeScript', organization: 'Microsoft' }); // 정상
+
+const ts = {
+  language: 'TypeScript',
+  organization: 'Microsoft',
+};
+
+complain(ts); // 에러 발생
+```
+
+이 문제는 타입 선언을 추가하거나 상수 단언을 사용해 해결합니다.
+
+### 콜백 사용 시 주의점
+콜백을 다른 함수로 전달할 때, 타입스크립트는 콜백의 매개변수 타입을 추론하기 위해 문맥을 사용합니다.
+
+```ts
+function callWithRandomNumbers(fn: (n1: number, n2: number) => void) {
+  fn(Math.random(), Math.random());
+}
+
+callWithRandomNumbers((a, b) => {
+  a; // 타입이 number
+  b; // 타입이 number
+  console.log(a + b);
+});
+```
+
+`callWithRandomNumbers`의 타입 선언으로 인해 `a`와 `b`의 타입이 `number`로 추론됩니다. 콜백을 상수로 뽑아내면 문맥이 소실되고 `noImplicitAny` 오류가 발생하게 됩니다.
+
+```ts
+const fn = (a, b) => {
+  // a, b 매개변수에는 암시적으로 any 형식이 표함됩니다.
+  console.log(a + b);
+}
+
+callWithRandomNumbers(fn);
+```
+
+이런 경우는 매개변수에 타입 구문을 추가해서 해결할 수 있습니다.
+
+```ts
+const fn = (a: number, b: number) => {
+  console.log(a + b);
+}
+callWithRandomNumbers(fn);
+```
+
+또는 가능할 경우 전체 함수 표현식에 타입 선언을 적용하는 것입니다.
