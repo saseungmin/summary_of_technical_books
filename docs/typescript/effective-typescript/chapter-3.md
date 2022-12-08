@@ -886,3 +886,116 @@ callWithRandomNumbers(fn);
 ```
 
 또는 가능할 경우 전체 함수 표현식에 타입 선언을 적용하는 것입니다.
+
+## 🥕 아이템 27. 함수형 기법과 라이브러리로 타입 흐름 유지하기
+로데시나 람다 같은 라이브러리들의 일부 가능(`map`, `flatMap`, `filter`, `reduce` 등)은 순수 자바스크립트로 구현되어 있습니다. 이러한 기법은 루프를 대체할 수 있기 때문에 자바스크립트에서 유용하게 사용되는데, 타입스크립트와 조합하여 사용하면 더욱 빛을 발합니다. 그 이유는 타입 정보가 그대로 유지되면서 타입 흐름이 계속 전달되도록 하기 때문입니다. 반면에 직접 루프를 구현하면 타입 체크에 대한 관리도 직접 해야 합니다.   
+예를 들어, 어떤 CSV 데이터를 파싱한다고 생각해 보겠습니다. 순수 자바스크립트에서는 절차형 프로그래밍 형태로 구현할 수 있습니다.
+
+```ts
+const csvData = "...";
+const rawRows = csvData.split('/n');
+const headers = rawRows[0].split(',');
+
+const rows = rawRows.slice(1).map(rowStr => {
+  const row = {};
+  rowStr.split(',').forEach((val, j) => {
+    row[headers[j]] = val;
+  });
+  return row;
+});
+```
+
+함수형 마인드를 조금이라도 가진 자바스크립트 개발자라면 `reduce`를 사용해 행 객체를 만드는 방법을 선호할 수도 있습니다.
+
+```ts
+const rows = rawRows.slice(1)
+  .map(rowStr => rowStr.split(',')
+    .reduce((row, val, i) => (row[headers[i]] = val, row), {}));
+```
+
+이 코드는 절차형 코드에 비해 세 줄(약 20개의 글자)을 절약했지만 보는 사람에 따라 더 복잡하게 느껴질 수도 있습니다. 키와 값 배열로 취합해서 객체로 만들어 주는, 로대시의 `zipObject` 함수를 이용하면 코드를 더욱 짧게 만들 수 있습니다.
+
+```ts
+import _ from 'lodash';
+const rows = rawRows.slice(1)
+  .map(rowStr => _.zipObject(headers, rowStr.split(',')));
+```
+
+코드가 매우 짧아졌습니다. 그런데 자바스크립트에서는 프로젝트에 서드파티 라이브러리 종속성을 추가할 때 신중해야 합니다. 만약 서드파티 라이브러리 기반으로 코드를 짧게 줄이는 데 시간이 많이 든다면, 서드파티 라이브러리를 사용하지 않는 게 낫기 때문입니다.   
+
+그러나 같은 코드를 타입스크립트로 작성하면 서드파티 라이브러리를 사용하는 것이 무조건 유리합니다. 타입 정보를 참고하며 작업할 수 있기 때문에 서드파티 라이브러리 기반으로 바꾸는 데 시간이 훨씬 단축됩니다.   
+
+데이터의 가공이 정교해질수록 이러한 장점은 더욱 명확해집니다. 예를 들어, 모든 NBA 팀의 선수 명단을 가지고 있다고 가정해 보겠습니다.
+
+```ts
+interface BasketballPlayer {
+  name: string;
+  team: string;
+  salary: number;
+}
+
+declare const rosters: { [team: string]: BasketballPlayer[] };
+```
+
+르프를 사용해 단순 목록을 만들려면 배열에 `concat`을 사용해야 합니다. 다음 코드는 동작이 되지만 타입 체크는 되지 않습니다.
+
+```ts
+let allPlayers = [];
+
+for (const players of Object.values(rosters)) {
+  allPlayers = allPlayers.concat(players);
+  // 'allPlayers' 변수에는 암시적으로 'any[]' 형식이 포함됩니다.
+}
+```
+
+이 오류를 고치려면 `allPlayers`에 타입 구문을 추가해야 합니다.
+
+```ts
+let allPlayers: BasketballPlayer[] = [];
+for (const players of Object.values(rosters)) {
+  allPlayers = allPlayers.concat(players); // 정상
+}
+```
+
+그러나 더 나은 해법은 `Array.prototype.flat`을 사용하는 것입니다.
+
+```ts
+const allPlayers = Object.values(rosters).flat();
+```
+
+`flat` 메서드는 다차원 배열을 평탄화해줍니다. 타입 시그니처는 `T[][] => T[]` 같은 형태입니다. 이 버전이 가장 간결하고 타입 구문도 필요 없습니다. 또한 `allPlayers` 변수가 향후에 변경되지 않도록 `let` 대신 `const`를 사용할 수 있습니다.   
+
+`allPlayers`를 가지고 각 팀별로 연봉 순으로 정렬해서 최고 연봉 선수의 명단을 만든다고 가정해 보겠습니다. 로대시 없는 방법은 다음과 같습니다. 함수형 기법을 쓰지 않은 부분은 타입 구문이 필요합니다.
+
+```ts
+const teamToPlayers: {[team: string]: BasketballPlayer[]} = {};
+for (const player of allPlayers) {
+  const { team } = player;
+  teamToPlayers[team] = teamToPlayers[team] || [];
+  teamToPlayers[team].push(player);
+}
+
+for (const players of Object.values(teamToPlayers)) {
+  players.sort((a, b) => b.salary - a.salary);
+}
+
+const bestPaid = Object.values(teamToPlayers).map(players => players[0]);
+bestPaid.sort((playerA, playerB) => playerB.salary - playerA.salary);
+console.log(bestPaid);
+```
+
+로데시를 사용해서 동일한 작업을 하는 코드를 구현하면 다음과 같습니다.
+
+```ts
+const bestPaid = _(allPlayers)
+  .groupBy(player => player.team)
+  .mapValues(players => _.maxBy(players, p => p.salary)!)
+  .values()
+  .sortBy(p => -p.salary)
+  .value();
+```
+
+길이가 절반으로 줄었고, 보기에도 깔끔하며, `null`이 아님 단언문을 딱 한번만 사용했습니다. 또한 로데시와 언더스코어의 개념인 체인을 사용했기 때문에, 더 자연스러운 순서로 일련의 연산을 작성할 수 있었습니다.   
+그런데 내장된 `Array.prototype.map` 대신 `_.map`을 사용하려는 이유는 무엇일까요? 한 가지 이유는 콜백을 전달하는 대신 속성의 이름을 전달할 수 있기 때문입니다.   
+
+내장된 함수형 기법들과 로대시 같은 라이브러리에 타입 정보가 잘 유지되는 것은 우연이 아닙니다. 함수 호출 시 전달된 매개변수 값을 건드리지 않고 매번 새로운 값을 반환함으로써, 새로운 타입으로 안전하게 반환할 수 있습니다.
