@@ -44,3 +44,6 @@ sidebar_position: 1
 25. 비동기 코드에는 콜백 대신 `async` 함수 사용하기
 26. 타입 추론에 문맥이 어떻게 사용되는지 이해하기
 27. 함수형 기법과 라이브러리로 타입 흐름 유지하기
+
+#### [🎈 Chapter 4: 타입 설계](/docs/typescript/effective-typescript/chapter-4)
+28. 유효한 상태만 표현하는 타입을 지향하기
