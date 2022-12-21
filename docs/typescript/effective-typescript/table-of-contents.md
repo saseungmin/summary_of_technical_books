@@ -48,3 +48,4 @@ sidebar_position: 1
 #### [🎈 Chapter 4: 타입 설계](/docs/typescript/effective-typescript/chapter-4)
 28. 유효한 상태만 표현하는 타입을 지향하기
 29. 사용할 때는 너그럽게, 생성할 때는 엄격하게
+30. 문서에 타입 정보를 쓰지 않기
