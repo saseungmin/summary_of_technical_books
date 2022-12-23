@@ -383,3 +383,81 @@ function eulogize(p: Person) {
   }
 }
 ```
+
+## 🥕 아이템 33. `string` 타입보다 더 구체적인 타입 사용하기
+`string` 타입으로 변수를 선언하려 한다면, 혹시 그보다 더 좁은 타입이 적절하지는 않을지 검토해 보아야 합니다.   
+음악 컬렉션을 만들기 위해 앨범의 타입을 정의한다고 가정해 보겠습니다.
+
+```ts
+interface Album {
+  artist: string;
+  title: string;
+  releaseDate: string; // YYYY-MM-DD
+  recordingType: string; // 예를 들어, "live" 또는 "studio"
+}
+```
+
+`string` 타입이 남발된 모습입니다. 계다가 주석에 타입을 정보를 적어 둔 걸 보면 현재 인터페이스가 잘못되었다는 것을 알 수 있습니다. `string` 타입의 범위가 넓기 때문에 제대로 된 `Album` 객체를 사용하더라도 매개변수 순서가 잘못된 것이 오류로 드러나지 않습니다.
+
+```ts
+function recordRelease(title: string, date: string) { /* ... */ }
+recordRelease(kindOfBlue.releaseDate, kindOfBlue.title); // 오류여야 하지만 정상
+```
+
+`releaseDate` 필드는 `Date` 객체를 사용해서 날짜 형식으로만 제한하는 것이 좋습니다. `recordingType` 팔드는 `"live"`와 `"studio"`, 단 두 개의 값으로 유니온 타입을 정의할 수 있습니다.(`enum`을 사용할 수도 있지만 일반적으로는 추천하지 않습니다. 아이템 53 참고)
+
+```ts
+type RecordingType = 'studio' | 'live';
+
+interface Album {
+  artist: string;
+  title: string;
+  releaseDate: Date;
+  recordingType: RecordingType;
+}
+```
+
+이러한 방식에는 세 가지 장점이 더 있습니다.   
+첫 번째, 타입을 명시적으로 정의함으로써 다른 곳으로 값이 전달되어도 타입 정보가 유지됩니다.   
+두 번째, 타입을 명시적으로 정의하고 해당 타입의 의미를 설명하는 주석을 붙여 넣을 수 있습니다.(아이템 48)   
+
+```ts
+/** 이 녹음은 어떤 환경에서 이루어졌는지? */
+type RecordingType = 'live' | 'studio';
+```
+
+함수를 사용하는 곳에서 `RecordingType`의 설명을 볼 수 있습니다.   
+세 번째, `keyof`연산자로 더욱 세밀하게 객체의 속성 체크가 가능해집니다.
+
+```ts
+type K = keyof Album;
+// 타입이 "artist" | "title" | "releaseDate" | "recordingType"
+```
+
+그러므로 `string`을 `keyof T`로 바꾸면 됩니다.
+
+```ts
+function pluck<T>(records: T[], key: keyof T) {
+  return records.map(r => r[key]);
+}
+```
+
+이 코드는 타입 체커를 통과합니다. 또한 타입스크립트가 반환 타입을 추론할 수 있게 해 줍니다. `pluck` 함수에 마우스를 올려 보면, 추론된 타입을 알 수 있습니다.   
+
+그런데 `key`의 값으로 하나의 문자열을 넣게 되면, 그 범위가 너무 넓어서 적절한 타입이라고 보기 어렵습니다. 예를 들어 보곘습니다.
+
+```ts
+const releaseDates = pluck(albums, 'releaseDate'); // 타입이 (string | Date)[]
+```
+
+`releaseDates`의 타입은 `(string | Date)[]`가 아니라 `Date[]`이어야 합니다. `keyof T`는 `string`에 비하면 훨씬 범위가 좁기는 하지만 그래도 여전히 넓습니다. 따라서 범위를 더 좁히기 위해서, `keyof T`의 부분 집합으로 두 번째 제너릭 매개변수를 도입해야 합니다.
+
+```ts
+function pluck<T, K extends keyof T>(records: T[], key: K): T[K][] {
+  return records.map(r => r[key]);
+}
+```
+
+이제 타입 시그니처가 완벽해졌습니다.   
+매개변수 타입이 정밀해진 덕분에 언어 서비스는 `Album`의 키에 자동 완성 기능을 제공할 수 있게 해 줍니다.   
+`string`은 `any`와 비슷한 문제를 가지고 있습니다. 따라서 잘못 사용하게 되면 무효한 값을 허용하고 타입 간의 관계도 감추어 버립니다. 이러한 문제점은 타입 체커를 방해하고 실제 버그를 찾지 못하게 만듭니다. 보다 정확한 타입을 사용하면 오류를 방지하고 코드의 가독성도 향상시킬 수 있습니다.
