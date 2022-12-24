@@ -461,3 +461,37 @@ function pluck<T, K extends keyof T>(records: T[], key: K): T[K][] {
 이제 타입 시그니처가 완벽해졌습니다.   
 매개변수 타입이 정밀해진 덕분에 언어 서비스는 `Album`의 키에 자동 완성 기능을 제공할 수 있게 해 줍니다.   
 `string`은 `any`와 비슷한 문제를 가지고 있습니다. 따라서 잘못 사용하게 되면 무효한 값을 허용하고 타입 간의 관계도 감추어 버립니다. 이러한 문제점은 타입 체커를 방해하고 실제 버그를 찾지 못하게 만듭니다. 보다 정확한 타입을 사용하면 오류를 방지하고 코드의 가독성도 향상시킬 수 있습니다.
+
+## 🥕 아이템 34. 부정확한 타입보다는 미완성 타입을 사용하기
+
+```ts
+interface Point {
+  type: 'Point';
+  coordinates: number[];
+}
+interface LineString {
+  type: 'LineString';
+  coordinates: number[][];
+}
+interface Polygon {
+  type: 'Polygon';
+  coordinates: number[][][];
+}
+type Geometry = Point | LineString | Polygon; // 다른 것들도 추가할 수 있습니다.
+```
+
+큰 문제는 없지만 좌표에 쓰이는 `number[]`가 약간 추상적입니다. 여기서 `number[]`는 경도와 위도를 나타내므로 튜플 타입으로 선언하는 게 낫습니다.
+
+```ts
+type GeoPosition = [number, number];
+interface Point {
+  type: 'Point';
+  coordinates: GeoPosition;
+}
+// ...
+```
+
+타입을 더 구체적으로 개선했기 때문에 더 나은 코드가 된 것 같습니다. 안타깝게도 새로운 코드가 빌드를 깨뜨린다며 불평하는 사용자들의 모습만 보게 될 겁니다. 코드에는 위도와 경도만을 명시했지만, `GeoJSON`의 위치 정보에는 세 번째 요소인 고도가 있을 수 있고 또 다른 정보가 있을 수도 있습니다.   
+결과적으로 타입 선언을 세밀하게 만들고자 했지만 시도가 너무 과했고 오히려 타입이 부정확해졌습니다. 현재의 타입 선언을 그대로 사용하려면 사용자들은 타입 단언문을 도입하거나 `as any`를 추가해서 타입 체커를 완전히 무시해야 합니다.   
+
+이렇게 부정확함을 바로잡는 방법을 쓰는 대신, 테스트 세트를 추가하여 놓친 부분이 없는지 확인해도 됩니다. 일반적으로 복잡한 코드는 더 많은 테스트가 필요하고 타입의 관점에서도 마찬가지입니다.
