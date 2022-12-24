@@ -568,3 +568,45 @@ const snowLeopard: Animal = {
 - 동일한 의미를 나타낼 때는 같은 용어를 사용해야 합니다. 글을 쓸 때나 말을 할 때, 같은 단어를 반복해서 사용하면 지루할 수 있기 때문에 동의어를 사용합니다. 하지만 코드에서는 좋지 않습니다. 정말로 의미적으로 구분이 되어야 하는 경우에만 다른 용어를 사용해야 합니다.
 - `data`, `info`, `thing`, `item`, `object`, `entity` 같은 모호하고 의미 없는 이름은 피해야 합니다. 만약 `entity`라는 용어가 해당 분야에서 특별한 의미를 가진다면 괜찮습니다.
 - 이름을 지을 때는 포함된 내용이나 계산 방식이 아니라 데이터 자체가 무엇인지를 고려해야 합니다. 예를 들어, `INodeList`보다는 `Directory`가 더 의미 있는 이름입니다. `Directory`는 구현의 측면이 아니라 개념적인 측면에서 디렉터리를 생각하게 합니다. 좋은 이름은 추상화의 수준을 높이고 의도치 않은 충돌의 위험성을 줄여 줍니다.
+
+## 🥕 아이템 37. 공식 명칭에는 상표를 붙이기
+구조적 타이핑(아이템 4)의 특성 때문에 가끔 코드가 이상한 결과를 낼 수 있습니다.
+
+```ts
+interface Vector2D {
+  x: number;
+  y: number;
+}
+function calculateNorm(p: Vector2D) {
+  return Math.sqrt(p.x * p.x + p.y * p.y);
+}
+
+calculateNorm({ x: 3, y: 4 }); // 정상, 결과는 5
+const vec3D = { x: 3, y: 4, z: 1 };
+calculateNorm(vec3D); // 정상! 결과는 동일하게 5
+```
+
+이 코드는 구조적 타입핑 관전에서는 문제가 없기는 하지만, 수학적으로 따지면 2차원 벡터를 사용해야 이치에 맞습니다.   
+`calculateNorm` 함수가 3차원 벡터를 허용하지 않게 하려면 공식 명칭을 사용하면 됩니다. 공식 명칭을 사용하는 것은, 타입이 아니라 값의 관점에서 `Vector2D`라고 말하는 것입니다. 공식 명칭 개념을 타입스크립트에서 흉내 내려면 "상표(brand)"를 붙이면 됩니다.
+
+```ts
+interface Vector2D {
+  _brand: '2d';
+  x: number;
+  y: number;
+}
+function vec2D(x: number, y: number): Vector2D {
+  return { x, y, _brand: '2d' };
+}
+function calculateNorm(p: Vector2D) {
+  return Math.sqrt(p.x * p.x + p.y * p.y);
+}
+
+calculateNorm(vec2D(3, 4)); // 정상, 결과는 5
+const vec3D = { x: 3, y: 4, z: 1 };
+calculateNorm(vec3D);
+//            ~~~~~ '_brand' 속성이 ... 형식에 없습니다.
+```
+
+상표(`_brand`)를 사용해서 `calculateNorm` 함수가 `Vector2D` 타입만 받는 것을 보장합니다. 그러나 `vec3D` 값에 `_brand: '2d'`라고 추가하는 것 같은 악의적인 사용을 막을 수는 없습니다. 다만 단순한 실수를 방지하기에는 충분합니다.   
+상표 기겁은 타입 시스템에서 동작하지만 런타임에 상표를 검사하는 것과 동일한 효과를 얻을 수 있습니다. 타입 시스템이기 때문에 런타임 오버헤드를 없앨 수 있고 추가 속성을 붙일 수 없는 `string`이나 `number` 같은 내장 타입도 상표화할 수 있습니다.
