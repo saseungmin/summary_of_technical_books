@@ -43,7 +43,7 @@ const books = [
       imgName: 'objects.jpeg',
     },
     {
-      link: `${PREFIX_DOCS_URL}/object-oriented/growing-object-oriented-software-guided-by-tests/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/test/growing-object-oriented-software-guided-by-tests/table-of-contents`,
       bookName: '테스트 주도 개발로 배우는 객체 지향 설계와 실천',
       imgName: 'growing-object-oriented-software-guided-by-tests.jpeg',
     },
@@ -55,7 +55,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_SUMMARIZE_URL}/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%ED%8C%A8%ED%84%B4%EA%B3%BC%20%ED%85%8C%EC%8A%A4%ED%8A%B8`,
+      link: `${PREFIX_DOCS_URL}/javascript/javascript-pattern-and-test/table-of-contents`,
       bookName: '자바스크립트 패턴과 테스트',
       imgName: 'javascript-pattern-and-test.jpeg',
     },
@@ -89,7 +89,7 @@ const books = [
   ],
   [
     {
-      link: `${PREFIX_DOCS_URL}/git/pro-git-2/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/etc/pro-git-2/table-of-contents`,
       bookName: '프로 Git 2판: 그림으로 이해하는 Git의 작동 원리와 사용법',
       imgName: 'pro-git-2e.jpeg',
     },
