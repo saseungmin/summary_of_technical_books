@@ -59,3 +59,4 @@ sidebar_position: 1
 
 #### [🎈 Chapter 5. any 다루기](/docs/typescript/effective-typescript/chapter-5)
 38. 아이템 38. `any` 타입은 가능한 한 좁은 범위에서만 사용하기
+39. `any`를 구체적으로 변형해서 사용하기
