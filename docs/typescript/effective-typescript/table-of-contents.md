@@ -56,3 +56,6 @@ sidebar_position: 1
 35. 데이터가 아닌, API와 명세를 보고 타입 만들기
 36. 해당 분야의 용어로 타입 이름 짓기
 37. 공식 명칭에는 상표를 붙이기
+
+#### [🎈 Chapter 5. any 다루기](/docs/typescript/effective-typescript/chapter-5)
+38. 아이템 38. `any` 타입은 가능한 한 좁은 범위에서만 사용하기
