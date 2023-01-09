@@ -77,7 +77,7 @@ const books = [
       imgName: 'react-book.jpeg',
     },
     {
-      link: `${PREFIX_SUMMARIZE_URL}/You%20Don%E2%80%99t%20Know%20JS%201`,
+      link: `${PREFIX_DOCS_URL}/javascript/you-dont-know-js/table-of-contents`,
       bookName: 'You Don’t Know JS 타입과 문법, 스코프와 클로저',
       imgName: 'you-dont-know-js-1.jpeg',
     },
