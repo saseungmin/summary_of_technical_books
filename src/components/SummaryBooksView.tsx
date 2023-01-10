@@ -11,19 +11,23 @@ import MountainSvg from '../../static/img/undraw_docusaurus_mountain.svg';
 
 import RowSummaryBooksWrapper from './RowSummaryBooksWrapper';
 
-function SummaryBooksView({ title }) {
+type Props = {
+  title: string;
+}
+
+function SummaryBooksView({ title }: Props) {
   return (
     <div className={clsx('col')}>
       <div className="text--center">
-        <MountainImg alt={title} />
+        <MountainImg />
       </div>
       <div className="text--center padding-horiz--md">
         <h2>{title}</h2>
         <div>
-          {books.map((booksInfo) => (
+          {books.map((rowBooks) => (
             <RowSummaryBooksWrapper
               key={uuidv4()}
-              booksInfo={booksInfo}
+              rowBooks={rowBooks}
             />
           ))}
         </div>

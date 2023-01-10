@@ -1,7 +1,13 @@
 const PREFIX_DOCS_URL = 'https://saseungmin.github.io/reading_books_record_repository/docs';
 const PREFIX_SUMMARIZE_URL = 'https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown';
 
-const books = [
+export type Book = {
+  link: string;
+  bookName: string;
+  imgName: string;
+};
+
+const books: Book[][] = [
   [
     {
       link: `${PREFIX_SUMMARIZE_URL}/%ED%95%A8%EC%88%98%ED%98%95%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8`,
