@@ -4,13 +4,6 @@ import styled from '@emotion/styled';
 
 import SummaryBooksView from './SummaryBooksView';
 
-const BooksInfoSection = styled.section`
-  display: flex;
-  align-items: center;
-  padding: 2rem 0 5rem 0;
-  width: 100%;
-`;
-
 function SummaryBooks() {
   return (
     <BooksInfoSection>
@@ -26,3 +19,10 @@ function SummaryBooks() {
 }
 
 export default SummaryBooks;
+
+const BooksInfoSection = styled.section`
+  display: flex;
+  align-items: center;
+  padding: 2rem 0 5rem 0;
+  width: 100%;
+`;

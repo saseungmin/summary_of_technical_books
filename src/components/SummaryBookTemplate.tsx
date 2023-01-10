@@ -5,8 +5,11 @@ import styled from '@emotion/styled';
 import clsx from 'clsx';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import { Book } from '../data/books';
 
-function SummaryBookTemplate({ link, bookName, imgName }) {
+type Props = Book
+
+function SummaryBookTemplate({ link, bookName, imgName }: Props) {
   const imgSrc = useBaseUrl(`/img/books/${imgName}`);
 
   return (

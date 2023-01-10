@@ -5,11 +5,16 @@ import styled from '@emotion/styled';
 import { v4 as uuidv4 } from 'uuid';
 
 import SummaryBookTemplate from './SummaryBookTemplate';
+import { Book } from '../data/books';
 
-function RowSummaryBooksWrapper({ booksInfo }) {
+type Props = {
+  rowBooks: Book[];
+}
+
+function RowSummaryBooksWrapper({ rowBooks }: Props) {
   return (
     <BooksInfoWrapper className="row">
-      {booksInfo.map(({ link, bookName, imgName }) => (
+      {rowBooks.map(({ link, bookName, imgName }) => (
         <SummaryBookTemplate
           key={uuidv4()}
           link={link}
