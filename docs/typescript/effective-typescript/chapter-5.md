@@ -134,3 +134,77 @@ type FnN = (...args: any[]) => any; // 모든 개수의 매개변수 "Function" 
 const numArgsBad = (...args: any) => args.length; // any를 반환합니다.
 const numArgsGood = (...args: any[]) => args.length; // number를 반환합니다.
 ```
+
+## 🥕 아이템 40. 함수 안으로 타입 단언문 감추기
+함수 내부에는 타입 단언을 사용하고 함수 외부로 드러나는 타입 정의를 정확히 명시하는 정도로 끝내는 게 낫습니다. 프로젝트 전반에 위험한 타입 단언문이 드러나 있는 것보다, 제대로 타입이 정의된 함수 안으로 타입 단언문을 감추는 것이 더 좋은 설계입니다.   
+
+예를 들어, 어떤 함수가 자신의 마지막 호출을 캐시하도록 만든다고 가정해보겠습니다.
+
+```ts
+declare function cacheLast<T extends Function>(fn: T): T;
+
+declare function shallowEqual(a: any, b: any): boolean;
+function cacheLast<T extends Function>(fn: T): T {
+  let lastArgs: any[]|null = null;
+  let lastResult: any;
+
+  return function(...args: any[]) {
+    //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // '(...args: any[]) => any' 형식은 'T' 형식에 할당할 수 없습니다.
+    if (!lastArgs || !shallowEqual(lastArgs, args)) {
+      lastResult = fn(...args);
+      lastArgs = args;
+    }
+
+    return lastResult;
+  };
+}
+```
+
+타입스크립트는 반환문에 있는 함수와 원본 함수 `T`타입이 어떤 관련이 있는지 알지 못하기 때문에 오류가 발생했습니다. 그러나 결과적으로 원본 함수 `T` 타입과 동일한 매개변수로 호출되고 반환값 역시 예상한 결과가 되기 때문에, 타입 단언문을 추가해서 오류를 제거하는 것이 큰 문제가 되지는 않습니다.
+
+```ts
+function cacheLast<T extends Function>(fn: T): T {
+  let lastArgs: any[]|null = null;
+  let lastResult: any;
+
+  return function(...args: any[]) {
+    if (!lastArgs || !shallowEqual(lastArgs, args)) {
+      lastResult = fn(...args);
+      lastArgs = args;
+    }
+
+    return lastResult;
+  } as unknown as T;
+}
+```
+
+실제로 함수를 실행해 보면 잘 동작합니다.
+
+```ts
+declare function shallowObjectEqual<T extends object>(a: T, b: T): boolean;
+declare function shallowEqual(a: any, b: any): boolean;
+function shallowObjectEqual<T extends object>(a: T, b: T): boolean {
+  for (const [k, aVal] of Object.entries(a)) {
+    if (!(k in b) || aVal !== b[k]) { // '{}' 형식에 인덱스 시그니처가 없으므로 요소에 암시적으로 'any' 형식이 있습니다.
+      return false;
+    }
+  }
+  return Object.keys(a).length === Object.keys(b).length;
+}
+```
+
+`if` 구문의 `k in b` 체크로 `b` 객체에 `k`속성이 있다는 것을 확인했지만 `b[k]` 부분에서 오류가 발생하는 것이 이상합니다. 어쨌든 실제 오류가 아니라는 것을 알고 있기 때문에 `any`로 단언하는 수밖에 없습니다.
+
+```ts
+function shallowObjectEqual<T extends object>(a: T, b: T): boolean {
+  for (const [k, aVal] of Object.entries(a)) {
+    if (!(k in b) || aVal !== (b as any)[k]) {
+      return false;
+    }
+  }
+  return Object.keys(a).length === Object.keys(b).length;
+}
+```
+
+`b as any` 타입 단언문은 안전하며(`k in b` 체크를 했으므로), 결국 정확한 타입으로 정의되고 제대로 구현된 함수가 됩니다. 객체가 같은지 체크하기 위해 객체 순회와 단언문이 코드에 직접 들어가는 것보다, 앞의 코드처럼 별도의 함수로 분리해 내는 것이 훨씬 좋은 설계입니다.
