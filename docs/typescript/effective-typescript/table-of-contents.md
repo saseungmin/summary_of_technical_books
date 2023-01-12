@@ -61,6 +61,7 @@ sidebar_position: 1
 38. 아이템 38. `any` 타입은 가능한 한 좁은 범위에서만 사용하기
 39. `any`를 구체적으로 변형해서 사용하기
 40. 함수 안으로 타입 단언문 감추기
+41. `any`의 진화를 이해하기
 
 #### [🎈 Chapter 7. 코드를 작성하고 실행하기](/docs/typescript/effective-typescript/chapter-7)
 53. 타입스크립트 기능보다는 ECMAScript 기능을 사용하기

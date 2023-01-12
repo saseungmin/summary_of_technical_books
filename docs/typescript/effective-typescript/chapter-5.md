@@ -208,3 +208,58 @@ function shallowObjectEqual<T extends object>(a: T, b: T): boolean {
 ```
 
 `b as any` 타입 단언문은 안전하며(`k in b` 체크를 했으므로), 결국 정확한 타입으로 정의되고 제대로 구현된 함수가 됩니다. 객체가 같은지 체크하기 위해 객체 순회와 단언문이 코드에 직접 들어가는 것보다, 앞의 코드처럼 별도의 함수로 분리해 내는 것이 훨씬 좋은 설계입니다.
+
+## 🥕 아이템 41. `any`의 진화를 이해하기
+
+```ts
+function range(start: number, limit: number) {
+  const out = []; // 타입이 any[]
+  for (let i = start; i < limit; i++) {
+    out.push(i); // out의 타입이 any[]
+  }
+  return out; // 반환 타입이 number[]로 추론됨.
+}
+```
+
+`out`의 타입은 `any[]`로 선언되었지만 `number` 타입의 값을 넣는 순간부터 타입은 `number[]`로 진화합니다.   
+타입의 진화는 타입 좁히기(아이템 22)와 다릅니다. 배열에 다양한 타입의 요소를 넣으면 배열의 타입이 확장되며 진화합니다.
+
+```ts
+const result = []; // 타입이 any[]
+result.push('a');
+result // 타입이 string[]
+result.push(1);
+result // 타입이 (string | number)[]
+```
+
+또한 조건문에서는 분기에 따라 타입이 변할 수도 있습니다.
+
+```ts
+let val; // 타입이 any
+if (Math.random() < 0.5) {
+  val = /hello/;
+  val // 타입이 ReqExp
+} else {
+  val = 12;
+  val // 타입이 number
+}
+val // 타입이 number | RegExp
+```
+
+변수의 초깃값이 `null`인 경우에도 `any`의 진화가 일어납니다. 보통은 `try/catch` 블록 안ㅇ네서 변수를 할당하는 경우에 나타납니다.
+
+```ts
+let val = null // 타입이 any
+try {
+  somethingDangerous()
+  val = 12;
+  val // 타입이 number
+} catch (e) {
+  console.log('alas!');
+}
+val // 타입이 number | null
+```
+
+`any` 타입의 진화는 `noImplicitAny`가 설정된 상태에서 변수의 타입이 암시적 `any`인 경우에만 일어납니다. 그러나 명시적으로 `any`를 선언하면 타입이 그대로 유지됩니다.   
+
+`any`가 진화하는 방식은 일반적인 변수가 추론되는 원리와 동일합니다. 예를 들어, 진화한 배열의 타입이 `(string|number)[]`라면, 원래 `number[]` 타입이어야하지만 실수로 `string`이 섞여서 잘못 진화한 것일 수 있습니다. 타입을 안전하게 지키기 위해서는 암시적 `any`를 진화시키는 방법보다 명시적 타입 구문을 시용하는 것이 더 좋은 설계입니다.
