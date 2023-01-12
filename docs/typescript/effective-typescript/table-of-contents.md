@@ -62,6 +62,7 @@ sidebar_position: 1
 39. `any`를 구체적으로 변형해서 사용하기
 40. 함수 안으로 타입 단언문 감추기
 41. `any`의 진화를 이해하기
+42. 모르는 타입의 값에는 `any` 대신 `unknown`을 사용하기
 
 #### [🎈 Chapter 7. 코드를 작성하고 실행하기](/docs/typescript/effective-typescript/chapter-7)
 53. 타입스크립트 기능보다는 ECMAScript 기능을 사용하기
