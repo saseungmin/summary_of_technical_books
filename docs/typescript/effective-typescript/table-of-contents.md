@@ -64,6 +64,7 @@ sidebar_position: 1
 41. `any`의 진화를 이해하기
 42. 모르는 타입의 값에는 `any` 대신 `unknown`을 사용하기
 43. 몽키 패치보다는 안전한 타입을 사용하기
+44. 타입 커버리지를 추적하여 타입 안전성 유지하기
 
 #### [🎈 Chapter 7. 코드를 작성하고 실행하기](/docs/typescript/effective-typescript/chapter-7)
 53. 타입스크립트 기능보다는 ECMAScript 기능을 사용하기
