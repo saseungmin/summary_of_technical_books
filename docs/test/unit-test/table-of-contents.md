@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # 🚀 목차
 
-## 👉 예제 코드: https://github.com/AcornPublishing/unit-testing
+### 👉 예제 코드: https://github.com/AcornPublishing/unit-testing
 
 ## ✌️ 책 정보
 - [도서 정보](http://www.yes24.com/Product/Goods/104084175)
@@ -15,3 +15,7 @@ sidebar_position: 1
 ### Part 1: 더 큰 그림
 
 #### [🎈 Chapter 1: 단위 테스트의 목표](/docs/test/unit-test/chapter-1)
+1. 단위 테스트 현황
+2. 단위 테스트의 목표
+3. 테스트 스위트 품질 측정을 위한 커버리지 지표
+4. 무엇이 성공적인 테스트 스위트를 만드는가?
