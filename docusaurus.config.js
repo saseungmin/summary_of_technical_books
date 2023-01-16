@@ -155,7 +155,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala'],
+      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala', 'csharp'],
     },
     algolia: {
       appId: process.env.ALGOLIA_APP_ID,
