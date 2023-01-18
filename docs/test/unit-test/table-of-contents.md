@@ -24,3 +24,5 @@ sidebar_position: 1
 #### [🎈 Chapter 2: 단위 테스트란 무엇인가](/docs/test/unit-test/chapter-2)
 1. '단위 테스트'의 정의
 2. 단위 테스트의 런던파와 고전파
+3. 고전파와 런던파의 비교
+4. 두 분파의 통합 테스트
