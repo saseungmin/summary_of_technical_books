@@ -290,3 +290,145 @@ public abstract class IntegrationTests : IDisposable {
 ```
 
 `CustomerTests`가 생성자 없이 작성됐다는 것을 알 수 있다. `IntegrationTests` 기초 클래스 상속을 통해 `_database` 인스턴스에 접근한다.
+
+## 🥕 단위 테스트 명명법
+테스트에 표현력이 있는 이름을 붙이는 것이 중요하다. 올바른 명칭은 테스트가 검증하는 내용과 기본 시스템의 동작을 이해하는 데 도움이 된다.   
+
+간단하고 쉬운 영어 구문이 훨씬 더 효과적이며, 엄격한 명명 구조에 얽매이지 않고 표현력이 뛰어나다. 간단한 문구로 고객이나 도메인 전문가에게 의미 있는 방식으로 시스템 동작을 설명할 수 있다.   
+
+혹자는 프로그래머가 아닌 사람들에게 이름을 어떻게 생각하는지는 중요하지 않다고 말할 수도 있다. 결국 단위 테스트는 도메인 전문가가 아니라 프로그래머를 위해 프로그래머가 작성한다. 그리고 프로그래머는 수수께끼 같은 이름을 잘 판독한다. 수수께끼 같은 이름은 프로그래머든 아니든 모두가 이해하는 데 부담이 된다. 테스트가 정확히 무엇을 검증하는지, 비즈니스 요구 사항과 어떤 관련이 있는지 파악하려면 머리를 더 써야 한다. 전체 테스트 스위트의 유지비가 천천히 늘어난다.
+
+```cs
+public void Sum_of_two_numbers() {}
+public void Sum_TwoNumbers_ReturnsSum() {}
+```
+
+쉬운 영어로 작성한 첫 번째 이름이 읽기에 훨씬 간결하다. 이는 테스트 대상 동작에 대한 현실적인 설명이다.
+
+### 🎈 단위 테스트 명명 지침
+표현력 있고 읽기 쉬운 테스트 이름을 지으려면 다음 지침을 따르자.
+- 엄격한 명명 정책을 따르지 않는다. 복잡한 동작에 대한 높은 수준의 설명을 이러한 정책의 좁은 상자 안에 넣을 수 없다. 표현의 자유를 허용하자.
+- 문제 도메인에 익숙한 비개발자들에게 시나리오를 설명하는 것처럼 테스트 이름을 짖자. 도메인 전문가나 비즈니스 분석가가 좋은 예다.
+- 단어를 밑줄 표시로 구분한다. 그러면 특히 긴 이름에서 가독성을 향상시키는 데 도움이 된다.
+
+보통 클래스 이름은 그리 길지 않아서 밑줄 표시가 없어도 잘 읽을 수 있다. 또 테스트 클래스 이름을 지정할 때 `[클래스명]Tests` 패턴을 사용하지만, 테스트가 해당 클래스만 검증하는 것으로 제한하는 것은 아니다. 단위 테스트에서 단위는 동작의 단위지, 클래스의 단위가 아닌 것을 명심하자.
+
+### 🎈 예제: 지침에 따른 테스트 이름 변경
+- 예제 내용 P.99 ~ P.101 참고
+
+```cs
+public void IsDeliveryValid_InvalidDate_ReturnsFalse() {} // 변경 전
+public void Delivery_with_a_past_date_isValid() {} // 변경 후
+```
+
+새로운 버전에서 두 가지가 눈에 띈다.
+- 이제 이름이 프로그래머가 아닌 사람들에게 납득되고, 마찬가지로 프로그래머도 더 쉽게 이해할 수 있다.
+- SUT의 메서드 이름(`IsDeliveryValid`)은 더 이상 테스트명에 포함되지 않는다.
+
+## 🥕 매개변수화된 테스트 리팩터링하기
+동작이 충분히 복잡하면, 이를 설명하는 데 테스트 수가 급격히 증가할 수 있으며 관리하기 어려워질 수 있다. 다행히도 대부분의 단위 테스트 프레임워크는 매개변수화된 테스트를 사용해 유사한 테스트를 묶을 수 있는 기능을 제공한다.   
+
+가장 빠른 배송일이 오늘로부터 이틀 후가 되도록 작동하는 배송 기능이 있다고 가정하자. 분명히 테스트 하나로는 충분하지 않다. 작성했던 테스트를 `Delivery_with_a_past_date_isValid`로 하자. 다음 메서드 세 개를 추가해보자.
+
+```cs
+public void Delivery_for_today_is_invalid() {}
+public void Delivery_for_tomorrow_is_invalid() {}
+public void The_soonest_delivery_date_is_two_days_from_now() {}
+```
+
+하지만 이로 인해 네 가지의 테스트 메서드가 나왔지만, 유일한 차이점은 배송 날짜뿐 더 좋은 방법은 테스트 코드의 양을 줄이고자 이러한 테스트를 하나로 묶는 것이다.
+
+```cs
+// 몇 가지 사실을 포괄하는 테스트
+public class DeliveryServiceTests {
+  // [InlineData] 특성은 테스트 메서드에 입력 값 집합을 보낸다. 각 라인은 동작에 대해 별개의 사실을 나타낸다.
+  [InlineData(-1, false)]
+  [InlineData(0, false)]
+  [InlineData(1, false)]
+  [InlineData(2, true)]
+  [Theory]
+  public void Can_detect_an_invalid_delivery_date(int daysFromNow, bool expected) {
+    DeliveryService sut = new DeliveryService();
+    DateTime deliveryDate = DateTime.Now.AddDays(daysFromNow);
+    Delivery delivery = new Delivery {
+      Date = deliveryDate
+    };
+
+    bool isValid = sut.IsDeliveryValid(delivery);
+
+    Assert.Equal(expected, isValid);
+  }
+}
+```
+
+테스트 이름에서 더 이상 구성된 날짜가 올바른지 또는 잘못됐는지에 대해 언급할 필요가 없으므로 좀 더 일반적으로 바꿨다.   
+매개변수화된 테스트를 사용하면 테스트 코드의 양을 크게 줄일 수 있지만, 비용이 발생한다. 이제 테스트 메서드가 나타내는 사실을 파악하기가 어려워젔다. 그리고 매개변수가 많을수록 더 어렵다. 절충안으로 긍정적인 테스트 케이스는 고유한 테스트로 도출하고, 가장 중요한 부분을 잘 설명하는 이름을 쓰면 좋다.
+
+```cs
+// 긍정적인 시나리오와 부정적인 시나리오를 검증하는 두 가지 테스트
+public class DeliveryServiceTests {
+  [InlineData(-1)]
+  [InlineData(0)]
+  [InlineData(1)]
+  [Theory]
+  public void Detects_an_invalid_delivery_date(int daysFromNow) {
+    // ...
+  }
+
+  [Fact]
+  public void The_soonest_delivery_date_is_two_days_from_now() {
+    // ...
+  }
+}
+```
+
+테스트 코드의 양과 그 코드의 가독성은 서로 상충된다. 경험상 입력 매개변수만으로 테스트 케이스를 판단할 수 있다면 긍정적인 테스트 케이스와 부정적인 테스트 케이스 모두 하나의 메서드로 두는 것이 좋다. 그렇지 않으면 긍정적인 테스트 케이스를 도출하라. 그리고 동작이 너무 복잡하면 매개변수화된 테스트를 조금도 사용하지 말라. 긍정적인 테스트 케이스와 부정적인 테스트 케이스 모두 각각 고유의 테스트 메서드로 나타내라.
+
+### 🎈 매개변수화된 테스트를 위한 데이터 생성
+매개변수화된 테스트를 사용하는 데 주의해야 할 점이 있다.   
+
+xUnit에는 테스트 메서드에 공급할 사용자 정의 데이터를 생성하는 데 사용할 수 있는 기능이 있다. 다음 예제는 이 기능을 사용해서 어떻게 이전 테스트를 다시 작성하는지를 보여준다.
+
+```cs
+// 매개변수화된 테스트를 위한 복잡한 데이터 생성
+[Theory]
+[MemberData(nameof(Data))]
+public void Can_detect_an_invalid_delivery_date(DateTime deliveryDate, bool expected) {
+  // ...
+}
+
+public static List<object[]> Data() {
+  return new List<object[]> {
+    new object[] { DateTime.Now.AddDays(-1), false },
+    new object[] { DateTime.Now, false },
+    new object[] { DateTime.Now.AddDays(1), false },
+    new object[] { DateTime.Now.AddDays(2), true },
+  }
+}
+```
+
+## 🥕 검증문 라이브러리를 사용한 테스트 가독성 향상
+검증문 라이브러리를 사용하는 주요 이점은 검증문을 재구성해 가독성을 높이는 방법이다. 다음은 이전 테스트 중 하나다.
+
+```cs
+[Fact]
+public void Sum_of_two_numbers() {
+  var sut = new Calculator();
+  double result = sut.Sum(10, 20);
+  Assert.Equal(30, result);
+}
+```
+
+이제 다음 코드와 같이 자연스럽게 검증문을 수정해서 비교해보자.
+
+```cs
+[Fact]
+public void Sum_of_two_numbers() {
+  var sut = new Calculator();
+  double result = sut.Sum(10, 20);
+  result.Should().Be(30);
+}
+```
+
+두 번째 테스트의 검증문은 쉬운 영어로 읽을 수 있다. 이는 정확히 코드를 읽고 싶은 방식이다.   
+`result.Should().Be(30)`은 이야기 패턴을 따르기 때문에 `Assert.Equal(30, result)`보다 더 잘 읽힌다.   
