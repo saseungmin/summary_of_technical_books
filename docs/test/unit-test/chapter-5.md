@@ -264,3 +264,101 @@ public class MessageRenderer : IRenderer {
 |---:|---:|---:|
 |**공개**|좋음|나쁨|
 |**비공개**|해당 없음|좋음|
+
+## 🥕 목과 테스트 취약성 간의 관계
+
+### 🎈 육각형 아키텍처 정의
+애플리켕션 서비스 계층은 도메인 계층 위에 있으며 외부 환경과의 통신을 조정한다. 이 계층은 도메인 클래스와 프로세스 외부 의존성 간의 작업을 조정한다. 다음은 애플리케이션 서비스에 대한 조정의 예따.
+- 데이터베이스를 조회하고 해당 데이터로 도메인 클래스 인스턴스 구체화
+- 해당 인스턴스에 연산 호출
+- 결과를 데이터베이스에 다시 저장
+
+애플리케이션 서비스 계층과 도메인 계층의 조합은 육각형을 형성하며, 이 육각형은 애플리케이션을 나타낸다. 또한 다른 애플리케이션과 소통할 수 있고, 다른 애플리케이션도 육각형을 나타낸다. 육각형 아키텍처의 목적은 세 가지 중요한 지침을 강조하는 것이다.
+- 도메인 계층과 애플리케이션 서비스 계층 간의 관심사 분리
+- 애플리케이션 내부 통신: 육각형 아키텍처는 애플리케이션 버시스 계층에서 도메인 계층으로 흐르는 단방향 의존성 흐름을 규정한다. 애플리케이션 서비스 계층과 도메인 계층 간에 관심사를 분리하는 것은 애플리케이션 서비스 계층이 도메인 계층에 대해 아는 것을 의미하지만, 반대는 아니다. 도메인 계층은 외부 환경에서 완전히 격리돼야 한다.
+- 애플리케이션 간의 통신: 외부 애플리케이션은 애플리케이션 서비스 계층에 있는 공통 인터페이스를 통해 해당 애플리케이션에 연결된다. 아무도 도메인 계층에 직접 접근할 수 없다. 육각형의 각 면은 애플리케이션 내외부 연결을 나타낸다.
+
+식별할 수 있는 동작은 바깥 계층에서 안쪽으로 흐른다. 외부 클라이언트에게 중요한 목표는 개별 도메인 클래스에서 달성한 하위 목표로 변환된다. 도메인 클래스의 경우 클라이언트는 애플리케이션 서비스에 해당하고, 애플리케이션 서비스면 외부 클라이언트에 해당한다.
+
+### 🎈 시스템 내부 통신과 시스템 간 통신
+일반적인 애플리케이션에는 시스템 내부 통신과 시스템 간 통신이 있다. 시스템 내부 통신은 애플리케이션 내 클래스 간의 통신이다. 시스템 간 통신은 애플리케이션이 다른 애플리케이션과 통신하는 것을 말한다.
+
+> 시스템 내부 통신은 구현 세부 사항이고, 시스템 간 통신은 그렇지 않다.
+
+시스템 간 통신의 특성은 별도 애플리케이션과 함께 성장하는 방식에서 비롯된다. 성장의 주요 원칙 중 하나로 하위 호환성을 지키는 것이다. 시스템 내부에서 하는 리팩터링과 다르게, 외부 애플리케이션과 통신할 때 사용하는 통신 패턴은 항상 외부 애플리케이션이 이해할 수 있도록 유지해야 한다.   
+
+목을 사용하면 시스템과 외부 애플리케이션 간의 통신 패턴을 확인할 때 좋다. 반대로 시스템 내 클래스 간의 통신을 검증하는 데 사용하면 테스트 구현 세부 사항과 결합되며, 그에 따라 리팩터링 내성 지표가 미흡해진다.
+
+### 🎈 시스템 내부 통신과 시스템 간 통신의 예
+`CustomerController` 클래스는 도메인 클래스와 외부 애플리케이션 간의 작업을 조정하는 애플리케이션 서비스다.
+
+```cs title="외부 애플리케이션과 도메인 모델 연결하기"
+public class CustomerController {
+  public bool Purchase(int customerId, int productId, int quantity) {
+    Customer customer = _customerRepository.GetById(customerId);
+    Product product = _productRepository.GetById(productId);
+
+    bool isSuccess = customer.Purchase(
+      _mainStore, product, quantity
+    );
+
+    if (isSuccess) {
+      _emailGateway.SendReceipt(
+        customer.Email, product.Name, quantity
+      );
+    }
+
+    return isSuccess;
+  }
+}
+```
+
+구매라는 동작은 시스템 내부 통신과 시스템 간 통신이 모두 있는 비즈니스 유스케이스다. 시스템 간 통신은 `CustomerController` 애플리케이션 서비스와 두 개의 외부 시스템인 서드파티 애플리케이션과 이메일 게이트웨이 간의 통신이다. 시스템 내부 통신은 `Customer`와 `Store` 도메인 클래스 간의 통신이다.   
+
+다음 예제는 목을 사용하는 타당한 예를 보여준다.
+
+```cs title="취약한 테스트로 이어지지 않는 목 사용"
+[Fact]
+public void Successful_purchase() {
+  var mock = new Mock<IEmailGateway>();
+  var sut = new CustomerController(mock.Object);
+
+  bool isSuccess = sut.Purchase(
+    customerId: 1, productId: 2, quantity: 5
+  );
+
+  Assert.True(isSuccess);
+  mock.Verify(
+    x => x.SendReceipt(
+      "customer@email.com", "Shampoo", 5
+    ), Times.Once
+  );
+}
+```
+
+`isSuccess` 플래그는 외부 클라이언트에서도 확인할 수 있으며, 검증도 필요하다. 하지만 이 플래그는 목이 필요 없고, 간단한 값 비교만으로 충분하다.   
+
+이제 `Customer` 클래스와 `Store` 클래스 간의 통신에 목을 사용한 테스트를 살펴보자.
+
+```cs title="취약한 테스트로 이어지는 목 사용"
+[Fact]
+public void Purchase_succeeds_when_enough_inventory() {
+  var storeMock = new Mock<IStore>();
+  storeMock
+    .Setup(x => x.HasEnoughInventory(Product.Shampoo, 5))
+    .Returns(true);
+  var customer = new Customer();
+
+  bool success = customer.Purchase(
+    storeMock.Object, Product.Shampoo, 5
+  );
+
+  Assert.True(success);
+  storeMock.Verify(
+    x => x.RemoveInventory(Product.Shampoo, 5),
+    Times,Once
+  );
+}
+```
+
+`Customer` 클래스에서 `Store` 클래스로의 메서드 호출은 애플리케이션 경계를 넘지 않는다. 호출자와 수신자 모두 애플리케이션 내에 있다. 또한 이 메서드는 클라이언트가 목표를 달성하는 데 도움이 되는 연산이나 상태가 아니다. 이 두 도메인 클래스의 클라이언트는 구매를 목표로 하는 `CustomerController`다. 이 목표에 직접적인 관련이 있는 멤버는 `customer.Purchase()`와 `store.GetInventory()` 이렇게 둘뿐이다.
