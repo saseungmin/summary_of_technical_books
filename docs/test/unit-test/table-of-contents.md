@@ -47,3 +47,4 @@ sidebar_position: 1
 #### [🎈 Chapter 5: 목과 테스트 취약성](/docs/test/unit-test/chapter-5)
 1. 목과 스텁 구분
 2. 식별할 수 있는 동작과 구현 세부 사항
+3. 목과 테스트 취약성 간의 관계
