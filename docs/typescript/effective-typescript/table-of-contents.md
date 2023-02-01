@@ -73,6 +73,7 @@ sidebar_position: 1
 48. API 주석에 TSDoc 사용하기
 49. 콜백에서 `this`에 대한 타입 제공하기
 50. 오버로딩 타입보다는 조건부 타입 사용하기
+51. 의존성 분리를 위해 미러 타입 사용하기
 
 #### [🎈 Chapter 7. 코드를 작성하고 실행하기](/docs/typescript/effective-typescript/chapter-7)
 53. 타입스크립트 기능보다는 ECMAScript 기능을 사용하기
