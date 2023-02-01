@@ -152,3 +152,86 @@ interface Vector3D {
 주석을 수필처럼 장황하게 쓰지 않도록 주의해햐 합니다. 훌륭한 주속은 간단히 요점만 언급합니다.   
 
 타입스크립트에서는 타입 정보가 코드에 있기 떄문에 TSDoc에서는 타입 정보를 명시하면 안 됩니다.
+
+## 🥕 아이템 49. 콜백에서 `this`에 대한 타입 제공하기
+P.243 ~ P.248 참고
+
+> 자바스크립트 `this` 내용이라 생략 ([this 내용 참고](https://saseungmin.github.io/reading_books_record_repository/docs/javascript/core-javascript/chapter-3))
+
+### 요약
+- `this` 바인등이 동작하는 원리를 이해해야 합니다.
+- 콜백 함수에서 `this`를 사용해야 한다면, 타입 정보를 명시해야 합니다.
+
+## 🥕 아이템 50. 오버로딩 타입보다는 조건부 타입 사용하기
+다음 예제는 타입스크립트의 함수 오버로딩 개념을 사용했습니다.
+
+```ts
+function double(x: number | string): number | string;
+function double(x: any) { return x + x; }
+```
+
+선언이 틀린 것은 아니지만, 모호한 부분이 있습니다.
+
+```ts
+const num = double(12); // string | number
+const str = double('x'); // string | number
+```
+
+선언문에는 `number` 타입을 매개변수로 넣고 `string` 타입을 반환하는 경우도 포함되어 있습니다.   
+제너릭을 사용하면 이러한 동작을 모델링할 수 있습니다.
+
+```ts
+function double<T extends number | string>(x: T): T;
+function double(x: any) { return x + x; }
+
+const num = double(12); // 타입이 12
+const str = double('x'); // 타입이 "x"
+```
+
+이제는 타입이 너무 과하게 구체적입니다. `string` 타입을 매개변수로 넘기면 `string` 타입이 반환되어야 합니다.   
+
+또 다른 방법은 여러 가지 타입 선언으로 분리하는 것입니다. 타입스크립트에서 함수의 구현체는 하나지만, 타입 선언은 몇 개든지 만들 수 있습니다.
+
+```ts
+function double(x: number): number;
+function double(x: string): string;
+function double(x: any) { return x + x; }
+
+const num = double(12); // 타입이 number
+const str = double('x'); // 타입이 string
+```
+
+함수 타입이 조금 명확해졌지만 여전히 버그는 남아 있습니다. `string`이나 `number` 타입의 값으로는 잘 동작하지만, 유니온 타입 관련해서 문제가 발생합니다.
+
+```ts
+function f(x: number|string) {
+  return double(x);
+  //            ~ 'string|number' 형식의 인수는 'string' 형식의 매개변수에 할당될 수 없습니다.
+}
+```
+
+오버로딩 타입의 마지막 선언까지 검색했을 때, `string|number` 타입은 `string`에 할당할 수 없기 때문에 오류가 발생합니다.   
+세 번째 오버로딩을 추가하여 문제를 해결할 수도 있지미나, 가장 좋은 해결책은 조건부 타입을 사용하는 것입니다.   
+조건부 타입은 타입 공간의 `if` 구문과 같습니다.
+
+```ts
+function double<T extends number | string>(x: T): T extends string ? string : number;
+function double(x: any) { return x + x; }
+```
+
+이 코드는 제너릭을 사용했던 예제와 유사하지만, 반환 타입이 더 정교합니다.
+- `T`가 `string`의 부분 집합이면, 반환 타입이 `string`입니다.
+- 그 외의 경우는 반환 타입이 `number`입니다.
+
+```ts
+const num = double(12); // 타입이 number
+const str = double('x'); // 타입이 string
+
+// function f(x: string | number): string | number
+function f(x: number | string) {
+  return double(x);
+}
+```
+
+유니온에 조건부 타입을 적용하면, 조건부 타입의 유니온으로 분리되기 때문에 `number | string`의 경우에도 동작합니다.   
+오버로딩 타입이 작성하기 쉽지만, 조건부 타입은 별개 타입의 유니온으로 일반화하기 때문에 타입이 더 정확해집니다. 타입 오버로딩이 필요한 경우에 가끔 조건부 타입이 필요한 상황이 발생합니다. 각각의 오버로딩 타입이 독립적으로 처리되는 반면, 조건부 타입은 타입 체커가 단일 표현식으로 받아들이기 때문에 유니온 문제를 해결할 수 있습니다.
