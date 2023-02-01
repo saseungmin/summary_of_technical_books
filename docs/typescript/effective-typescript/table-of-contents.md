@@ -70,6 +70,7 @@ sidebar_position: 1
 45. devDependencies에 typescript와 `@types`추가하기
 46. 타입 선언과 관련된 세 가지 버전 이해하기
 47. 공게 API에 등장하는 모든 타입을 익스포트하기
+48. API 주석에 TSDoc 사용하기
 
 #### [🎈 Chapter 7. 코드를 작성하고 실행하기](/docs/typescript/effective-typescript/chapter-7)
 53. 타입스크립트 기능보다는 ECMAScript 기능을 사용하기
