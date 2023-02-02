@@ -276,3 +276,147 @@ function parseCSV(contents: string | CsvBuffer): {[column: string]: string}[] {
 다른 라이브러리의 타입이 아닌 구현에 의존하는 경우에도 동일한 기법을 적용할 수 있고 타입 의존성을 피할 수 있습니다. 그러나 프로젝트의 의존성이 다양해지고 필수 의존성이 추가됨이 따라 미러링 기법을 적용하기가 어려워집니다. 다른 라이브러리의 타입 선언의 대부분을 추출해야 한다면, 차라리 명시적으로 `@types` 의존성을 추가하는 게 낫습니다.   
 
 미러링 기법은 유닛 테스트와 상용 시스템 간의 의존성을 분리하는 데도 유용합니다.
+
+## 🥕 아이템 52. 테스팅 타입의 함정에 주의하기
+프로젝트를 공개하려면 테스트 코드를 작성하는 것은 필수이며, 타입 선언도 테스트를 거쳐야 합니다. 그러나 타입 선언을 테스트하기에는 매우 어렵습니다.   
+
+유틸리티 라이브러리에서 제공하는 `map` 함수의 타입 선언을 작성한다고 가정해 보겠습니다.
+
+```ts
+declare function map<U, V>(array: U[], fn: (u: U) => V): V[];
+```
+
+타입 선언이 예산한 타입으로 결과를 내는지 체크할 수 있는 한 가지 방법은 함수를 호출하는 테스트 파일을 작성하는 것입니다.
+
+```ts
+map(['2017', '2018', '2019'], v => Number(v));
+```
+
+하지만 반환값에 대한 체크가 누락되어 있기 때문에 완전한 테스트라고 할 수 없습니다.   
+앞의 코드와 동일한 스타일로 `square`라는 함수의 런타임 동작을 테스트한다면 다음과 같은 테스트 코드가 됩니다.
+
+```ts
+test('square a number', () => {
+  square(1);
+  square(2);
+});
+```
+
+반환값에 대해서는 체크하지 않기 때문에, 실제로는 실행의 결과에 대한 테스트는 하지 않은 게 됩니다. 따라서 `square`의 구현이 잘못되어 있더라도 이 테스트는 통과하게 됩니다.   
+
+```ts
+const lengths: number[] = map(['john', 'paul'], name => name.length);
+```
+
+이 코드는 일반적으로 불필요한 타입 선언에 해당합니다. 그러나 테스트 코드 관점에서는 중요한 역할을 하고 있습니다. `number[]` 타입 선언은 `map` 함수의 반환 타입이 `number[]`임을 보장합니다. 실제로 `DefinitelyTyped`를 살펴보면, 테스팅을 하기 위해 정확히 동일한 방식을 사용한 수많은 타입 선언을 볼 수 있습니다. 그러나 테스팅을 위해 할당을 사용하는 방법에는 두 가지 근본적인 문제가 있습니다.   
+
+첫 번째, 불필요한 변수를 만들어야 합니다. 반환값을 할당하는 변수는 샘플 코드처럼 쓰일 수도 있지만, 일부 린팅 규칙을 비활성화해야 합니다.   
+일반적인 해결책은 변수를 도입하는 대신 헬퍼 함수를 정의하는 것입니다.
+
+```ts
+function assertType<T>(x: T) {}
+
+assertType<number[]>(map(['john', 'paul'], name => name.length));
+```
+
+이 코드는 불필요한 변수 문제를 해결하지만, 또 다른 문제점이 남아 있습니다.   
+두 번째, 두 타입이 동일한지 체크하는 것이 아니라 할당 가능성을 체크하고 있습니다. 다음 예제처럼 잘 동작하는 경우도 있습니다.
+
+```ts
+const n = 12;
+assertType<number>(n); // 정상
+```
+
+`n` 심벌을 조사해 보면, 타입이 실제로 숫자 리터럴 타입인 12임을 볼 수 있습니다. 12는 `number`의 서브타입이고 할당 가능성 체크를 통과합니다.   
+그러나 객체의 타입을 체크하는 경우를 살펴보면 문제를 발견하게 될 겁니다.
+
+```ts
+const beatles = ['john', 'paul', 'george', 'ringo'];
+assertType<{ name: string }[]>(
+  map(beatles, name => ({
+    name,
+    inYellowSubmarine: name === 'ringo'
+  })),
+); // 정상
+```
+
+`map`은 `{name: string, inYellowSubmarine: boolean}` 객체의 배열을 반환합니다. 반환된 배열을 `{name: string}[]`에 할당 가능하지만, `inYellowSubmarine` 속성에 대한 부분이 체크되지 않았습니다.   
+게다가 `assertType`에 함수를 넣어 보면, 이상한 결과가 나타납니다.
+
+```ts
+const add = (a: number, b: number) => a + b;
+assertType<(a: number, b: number) => number>(add);
+
+const double = (x: number) => 2 * x;
+assertType<(a: number, b: number) => number>(double); // 정상!?
+```
+
+`double` 함수의 체크가 성공하는 이유는, 타입스크립트의 함수 매개변수가 더 적은 함수 타입에 할당 가능하기 때문입니다.   
+
+다음 코드처럼 `Parameters`와 `ReturnType` 제너릭 타입을 이용해 함수의 매개변수 타입과 반환 타입만 분리하여 테스트할 수 있습니다.
+
+```ts
+const double = (x: number) => 2 * x;
+let p: Parameters<typeof double> = null!;
+assertType<number, number>(p);
+//                         ~ '[number]' 형식의 인수는 '[number, number]' 형식의 매개변수에 할당될 수 없습니다.
+
+let r: ReturnType<typeof double> = null!;
+assertType<number>(r); // 정상
+```
+
+한편, `this`가 등장하는 콜박 함수의 경우는 또 다른 문제가 있습니다. `map`은 콜백 함수에서 `this`의 값을 사용할 때가 있으며 타입스크립트는 이러한 동작을 모델링할 수 있으므로, 타입 선언에 반영해야 하며 테스트도 해야합니다.   
+
+앞서 등장했던 테스트는 모두 블랙박스 스타일이었습니다. 세부 사항을 테스트하기 위해서 콜백 함수 내부에서 매개변수들의 타입과 `this`를 직접 체크해 보겠습니다.
+
+```ts
+const beatles = ['john', 'paul', 'george', 'ringo'];
+assertType<number[]>(
+  map(beatles, function(name, i, array) {
+    //         ~~~~~~~~ '(name: any, i: any, array: any) => any' 형식의 인수는
+    //                  '(u: string) => any' 형식의 매개변수에 할당될 수 없습니다.
+    assertType<string>(name);
+    assertType<number>(i);
+    assertType<string[]>(array);
+    assertType<string[]>(this);
+    //                   ~~~~ 'this'에는 암시적으로 'any' 형식이 포함됩니다.
+    return name.length;
+  }),
+);
+```
+
+다음 코드의 선언을 사용하면 타입 체크를 통과합니다.
+
+```ts
+declare function map<U, V>(
+  array: U[],
+  fn: (this: U[], u: U, i: number, array: U[]) => V
+): V[];
+```
+
+그러나 다음 모듈 선언은 까다로운 테스트를 통과할 수 있는 타입 선언 파일지만, 결과적으로 좋지 않은 설계가 됩니다.
+
+```ts
+declare module 'overbar';
+```
+
+이 선언은 전체 모듈에 `any` 타입을 할당합니다. 따라서 테스트는 전부 통과하겠지만, 모든 타입 안전성을 포기하게 됩니다. 더 나쁜 점은, 해당 모듈에 속하는 모든 함수의 호출마다 암시적으로 `any` 타입을 반환하기 때문에 코드 전반에 걸쳐 타입 안전성을 지속적으로 무너뜨리게 된다는 것입니다.   
+
+타입 시스텝 내에서 암시적으로 `any` 타입을 발견해 내는 것은 매우 어렵습니다. 이러한 어려움 때문에 타입 체커와 독립적으로 동작하는 도구를 사용해서 타입 선언을 테스트하는 방법이 권장됩니다.   
+
+`DefinitelyTyped`의 타입 선언을 위한 도구는 [dtslint](https://github.com/microsoft/dtslint)입니다. dtslint는 특별한 형태의 주석을 통해 동작합니다. dtslint를 사용하면 `beatles` 관련 예제의 테스트를 다음처럼 작성할 수 있습니다.
+
+```ts
+const beatles = ['john', 'paul', 'george', 'ringo'];
+map(beatles, function(
+  name, // $ExpectType string
+  i, // $ExpectType number
+  array // $ExpectType string[]
+) {
+  this // $ExpectType string[]
+  return name.length;
+}); // $ExpectType number[]
+```
+
+dtslint는 할당 가능성을 체크하는 대신 각 심벌의 타입을 추출하여 글자 자체가 같은지 비교합니다. 이 비교 과정은 편집기에서 타입 선언을 눈으로 확인하는 것과 같은데, dtslint는 이러한 과정을 자동화합니다.   
+그러나 글자 자체가 같은지 비교하는 방식에는 단점이 있습니다. `number|string`과 `string|number`는 같은 타입이지만 글자 자체로 보면 다르기 때문에 다른 타입으로 인식됩니다. `string`과 `any`를 비교할 때도 마찬가지인데, 두 타입은 서로 간에 할당이 가능하지만 글자 자체는 다르기 때문에 다른 타입으로 인식됩니다.
