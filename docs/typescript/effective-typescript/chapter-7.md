@@ -226,3 +226,61 @@ function foo(abc: ABC) {
 ```
 
 객체를 다룰 때에는 항상 "프로토타입 오염"의 가능성을 염두해 두어야 합니다. 실제 작업에서는 `Object.prototype`에 순회 가능한 속성을 절대로 추가하면 안됩니다.
+
+## 🥕 아이템 55. DOM 계층 구조 이해하기
+타입스크립트에서 DOM 엘리먼트의 계층 구조를 파악하기 용이합니다.   
+아래 코드는 타입스크립트에서 수많은 오류가 표시됩니다.
+
+```ts
+function handleDrag(eDown: Event) {
+  const targetEl = eDown.currentTarget;
+  targetEl.classList.add('dragging');
+
+  const dragStart = [eDown.clientX, eDown.clientY];
+
+  const handleUp = (eUp: Event) => {
+    targetEl.classList.remove('dragging');
+    targetEl.removeEventListener('mouseup', handleUp);
+
+    const dragEnd = [eUp.clientX, eUp.clientY];
+    console.lg('dx, dy = ', [0, 1].map(i => dragEnd[i] - dragStart[i]));
+  }
+
+  targetEl.addEventListener('mouseup', handleUp);
+}
+
+const div = document.getElementById('surface');
+div.addEventListener('mousedown', handleDrag);
+```
+
+일반적으로 타입 단언문은 지양해야 하지만, DOM 관련해서는 타입스크립보다 우리가 더 정확히 알고 있는 경우이므로 단언문을 사용해도 좋습니다.
+
+```ts
+document.getElementById('my-div') as HTMLDivElement;
+```
+
+`strictNullChecks`가 설정된 상태라면, `document.getElementById`가 `null`인 경우를 체크해야 합니다. 실제 코드에서 `document.getElementById`가 `null`일 가능성이 있다면 `if` 분기문을 추가해야 합니다.   
+
+아래 예제는 타입스크립트 오류를 해결한 예제입니다.
+
+```ts
+function addDragHandler(el: HTMLElement) {
+  el.addEventListener('mosuedown', eDown => {
+    const dragStart = [eDown.clientX, eDown.clientY];
+    const handleUp = (eUp: MouseEvent) => {
+      el.classList.remove('dragging');
+      el.removeEventListener('mouseup', handleUp);
+      const dragEnd = [eUp.clientX, eUp.clientY];
+      console.lg('dx, dy = ', [0, 1].map(i => dragEnd[i] - dragStart[i]));
+    }
+    el.addEventListener('mouseup', handleUp);
+  });
+}
+
+const div = document.getElementById('surface');
+if (div) {
+  addDragHandler(div);
+}
+```
+
+자바스크립트를 사용할 때는 신경 쓰지 않았겠지만, DOM에는 타입 계층 구조가 있습니다 DOM 타입은 타입스크립트에서 중요한 정보이며, 브라우저 관련 프로젝트에서 타입스크립트를 사용할 때 유용합니다.
