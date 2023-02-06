@@ -283,4 +283,83 @@ if (div) {
 }
 ```
 
-자바스크립트를 사용할 때는 신경 쓰지 않았겠지만, DOM에는 타입 계층 구조가 있습니다 DOM 타입은 타입스크립트에서 중요한 정보이며, 브라우저 관련 프로젝트에서 타입스크립트를 사용할 때 유용합니다.
+자바스크립트를 사용할 때는 신경 쓰지 않았겠지만, DOM에는 타입 계층 구조가 있습니다. DOM 타입은 타입스크립트에서 중요한 정보이며, 브라우저 관련 프로젝트에서 타입스크립트를 사용할 때 유용합니다.
+
+## 🥕 아이템 56. 정보를 감추는 목적으로 `private` 사용하지 않기
+
+```ts
+class Diary {
+  private secret = 'cheated on my English test';
+}
+
+const diary = new Diary();
+diary.secret
+//    ~~~~~~ 'secret' 속성은 private이며 'Diary' 클래스 내에서만 접근할 수 있습니다.
+```
+
+타입스크립트에는 `public`, `protected`, `private` 같은 접근 제어자는 타입스크립트 키워드이기 떄문에 컴파일 후에는 제거됩니다. 이 타입스크립트 코드를 컴파일하게 되면 다음 예제의 자바스크립트 코드로 변환됩니다.(target=ES2017이 설정된 상태)
+
+```ts
+class Diary {
+  constructor() {
+    this.secret = 'cheated on my English test';
+  }
+}
+
+const diary = new Diary();
+diary.secret;
+```
+
+`private` 키워드는 사라졌고 `secret`은 일반적인 속성이므로 접근할 수 있습니다. 타입스크립트의 접근 제어자들은 단지 컴파일 시점에만 오류를 표시해 줄 뿐이며, 언더스코어 관례와 마찬가지로 런타임에는 아무런 효력이 없습니다. 심지어 단언문을 사용하면 타입스크립트 상태에서도 `private` 속성에 접근할 수 있습니다.
+
+```ts
+class Diary {
+  private secret = 'cheated on my English test';
+}
+
+const diary = new Diary();
+(diary as any).secret // 정상
+```
+
+즉, 정보를 감추기 위해 `private`을 사용하면 안 됩니다.   
+자바스크립트에서 정보를 숨기기 위해 가장 효과적인 방법은 클로저를 사용하는 것입니다. 다음 코드처럼 생성자에서 클로저를 만들어 낼 수 있습니다.
+
+```ts
+declare function hash(text: string): number;
+
+class PasswordChecker {
+  checkPassword: (password: string) => boolean;
+  constructor(passwordHash: number) {
+    this.checkPassword = (password: string) => {
+      return hash(password) === passwordHash;
+    }
+  }
+}
+
+const checker = new PasswordChecker(hash('s3cret'));
+checker.checkPassword('s3cret'); // 결과는 true
+```
+
+몇 가지 주의사항이 있습니다. `passwordHash`를 생성자 외부에서 접근할 수 없기 때문에, `passwordHash`에 접근해야 하는 메서드 역시 생성자 내부에 정의되어야 합니다. 그리고 메서드 정의가 생성자 내부에 존재하면, 인스턴스를 생성할 때마다 각 메서드의 복사본이 생성되기 때문에 메모리를 낭비하게 된다는 것을 기억해야 합니다. 또한 동일한 클래스로부터 생성된 인스턴스라고 하더라도 서로 비공개 데이터에 접근하는 것이 불가능하기 때문에 철저하게 비공개이면서 동시에 불푠함이 따릅니다.   
+
+또 하나의 선택지로, 현재 표준화가 진행 중인 비공개 필드 기능을 사용할 수도 있습니다. ([책은 진행 중이라고 되어있지만 현재는 표준화 완료](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes/Private_class_fields)) 비공개 필드 기능은 접두사로 `#`를 붙여서 타입 체크와 런타임 모두에서 비공개로 만드는 역할을 합니다.
+
+```ts
+class PasswordChecker {
+  #passwordHash: number;
+
+  constructor(passwordHash: number) {
+    this.#passwordHash = passwordHash;
+  }
+
+  checkPassword(password: string) {
+    return hash(password) === this.#passwordHash;
+  }
+}
+
+const checker = new PasswordChecker(hash('s3cret'));
+checker.checkPassword('secret'); // 결과는 false
+checker.checkPassword('s3cret'); // 결과는 true
+```
+
+`#passwordHash` 속성은 클래스 외부에서 접근할 수 없습니다. 그러나 클로저 기법과 다르게 클래스 메서드나 동일한 클래스의 개별 인스턴스끼리는 접근이 가능합니다.
