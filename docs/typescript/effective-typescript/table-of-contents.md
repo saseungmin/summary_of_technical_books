@@ -78,3 +78,4 @@ sidebar_position: 1
 
 #### [🎈 Chapter 7. 코드를 작성하고 실행하기](/docs/typescript/effective-typescript/chapter-7)
 53. 타입스크립트 기능보다는 ECMAScript 기능을 사용하기
+54. 객체를 순회하는 노하우
