@@ -82,3 +82,10 @@ sidebar_position: 1
 55. DOM 계층 구조 이해하기
 56. 정보를 감추는 목적으로 `private` 사용하지 않기
 57. 소스맵을 사용하여 타입스크립트 디버깅하기
+
+#### [🎈 Chapter 8. 타입스크립트로 마이그레이션하기](/docs/typescript/effective-typescript/chapter-8)
+58. 모던 자바스크립트로 작성하기
+59. 타입스크립트 도입 전에 `@ts-check`와 `JSDoc`으로 시험해 보기
+60. allowJs로 타입스크립트와 자바스크립트 같이 사용하기
+61. 의존성 관계에 따라 모듈 단위로 전환하기
+62. 마이그레이션의 완성을 위헤 `noImplicitAny` 설정하기
