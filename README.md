@@ -41,6 +41,10 @@
 - You Don’t Know JS this와 객체 프로토타입, 비동기와 성능
 - 클린 아키텍처 소프트웨어 구조와 설계의 원칙
 - HTTP 완벽 가이드
+- [구글 엔지니어는 이렇게 일한다](http://www.yes24.com/Product/Goods/109182479)
+- [쏙쏙 들어오는 함수형 코딩](http://www.yes24.com/Product/Goods/108748841)
+- [프로그래머의 뇌](http://www.yes24.com/Product/Goods/105911017)
+- [Code Complete 코드 컴플리트 2](http://www.yes24.com/Product/Goods/44130507)
 
 ## 🔥 컨트리뷰션 방법
 
