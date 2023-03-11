@@ -53,3 +53,4 @@ sidebar_position: 1
 #### [🎈 Chapter 6: 단위 테스트 스타일](/docs/test/unit-test/chapter-6)
 1. 단위 테스트의 세 가지 스타일
 2. 단위 테스트 스타일 비교
+3. 함수형 아키텍처 이해
