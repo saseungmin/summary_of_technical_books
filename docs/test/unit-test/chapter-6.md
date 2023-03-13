@@ -228,3 +228,154 @@ public int Increment() {
 또 다른 유사점은 의존성 간의 단방향 흐름이다. 육각형 아키텍처에서 도메인 계층 내 클래스는 서로에게만 의존해야 한다. 애플리케이션 서비스 계층의 클래스에 의존해서는 안된다. 마찬가지로 함수형 아키텍처의 불변 코어는 가변 셸에 의존하지 않는다. 자급할 수 있고 외부 계층과 격리돼 작동할 수 있다. 이로 인해 함수형 아키텍처를 테스트하기 쉽다.   
 
 이 둘의 차이점은 부작용에 대한 처리에 있다. 함수형 아키텍처는 모든 부작용을 불변 코어에서 비즈니스 연산 가장자리로 밀어낸다. 이 가장자리는 가변 셸이 처리한다. 반면 육각형 아키텍처는 도메인 계층에 제한하는 한, 도메인 계층으로 인한 부작용도 문제없다. 육각형 아키텍처의 모든 수정 사항은 도메인 계층 내에 있어야 하며, 계층의 경계를 넘어서는 안 된다.
+
+## 🥕 함수형 아키텍처와 출력 기반 테스트로의 전환
+상태 기반 테스트와 통신 기반 테스트를 출력 기반 테스트 스타일로 리팩터링할 것이다.   
+
+### 🎈 감사 시스템 소개
+샘플 프로젝트는 조직의 모든 방문자를 추적하는 감사 시스템이다. 이 시스템은 가장 최근 파일의 마지막 줄에 방문자의 이름과 방문 시간을 추가한다. 파일당 최대 항목 수에 도달하면 인덱스를 증가시켜 새 파일을 작성한다.
+
+```cs title="감사 시스템의 초기 구현"
+public class AuditManager {
+  private readonly int _maxEntriesPerFile;
+  private readonly string _directoryName;
+
+  public AuditManager(int maxEntriesPerFile, string directoryName) { // 최대 항목 수와 작업 디렉터리를 설정 매개변수로 받는다.
+    _maxEntriesPerFile = max EntriesPerFile;
+    _directoryName = directoryName;
+  }
+
+  public void AddRecord(string visitorName, DateTime timeOfVisit) {
+    // 작업 디렉터리에서 전체 파일 목록을 검색
+    string[] filePaths = Directory.GetFiles(_directoryName);
+    // 인덱스별로 정렬
+    (int index, string path)[] sorted = SortByIndex(filePaths);
+
+    string newRecord = visitorName + ';' + timeOfVisit;
+
+    // 아직 감시 파일이 없으면 단일 레코드로 첫 번째 파일을 생성한다.
+    if (sorted.Length == 0) {
+      string newFile = Path.Combine(_directoryName, "audit+1.txt");
+      File.WriteAllText(newFile, newRecord);
+      return;
+    }
+
+    // 감시 파일이 있으면 최신 파일을 가져와서 파일의 항목 수가 한계에 도달했는지에 따라 새 레코드를 추가하거나 새 파일을 생성한다.
+    (int currentFileIndex, string currentFilePath) = sorted.Last();
+    List<string> lines = File.ReadAllLines(currentFilePath).ToList();
+
+    if (lines.Count < _maxEntriesPerFile) {
+      lines.Add(newRecord);
+      string newContent = string.Join("\r\n", lines);
+      File.WriteAllText(currentFilePath, newContent);
+    } else {
+      int newIndex = currentFileIndex + 1;
+      string newName = $"audit_{newIndex}.txt";
+      string newFile = Path.Combine(_directoryName, newName);
+      File.WriteAllText(newFile, newRecord);
+    }
+  }
+}
+```
+
+`AuditManager` 클래스는 파일 시스템과 밀접하게 연결돼 있어 그대로 테스트하기가 어렵다. 테스트 전에 파일을 올바른 위치에 배치하고, 테스트가 끝나면 해당 파일을 읽고 내용을 확인한 후 삭제해야 한다.   
+
+병목 지점은 파일 시스템이다. 이는 테스트가 실행 흐름을 방해할 수 있는 공유 의존성이다.   
+또 파일 시스템은 테스트를 느리게 한다. 로컬 시스템과 빌드 서버 모두 작업 디렉터리가 있고 테스트할 수 있어야 하므로 유지 보수성도 저하된다.   
+
+한편 파일 시스템에 직접 작동하는 테스트는 단위 테스트의 정의에 맞지 않는다. 단위 테스트의 두 번째와 세 번째 특성을 준수하지 않으므로, 통합 테스트 범주에 속한다.
+-  단위 테스트는 단위 동작을 검증하고
+-  빠르게 수행하고
+-  다른 테스트와 별도로 처리한다.
+
+### 🎈 테스트를 파일 시스템에서 분리하기 위한 목 사용
+테스트가 밀접하게 결함된 문제는 일반적으로 파일 시스템을 목으로 처리해 해결한다. 파일의 모든 연산을 별도의 클래스(`IFileSystem`)로 도출하고 `AuditManager`에 생성자로 해당 클래스를 주입할 수 있다. 그런 다음 테스트는 이 클래스를 목으로 처리하고 감사 시스템이 파일에 수행하는 쓰기를 캡처한다.
+
+```cs title="생성자를 통한 파일 시스템의 명시적 주입"
+public class AuditManager {
+  private readonly int _maxEntriesPerFile;
+  private readonly string _directoryName;
+  private readonly IFileSystem _fileSystem;
+
+  public AuditManager(
+    int maxEntriesPerFile, string directoryName, IFileSystem fileSystem
+  ) {
+    _maxEntriesPerFile = maxEntriesPerFile;
+    _directoryName = directoryName;
+    _fileSystem = fileSystem;
+  }
+}
+```
+
+다음은 `AddRecord` 메서드다.
+
+```cs title="새로운 IFileSystem 인터페이스 사용"
+  public void AddRecord(string visitorName, DateTime timeOfVisit) {
+    // highlight-next-line
+    string[] filePaths = _fileSystem.GetFiles(_directoryName);
+    (int index, string path)[] sorted = SortByIndex(filePaths);
+
+    string newRecord = visitorName + ';' + timeOfVisit;
+
+    if (sorted.Length == 0) {
+      string newFile = Path.Combine(_directoryName, "audit+1.txt");
+      // highlight-next-line
+      _fileSystem.WriteAllText(newFile, newRecord);
+      return;
+    }
+
+    (int currentFileIndex, string currentFilePath) = sorted.Last();
+    // highlight-next-line
+    List<string> lines = _fileSystem.ReadAllLines(currentFilePath).ToList();
+
+    if (lines.Count < _maxEntriesPerFile) {
+      lines.Add(newRecord);
+      string newContent = string.Join("\r\n", lines);
+      // highlight-next-line
+      _fileSystem.WriteAllText(currentFilePath, newContent);
+    } else {
+      int newIndex = currentFileIndex + 1;
+      string newName = $"audit_{newIndex}.txt";
+      string newFile = Path.Combine(_directoryName, newName);
+      // highlight-next-line
+      _fileSystem.WriteAllText(newFile, newRecord);
+    }
+  }
+```
+
+이제 `AuditManager`가 파일 시스템에서 분리되므로, 공유 의존성이 사라지고 테스트를 서로 독립적으로 실행할 수 있다. 다음은 그러한 테스트다.
+
+```cs title="목을 이용한 감사 시스템의 동작 확인"
+[Fact]
+public void A_new_file_is_created_when_the_current_file_overflows() {
+  var fileSystemMock = new Mock<IFileSystem>();
+  fileSystemMock
+    .Setup(x => x.GetFiles("audits"))
+    .Returns(new string[] {
+      @"audits\audit_1.txt",
+      @"audits\audit_2.txt"
+    });
+  fileSystemMock
+    .Setup(x => x.ReadAllLines(@"audits\audit_2.txt"))
+    .Returns(new List<string> {
+      "Peter; 2019-04-06T16:30:00",
+      "Jane; 2019-04-06T16:40:00",
+      "Jack; 2019-04-06T17:00:00",
+    });
+
+  var sut = new AuditManager(3, "audits", fileSystemMock.Object);
+
+  sut.AddRecord("Alice", DateTime.Pars("2019-04-06T18:00:00"));
+
+  fileSystemMock.verify(x => x.WriteAllText(
+    @"audits\audit_3.txt"
+    "Alice; 2019-04-06T18:00:00",
+  ));
+}
+```
+
+이 구현은 초기 버전보다 개선됐다. 테스트는 더 이상 파일 시스템에 접근하지 않으므로 더 빨리 실행된다. 테스트를 만족시키려고 파일 시스템을 다룰 필요가 없으므로 유지비도 절감된다. 리팩터링을 해도 회귀 방지와 리팩터링 내성이 나빠지지 않았다.   
+하지만 더 개선할 수 있다. 목 라이브러리가 최선을 다해 도움을 주지만, 작성된 테스트는 여전히 평이한 입출력에 의존하는 테스트만큼 읽기가 쉽지 않다.
+
+### 🎈 함수형 아키텍처로 리팩터링하기
+인터페이스 뒤로 부작용을 숨기고 해당 인터페이스를 `AuditManager`에 주입하는 대신, 부작용을 클래스 외부로 완전히 이동할 수 있다. 그러면 `AuditManager`는 파일에 수행할 작업을 둘러싼 결정만 책임지게 된다. 새로운 클래스인 `Persister`는 그 결정에 따라 파일 시스템에 업데이트를 적용한다.
