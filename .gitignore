@@ -25,12 +25,3 @@ yarn-error.log*
 
 # env
 .env
-
-# zero install
-.yarn/*
-!.yarn/cache
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
