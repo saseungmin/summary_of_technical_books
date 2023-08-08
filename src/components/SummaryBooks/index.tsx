@@ -1,12 +1,11 @@
 import React from 'react';
+import SummaryBooksView from '../SummaryBooksView';
 
-import styled from '@emotion/styled';
-
-import SummaryBooksView from './SummaryBooksView';
+import styles from './index.module.scss';
 
 function SummaryBooks() {
   return (
-    <BooksInfoSection>
+    <section className={styles.booksInfoSection}>
       <div className="container">
         <div className="row">
           <SummaryBooksView
@@ -14,15 +13,8 @@ function SummaryBooks() {
           />
         </div>
       </div>
-    </BooksInfoSection>
+    </section>
   );
 }
 
 export default SummaryBooks;
-
-const BooksInfoSection = styled.section`
-  display: flex;
-  align-items: center;
-  padding: 2rem 0 5rem 0;
-  width: 100%;
-`;
