@@ -20,6 +20,9 @@ module.exports = {
   organizationName: 'saseungmin', // Usually your GitHub org/user name.
   projectName: 'reading_books_record_repository', // Usually your repo name.
   trailingSlash: false,
+  plugins: [
+    'docusaurus-plugin-sass',
+  ],
   themeConfig: {
     navbar: {
       title: 'Summary of Books',

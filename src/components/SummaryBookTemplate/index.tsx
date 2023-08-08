@@ -1,11 +1,11 @@
 import React from 'react';
 
-import styled from '@emotion/styled';
-
 import clsx from 'clsx';
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import { Book } from '../data/books';
+import { Book } from '@site/src/data/books';
+
+import styles from './index.module.scss';
 
 type Props = Book
 
@@ -13,7 +13,7 @@ function SummaryBookTemplate({ link, bookName, imgName }: Props) {
   const imgSrc = useBaseUrl(`/img/books/${imgName}`);
 
   return (
-    <BookInfoWrapper className={clsx('col col--4')}>
+    <div className={clsx('col col--4', styles.bookInfoWrapper)}>
       <div>
         <h4>
           <a href={link}>
@@ -26,12 +26,8 @@ function SummaryBookTemplate({ link, bookName, imgName }: Props) {
           <img src={imgSrc} width="300px" height="300px" alt={bookName} />
         </a>
       </div>
-    </BookInfoWrapper>
+    </div>
   );
 }
 
 export default SummaryBookTemplate;
-
-const BookInfoWrapper = styled.div`
-  margin-top: 1rem;
-`;
