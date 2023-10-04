@@ -13,7 +13,7 @@ sidebar_position: 1
 
 ## [객체지향](/docs/object-oriented/table-of-contents)
 
-## [함수향](/docs/functional/table-of-contents)
+## [함수형](/docs/functional/table-of-contents)
 
 ## [클린코드](/docs/clean/table-of-contents)
 
