@@ -160,13 +160,13 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala', 'csharp'],
     },
-    algolia: {
+    algolia: process.env.ALGOLIA_APP_ID && process.env.ALGOLIA_API_KEY ? {
       appId: process.env.ALGOLIA_APP_ID,
       apiKey: process.env.ALGOLIA_API_KEY,
       indexName: 'reading-books-record-repository',
       contextualSearch: true,
       externalUrlRegex: 'external\\.com|domain\\.com',
-    },
+    } : undefined,
   },
   presets: [
     [
