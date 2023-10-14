@@ -134,7 +134,7 @@ for(let value of gen()) {
 
 ES5로 비동기 콜백 함수를 구현하려면 코드가 상당히 복잡해지고 번거로워진다.   
 `Promise`는 비동기 콜백 함수를 상대적으로 쉽게 구현할 목적으로 만들어졌다.   
-ESNext에서는 여러 개의 `Promise` 호출을 겸겸한 좀 더 복잡한 형태의 코드를 `async/await` 구문으로 간결하게 구현할 수 있게 한다.   
+ESNext에서는 여러 개의 `Promise` 호출을 결합한 좀 더 복잡한 형태의 코드를 `async/await` 구문으로 간결하게 구현할 수 있게 한다.   
 
 ```ts
 async function get() {
