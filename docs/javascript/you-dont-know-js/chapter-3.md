@@ -264,7 +264,7 @@ var matches = someText.match(namePattern);
 - `date` 객체 값은 `new Date()`로 생성한다.
 - ES5에 정의된 정적 도우미 함수(Helper Function), `Date.now()`를 사용하는 게 더 쉽다. (`getTime()` 보다)
 - `Error()` 생성자는 앞에 `new`가 있든 없든 결과는 같다.
-- `error` 객체의 주 용도는 현재의 실행 스택 콘텍스트(Execution Stack Context)를 포착하여 객체에 담든 것이다.
+- `error` 객체의 주 용도는 현재의 실행 스택 콘텍스트(Execution Stack Context)를 포착하여 객체에 담은 것이다.
 - 이 실행 스택 콘텍스트는 **함수 호출 스택, `error` 객체가 만들어진 줄 번호 등 디버깅에 도움이 될 만한 정보들을 담고 있다.**
 - `error` 객체는 보통 `throw` 연산자와 함께 사용한다.
 
@@ -350,7 +350,7 @@ Array.prototype.length = 0;
 
 - **프로토타입은 디폴트다**
 - 변수에 적절한 값이 할당되지 않은 상태에서 `Function.prototype` -> 빈 함수, `RegExp.prototype` -> 빈 정규식, `Array.prototype` -> 빈 배열은 모두 디폴드 값이다.
-- 프로토타입으로 디폴드 값을 세팅하면 추가적인 이점이 있다.
+- 프로토타입으로 디폴트 값을 세팅하면 추가적인 이점이 있다.
 - `.prototype`들은 이미 생성되어 내장된 상태이므로 단 한 번만 생성된다.
 - 어떤 식으로도 **프로토타입을 변경하지 않도록 유의해야 한다.**
 
