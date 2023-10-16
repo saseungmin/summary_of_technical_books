@@ -194,7 +194,7 @@ function doSomethingCool() {
   // ...
 }
 ```
-- `doSomethingCool` 함수는 `FeatureXYZ` 변수가 존재하면 그대로 사용하고 없으면 함수 바디를 정의하는데, 이렇게 해야 다른 사람이 카피 앤 페이스틀 해도 안전하게 `FeatureXYZ`가 존재하는지를 체크할 수 있다.
+- `doSomethingCool` 함수는 `FeatureXYZ` 변수가 존재하면 그대로 사용하고 없으면 함수 바디를 정의하는데, 이렇게 해야 다른 사람이 카피 앤 페이스트를 해도 안전하게 `FeatureXYZ`가 존재하는지를 체크할 수 있다.
 
 ```javascript
 (function() {

@@ -21,7 +21,7 @@ sidebar_position: 3
 
 ### 🐣 기존 저장소를 Clone 하기
 - 다른 프로젝트에 참여하거나(contribute) Git 저장소를 복사하고 싶을 때 `git clone` 명령을 사용한다.
-- Git이 SVN과 가장 큰 차이점은 ㅅ버에 있는 거의 모든 데이터를 복사한다.
+- Git이 SVN과 가장 큰 차이점은 서버에 있는 거의 모든 데이터를 복사한다.
 - `git clone`을 실행하면 프로젝트 히스토리를 전부 받아온다.
 
 ```bash
