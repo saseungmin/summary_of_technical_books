@@ -24,8 +24,8 @@ const total = 100 + (100 + taxRate);
 // 100행의 코드를 건너뛰었습니다.
 return `구매 금액은 ${total}입니다.`;
 ```
-- `const`를 사용할 때는 `total`이 상수이며 **재할당할 수 없다는 것**을 알고있기 때문에 정확하게 `110`이 반환된다는 것을 알 수 있다.
-- `var`은 반복문, 조건문, 재할당 처럼 값을 변경할 수 있는 코드가 있기 때문에 `total`값이 중간에 변경될 수 있는 여지가 있다.
+- `const`를 사용할 때는 `total`이 상수이며 **재할당할 수 없다는 것**을 알고 있기 때문에 정확하게 `110`이 반환된다는 것을 알 수 있다.
+- `var`은 반복문, 조건문, 재할당처럼 값을 변경할 수 있는 코드가 있기 때문에 `total`값이 중간에 변경될 수 있는 여지가 있다.
 
 ```javascript
 const discountable = [];
@@ -38,7 +38,7 @@ for(let i = 0; i < cart.length; i++){
 ```
 - `const`에 할당된 값이 불변값이 되지 않는다는 것이 아니다.
 - 변수를 재할당할 수는 없지만, 위와 같이 값을 바꿀 수는 있다.
-- 그렇기 때문에 위와 같은 코드는 코드이 뒷부분에서 어떤 값을 보게 될지 확신할 수 없기에 조작(multation)을 피하는 것이 최선이다.
+- 그렇기 때문에 위와 같은 코드는 코드의 뒷부분에서 어떤 값을 보게 될지 확신할 수 없기에 조작(multation)을 피하는 것이 최선이다.
   
 ```javascript
 const discountable = cart.filter(item => item.discountAvailable);
@@ -47,7 +47,7 @@ const discountable = cart.filter(item => item.discountAvailable);
 ### 🎯 let과 const로 유효 범위 충돌을 줄여라.
 - 변수를 반드시 재할당해야 하는 경우에는 `let`을 사용한다.
 - `var`은 **어휘적 유효 범위(lexical scope)**를 따르는 반면, `let`은 **블록 유효 범위(block scope)**를 따른다.
-- 블록 밖에서는 블록 유효 범위 변수에 접근할 수 없다. (주괄호를 벗어나면 변수가 존재하지 않는다는 규칙)
+- 블록 밖에서는 블록 유효 범위 변수에 접근할 수 없다. (중괄호를 벗어나면 변수가 존재하지 않는다는 규칙)
 
 ```javascript
 function getLowesPrice(item){
@@ -180,7 +180,7 @@ function generateLink(image, width){
 ```
 
 - **템플릿 리터럴**을 사용하면 복잡도를 줄일 수 있다.
-- 텦플릿 리터럴은 자바스클립트 표현식을 사용해서 문자열을 연결하고 새로운 문자열을 생성하는 간단한 문법이다.
+- 템플릿 리터럴은 자바스크립트 표현식을 사용해서 문자열을 연결하고 새로운 문자열을 생성하는 간단한 문법이다.
 
 ```javascript
 function generateLink(image, width){
