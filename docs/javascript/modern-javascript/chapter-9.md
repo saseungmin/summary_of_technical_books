@@ -7,7 +7,7 @@ sidebar_position: 10
 
 ### 🎯 프라미스를 이용해 비동기적으로 데이터를 가져오라.
 
-- 자바스크립트는 **비동기 언어**이다. 비동기 언어는 그저 이전의 코드가 완전히 해결되지 않아도 이어지는 코드를 실행할 주 있는 언어를 의미한다.
+- 자바스크립트는 **비동기 언어**이다. 비동기 언어는 그저 이전의 코드가 완전히 해결되지 않아도 이어지는 코드를 실행할 수 있는 언어를 의미한다.
 - [비동기 코드와 동기 코드의 차이점 참고](https://www.pluralsight.com/guides/introduction-to-asynchronous-javascript)
 - 비동기 언어의 가치는 **지연된 정보를 기다리는 동안 이 정보가 필요하지 않은 다른 코드를 실행할 수 있다는 점**에 있다. (지연된 정보를 기다리는 동안 코드가 멈추지 않는다.)
 - 비동기 데이터를 다룰 때 반복적으로 사용할 수 있는 기법인 [**프라미스(Promise)**](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise)가 있다. ([모던 JavaScript 튜토리얼 참고](https://ko.javascript.info/promise-basics))
@@ -39,14 +39,14 @@ log('ending?'); // ending?
 // DUSK
 ```
 
-- 콜백 함수는 비동기 데이터를 다루는 좋은 방법이고 오랫동안 표준적인 방법이였다.
+- 콜백 함수는 비동기 데이터를 다루는 좋은 방법이고 오랫동안 표준적인 방법이었다.
 - 하지만, 문제는 비동기 함수에서 또 비동기 함수를 호출하고, 거기서 또 비동기 함수를 호출해 마침내 너무나 많은 콜백이 중첩되는 경우가 생기는 것이다.
 - 이런 경우를 아래 사진과 같이 **콜백 지옥(Callback Hell)** 이라고 한다.
 
 ![callback_hell](/img/modern-javascript/chapter9-1.jpeg)
 
 - 프라미스를 사용하면 이러한 콜백 함수 문제를 해결할 수 있다.
-- 프라미스는 콜백 함수를 인수로 받는 대신에 **성공과 실패에 대응하는 메서드를 사용한다.**
+- 프라미스는 콜백 함수를 인수로 하는 대신에 **성공과 실패에 대응하는 메서드를 사용한다.**
 - 프라미스는 비동기 작업을 전달받아서 응답에 따라 두 가지 메서드 중 하나를 호출하는 객체이다.
 - 프라미스는 비동기 작업이 **성공하거나 충족된 경우** `then()` 메서드에 결과를 넘겨준다.
 - 비동기 작업에 **실패하거나 거부되는 경우**에는 프로미스가 `catch()` 메서드를 호출한다.
@@ -124,7 +124,7 @@ getUserPreferences()
 // music for airports
 ```
 - 여러 개의 중첩된 콜백 함수에 데이터를 전달하는 대신 여러 개의 `then()` 메서드를 통해 데이터를 아래로 내려주는 것이다.
-- 위의 코드를 아래와 같이 변경해줄 수 있다.
+- 위의 코드를 아래와 같이 변경해 줄 수 있다.
 
 ```javascript
 getUserPreferences()
@@ -158,7 +158,7 @@ getUserPreferences()
 // {type: "네트워크 오류"}
 ```
 
-- 프라미스가 담긴 배열을 받아 모든 프라미스가 종료되었을 때의 성공 또는 실패 결과를 반환하는 `Promise.all` 이라는 메서드도 있다. ([MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all), [모던 javascript 튜토리얼](https://ko.javascript.info/promise-api#ref-566))
+- 프라미스가 담긴 배열을 받아 모든 프라미스가 종료되었을 때의 성공 또는 실패 결과를 반환하는 `Promise.all`이라는 메서드도 있다. ([MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all), [모던 javascript 튜토리얼](https://ko.javascript.info/promise-api#ref-566))
 
 ### 🎯 async/await로 함수를 명료하게 생성하라.
 
@@ -234,13 +234,13 @@ getArtistByPreference()
 ### 🎯 fetch로 간단한 AJAX 호출을 처리하라.
 
 - `fetch()`를 이용해서 원격 데이터를 가져올 수 있다.
-- API를 이용하면 네이티브 소프트웨어처럼 작동하는 매우 빠른 애플리케이션을 만들어낼 수 있다.
-- [AJAX(Asynchronous JavaScript And XML)](https://developer.mozilla.org/ko/docs/Web/Guide/AJAX/Getting_Started)(비동기 자바스크르비트와 XML)로 데이터를 가져오는 것은 꽤 번거로웠다.
+- API를 이용하면 네이티브 소프트웨어처럼 작동하는 매우 빠른 애플리케이션을 만들어 낼 수 있다.
+- [AJAX(Asynchronous JavaScript And XML)](https://developer.mozilla.org/ko/docs/Web/Guide/AJAX/Getting_Started)(비동기 자바스크립트와 XML)로 데이터를 가져오는 것은 꽤 번거로웠다.
 - AJAX 호출을 처리할 수 있는 `fetch()`라는 간단한 도구가 생겼다.
 - `fetch()`는 자바스크립트 명세의 일부가 아니라 `fetch()` 명세는 WHATWG(Web Hypertext Application Technology Working Group)가 [정의](https://fetch.spec.whatwg.org/)한다.
 - 따라서 대부분의 최신 브라우저에서 지원되지만 Node.js에서는 기본적으로 지원되지 않는다.
 - Node.js에서 `fetch()`를 사용하려면 [node-fetch 패키지](https://www.npmjs.com/package/node-fetch)를 사용해야 한다.
-- `fetch()`를 사용하려면 API 끝점(endpoint)가 필요하다. 
+- `fetch()`를 사용하려면 API 끝점(endpoint)이 필요하다. 
 - typicode는 [JSONPlaceholder](https://jsonplaceholder.typicode.com/)를 통해 가상 블로그 데이터를 제공하고 있다.
 - 또한, typicode에서 제공하는 [JSON 서버](https://github.com/typicode/json-server)라는 도구를 이용하면 로컬 환경에서 모의 API를 만들 수 있다.
 - 다음은 `fetch()`를 사용한 `GET` 요청이다.
@@ -260,7 +260,7 @@ fetch('https://jsonplaceholder.typicode.com/posts/1');
 ![fetch](/img/modern-javascript/chapter9-2.PNG)
 
 - `then()` 메서드에 응답을 처리하는 콜백 함수를 추가한다.
-- `fetch()`는 다양한 믹스인을 포함하고 있어서 **응답 본문 데이터를 자동으로 변환해준다.**
+- `fetch()`는 다양한 믹스인을 포함하고 있어서 **응답 본문 데이터를 자동으로 변환해 준다.**
 - `then()` 메서드의 콜백에서 파싱된 데이터를 처리할 수 있다.
 
 ```javascript
@@ -295,10 +295,10 @@ fetch('https://jsonplaceholder.typicode.com/posts/1')
   });
 ```
 
-- `fetch()`를 사용한 `POST`방법은 두 번째 인수로 설정 조건을 담은 객체를 전달해야 한다.
+- `fetch()`를 사용한 `POST` 방법은 두 번째 인수로 설정 조건을 담은 객체를 전달해야 한다.
 - 설정 객체는 서로 다른 다양한 세부 사항을 담을 수 있다.
-- 여기서 가장 중요한 정보만 포함시킬 것이다.
-- 메서드를 `POST`를 사용한다고 선언해주고, `JSON` 데이터를 넘겨줘야 한다.
+- 여기서 가장 중요한 정보만 포함할 것이다.
+- 메서드를 `POST`를 사용한다고 선언해 주고, `JSON` 데이터를 넘겨줘야 한다.
 - 그리고 `JSON` 데이터를 보내기 때문에 헤더의 `Content-Type`을 `application/json`으로 설정해야 한다.
 - 끝으로 `JSON` 데이터를 담은 문자열로 요청 본문을 추가한다.
 
@@ -341,11 +341,11 @@ fetch('https://jsonplaceholder.typicode.com/posts', options)
 
 ### 🎯 localStorage로 상태를 장기간 유지하라.
 
-- `localStorage`를 이요하면 사용자 정보를 쉽게 저장할 수 있다.
+- `localStorage`를 이용하면 사용자 정보를 쉽게 저장할 수 있다.
 - `localStorage`는 브라우저에만 존재하는 작은 데이터베이스와 같다.
 - `localStorage`에 정보를 추가하거나 가져올 수 있지만, **브라우저의 자바스크립트에서 직접적으로 접근할 수는 없다.**
-- 값을 저장할려면 `localStorage` 객체에 `setItem()` 메서드를 사용해서 값을 설정하면 된다.
-- 첫번째 인수에는 키, 두 번째 인수에는 값을 전달한다.
+- 값을 저장하려면 `localStorage` 객체에 `setItem()` 메서드를 사용해서 값을 설정하면 된다.
+- 첫 번째 인수에는 키, 두 번째 인수에는 값을 전달한다.
 
 ```javascript
 function saveBreed(breed) {
@@ -425,5 +425,5 @@ function clearPreferences() {
 - 덧붙여서 [`sessionStorage`](https://developer.mozilla.org/ko/docs/Web/API/Window/sessionStorage)를 사용해도 데이터를 임시로 저장할 수 있다.
 - 이 도구는 서버 측 렌더링과 클라이언트 측 기능을 혼합되어 있는 경우에 유용하다.
 - 페이지를 **새로 고침하면 저장한 데이터가 유지**되고, 사용자가 **페이지를 떠났다가 다시 돌아오면 저장한 데이터가 없는 기본 상태를 보여준다.**
-- 완전히 통합된 단일 페이지 애플리케이션을 만들어내는 도구를 다룰 수 있다.
+- 완전히 통합된 단일 페이지 애플리케이션을 만들어 내는 도구를 다룰 수 있다.
 - 브라우저에 저장된 정보와 API 접근을 이용하면 서버를 통한 페이지 렌더링을 한 번으로 줄일 수 있다.
