@@ -27,7 +27,7 @@ export { formatPrice };
 - 테스트할 때 어려운 부분은 `const rate = getTaxInformation(location);`이 부분으로 외부 함수를 호출할 때 시작된다.
 - 불러온 함수를 직접 사용할 때는 테스트하려는 함수가 불러온 함수와 밀접하게 결합되는 문제가 있다.
 - 즉, 테스트를 실행할 때 테스트가 외부 API에도 접근해야 하며, 그 결과 테스트는 네트워크 접근, 응답 시간 등에 의존하게 된 것이다.
-- 이 문제를 피하려면 모의 객체(mock)를 생성해서 **함수를 가로채고 명시적은 반환값을 설정**하게 만들어야 한다.
+- 이 문제를 피하려면 모의 객체(mock)를 생성해서 **함수를 가로채고 명시적인 반환값을 설정**하게 만들어야 한다.
 
 ```javascript
 import expect from 'expect';
@@ -73,7 +73,7 @@ describe('가격 표시', () => {
   });
 });
 ```
-- 테스트 코드에 스파이(spy), 모의 객체, 스텁과 같은 여러 가지 외부 헬퍼를 사용하고 있다면, 코드가 복잡하고 강하게 결합되어 있다는 증거로 코드를 단순화해야 한다.
+- 테스트 코드에 스파이(spy), 모의 객체, 스텁과 같은 여러 가지 외부 헬퍼를 사용하고 있다면, 코드가 복잡하고 강하게 결합해 있다는 증거로 코드를 단순화해야 한다.
 - 이럴 경우 외부 함수를 인수로 전달하도록 바꾸기만 하면 된다.
 - 의존성을 인수로 전달하는 것을 [**의존성 주입(dependency injection)**](https://wiki.cys.wo.tc/doku.php?id=javascript%EC%97%90%EC%84%9C%EC%9D%98_%EC%9D%98%EC%A1%B4%EC%84%B1_%EC%A3%BC%EC%9E%85)이라고 한다.
 - 코드의 결합을 제거하려면 `getTaxInformation()`을 인수로 전달하는 것만으로 충분하다.
@@ -118,7 +118,7 @@ describe('가격 표시', () => {
 - [자바스크립트 테스트에서 발생하는 다른 문제](https://www.toptal.com/javascript/writing-testable-code-in-javascript)
 
 ### 🎯 화살표 함수로 복잡도를 낮춰라.
-- 아래의 코드를 화살표 함수로 변경해보자.
+- 아래의 코드를 화살표 함수로 변경해 보자.
 
 ```javascript
 const myinfo = {
@@ -163,7 +163,7 @@ const getNameAndLocation = ({ first, last, city, state }) => ({
 getNameAndLocation(myinfo);
 // {fullName: "seungmin sa", location: "Daejoen still studying"}
 ```
-- 화살표 함수는 다른 함수를 반환하는 함수인 [**고차 함수(Higher-Order Function)**](https://velog.io/@jakeseo_me/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%9D%BC%EB%A9%B4-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-33%EA%B0%80%EC%A7%80-%EA%B0%9C%EB%85%90-22-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EA%B3%A0%EC%B0%A8-%ED%95%A8%EC%88%98Higher-Order-Function-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0) 를 만드는 데 좋다.
+- 화살표 함수는 다른 함수를 반환하는 함수인 [**고차 함수(Higher-Order Function)**](https://velog.io/@jakeseo_me/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%9D%BC%EB%A9%B4-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-33%EA%B0%80%EC%A7%80-%EA%B0%9C%EB%85%90-22-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EA%B3%A0%EC%B0%A8-%ED%95%A8%EC%88%98Higher-Order-Function-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)를 만드는 데 좋다.
 
 ```javascript
 const discounter = discount => {
@@ -195,9 +195,9 @@ discounter(0,1)(100);
 ### 🎯 부분 적용 함수로 단일 책임 매개변수를 관리하라.
 - 고차 함수는 매개변수를 가두는 방법을 통해 특별한 값을 제공하므로, **나중에 원래의 인수에 접근할 수 있게 해두고 함수 실행을 마칠 수 있다.**
 - 또한, **매개변수를 분리**해 함수의 의도를 명확하게 유지할 수 있다.
-- **부분 적용 함수(partially applied function)** 를 사용할 경우, 일부 매개변수를 전달하면 **해당 매개변수를 잠그는 함수가 반환**되어 여기에 더 많은 매개변수를 사용할 수 있다.
+- **부분 적용 함수(partially applied function)**를 사용할 경우, 일부 매개변수를 전달하면 **해당 매개변수를 잠그는 함수가 반환**되어 여기에 더 많은 매개변수를 사용할 수 있다.
 - 즉, 부분 적용 함수를 이용하면 한 번에 전달해야 할 함수 인수의 수가 줄어드는 대신 인**수를 더 전달해야 하는 다른 함수를 반환한다.**
-- 그렇기 때문에 **서로 독립적인 여러 매개변수 집합**을 둘 수 있다.(단일 책임을 지게 된다.)
+- 그렇기 때문에 **서로 독립적인 여러 매개변수 집합**을 둘 수 있다. (단일 책임을 지게 된다.)
 - 다음은 예제 객체 정보이다.
 ```javascript
 const building = {
@@ -260,7 +260,7 @@ function mergeProgramInfomation(building, manager) {
   }
 }
 ```
-- 다음과 같이 호출 할 수 있다.
+- 다음과 같이 호출할 수 있다.
 
 ```javascript
 const programInfo = mergeProgramInfomation(building, manager)(program);
@@ -324,7 +324,7 @@ const exhibitInfo = setStrongHallProgram(exhibit);
 > 가령 인수 세 개가 필요한 함수가 있다면, 먼저 **인수 하나를 받는 고차 함수가 다른 함수를 반환하고, 반환된 함수도 인수 하나를 받는다.**
 > 이 함수에서 끝으로 인수 하나를 받는 마지막 함수가 반환된다.
 
-- 다음 객체 배열 예제를 사용해보자.
+- 다음 객체 배열 예제를 사용해 보자.
 
 ```javascript
 const dogs = [
@@ -396,7 +396,7 @@ getDogNames(dogs, weightCheck(50));
 ```
 
 - 커링 함수를 사용하면 여러 지점에서 다양한 매개변수를 전달할 수 있다. 또한, 함수를 데이터로 전달할 수도 있다.
-- 중요한 부분은 반드시 **두 개의 함수와 두 개의 인수 집합으로 제한한 필요가 없다는 점**으로 커링을 사용해 원래의 비교 함수를 다시 작성할 수 있다.
+- 중요한 부분은 반드시 **두 개의 함수와 두 개의 인수 집합으로 제한할 필요가 없다는 점**으로 커링을 사용해 원래의 비교 함수를 다시 작성할 수 있다.
 
 ```javascript
 const identity = field => value => dog => dog[field] === value;
@@ -410,7 +410,7 @@ getDogNames(dogs, stateCheck('캔자스'));
 ```
 - 특정한 요구 사항이 있는 함수를 가져와서 여러 가지 다른 비교를 할 수 있도록 추상화를 만들 수 있다.
 - 부분 적용 함수를 변수에 할당할 수 있고, 이 변수를 데이터로 전달할 수도 있다
-- 즉, 간단한 도구 모움을 사용해서 매우 정교하게 비교할 수 있다.
+- 즉, 간단한 도구 모음을 사용해서 매우 정교하게 비교할 수 있다.
 
 ```javascript
 function allFilters(dogs, ...checks) {
@@ -473,7 +473,7 @@ validator.setInvalidMessages('도시');
 - 함수를 호출할 때마다 **호출되는 위치를 바탕**으로 `this` 바인딩을 만든다.
 - 처음 작성했던 `setInvalidMessage()`는 객체를 문맥으로 해서 호출되었지만, 여기서는 `this`의 문맥이 해당 객체였다.
 - `map()` 메서드에 **콜백 함수로 전달한 경우**에는 `map()` 메서드의 **문맥에서 호출되므로** 이 경우에는 **`this` 바인딩이 `validator` 객체가 아니다.**
-- 이 때의 **문맥은 전역 객체가 된다.** 브라우저에서는 `window`가, Node.js REPL 환경에서는 `global`이 된다.
+- 이때의 **문맥은 전역 객체가 된다.** 브라우저에서는 `window`가, Node.js REPL 환경에서는 `global`이 된다.
 - 즉, 콜백 함수로 전달되면 `message` 속성에 접근할 수 없게 된다.
 - 화살표 함수를 이용하면 이런 문제를 해결할 수 있다.
 - 화살표 함수는 함수를 호출할 때 `this` 바인딩을 **새로 만들지 않기 때문에**, 화살표 함수를 이용해서 `map()` 콜백을 다시 작성하면 의도대로 작동하게 된다.
@@ -492,7 +492,7 @@ validator.setInvalidMessages('도시');
 // ["도시는 유효하지 않습니다."]
 ```
 
-- 그렇지만 `this` 문맥(context)를 직접 설정해야 할 때도 있다.
+- 그렇지만 `this` 문맥(context)을 직접 설정해야 할 때도 있다.
 - 예를 들어 다음 예제 코드처럼 원래의 `setInvalidMessages()` 메서드를 명명된 메서드가 아니라 속성에 할당한 화살표 함수로 작성한 경우에는 어떻게 해야 할까??
 
 ```javascript
@@ -505,5 +505,5 @@ validator.setInvalidMessages('도시');
 // "도시undefined"
 ```
 - 이 경우에는 오류가 발생하게 된다. 현재 객체에 대해 새로운 `this` 문맥 바인딩을 만들지 않았다.
-- **새로운 문맥을 만들지 않았기 때문에 전역 객체에 바인딩된 것이다.**
+- **새로운 문맥을 만들지 않았기 때문에 전역 객체에 바인딩 된 것이다.**
 - 정리하면 화살표 함수는 **이미 문맥이 있고 다른 함수 내부에서 이 함수를 사용하려고 할 때** 유용하다.

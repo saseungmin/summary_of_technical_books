@@ -7,7 +7,7 @@ sidebar_position: 6
 
 ### 🎯 화살표 함수로 반복문을 단순하게 만들어라.
 - 대부분의 반복문은 [콜백 함수(callback function)](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)에 의존한다.
-- [화살표 함수(arrow function)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/%EC%95%A0%EB%A1%9C%EC%9A%B0_%ED%8E%91%EC%85%98)는 함수가 장황해지는 문제를 해결해서 함수 작성을 간결하고 짧게 만들어준다.
+- [화살표 함수(arrow function)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Functions/%EC%95%A0%EB%A1%9C%EC%9A%B0_%ED%8E%91%EC%85%98)는 함수가 장황해지는 문제를 해결해서 함수 작성을 간결하고 짧게 만들어 준다.
 - 화살표 함수는 필요하지 않은 정보를 최대한 걷어낸다.
   - `function` 키워드
   - 인수를 감싸는 괄호
@@ -45,14 +45,14 @@ const greet = (first, last) => {
 }
 ```
 
-- 함수를 한 줄로만 작성하는 경우에는 `return` 키워드도 사용할 필요가 없다. 즉, **함수 몸체의 실행 결과를 자동으로 반환한다.**
+- 함수를 한 줄로만 작성할 때는 `return` 키워드도 사용할 필요가 없다. 즉, **함수 몸체의 실행 결과를 자동으로 반환한다.**
 
 ```javascript
 const formatUser = name => `${capitalize(name)}님이 로그인했습니다.`;
 ```
 
 - 화살표 함수를 변수에 할당하지 않고 익명 함수로 사용할 수도 있다.
-- 자바스크립트에서 함수를 다른 함수에 인수로 전달할 수 있다. (예로 콜백 함수를 인수로 받는 함수)
+- 자바스크립트에서 함수를 다른 함수에 인수로 전달할 수 있다. (예로 콜백 함수를 인수로 하는 함수)
 
 ```javascript
 function applyCustomGreeting(name, callback) {
@@ -95,7 +95,7 @@ for(let i = 0; i < prices.length; i++) {
 // [1, 2.15]
 ```
 - 위 코드는 단순하지 못하고, 가독성 또한 코드가 늘어날수록 떨어질 것이다.
-- 그렇다고 예측가능한 코드도 아니다. 코드에서 생성한 빈 배열은 상수가 아니므로 나중에 변경될 수도 있고, 그렇지 않을 수도 있다.
+- 그렇다고 예측 가능한 코드도 아니다. 코드에서 생성한 빈 배열은 상수가 아니므로 나중에 변경될 수도 있고, 그렇지 않을 수도 있다.
 - 이러한 코드를 배열 메서드를 사용하면 불필요한 데이터를 배제한, 간결하고 예측 가능한 코드를 만들 수 있다.
 - 거의 대부분의 배열 메서드는 반환되는 배열의 길이나 형태를 변경할 수 있다.
 > - [`map()`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/map): 형태를 바꿀 수 있지만 길이는 유지된다.
@@ -117,7 +117,7 @@ const formattedPrices = prices.map(price => parseFloat(price)).filter(price => p
 - 맵 함수는 입력한 배열의 정보 중 한 조각을 받아 새로운 값을 반환한다.
 - 때로는 정보의 일부를 반환하기도 하고, 정보를 변형해서 새로운 값을 반환하기도 한다.
 - 즉, 배열에 있는 한 가지 속성을 반환하거나 배열에 있는 값을 가져와서 다른 형식의 값을 반환한다.
-- 먼저 `for` 문으로 작성해보자.
+- 먼저 `for` 문으로 작성해 보자.
 ```javascript
 const band = [
   { name: 'corbett', instrument: 'guitar' },
@@ -156,7 +156,7 @@ function getInstrument(member) {
 const instruments = band.map(getInstrument);
 // ["guitar", "guitar", "bass", "drums"]
 ```
-- 위의 기명 함수를 익명 함수로 바꿀 수 있다. 화살표 함수를 사용하여 변경 할 수 있다.
+- 위의 기명 함수를 익명 함수로 바꿀 수 있다. 화살표 함수를 사용하여 변경할 수 있다.
 ```javascript
 const instruments = band.map(member => member.instrument);
 // ["guitar", "guitar", "bass", "drums"]
@@ -190,8 +190,8 @@ for(let i = 0; i < team.length; i++) {
 // ["Dave L", "Dave C"]
 ```
 
-- `filter()` 메서드는 전달하는 함수는 **반드시 참 값**을 반환해야 한다.
-- 만약 **참 값을 반환하지 않으면** 해당 값은 새로운 배열에 담기지 않는다.
+- `filter()` 메서드는 전달하는 함수는 **반드시 참값**을 반환해야 한다.
+- 만약 **참값을 반환하지 않으면** 해당 값은 새로운 배열에 담기지 않는다.
 - 또한, 반환되는 배열은 원본의 **배열 순서도 그대로 유지**한다.
 - 중요한 점은 `filter()` 메서드는 항상 배열을 반환하면 조건에 일치하지 않는 **값이 없는 경우에도 빈 배열을 반환한다.**
 
@@ -200,8 +200,8 @@ const daves = team.filter(member => member.match(/Dav/));
 ```
 
 - 오로지 일치하는 항목이 하나뿐일 때는 [`find()`](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/find) 메서드를 사용할 수 있다.
-- `find()` 메서드는 참 또는 거짓 값을 반환하는 함수를 인수로 받고, 배열의 항목에 전달한 함수로 평가해 **참 값을 반환하는 첫 번째 항목만 반환한다.**
-- **참 값을 반환하는 항목이 없다면 undefined를 반환한다.**
+- `find()` 메서드는 참 또는 거짓 값을 반환하는 함수를 인수로 하고, 배열의 항목에 전달한 함수로 평가해 **참값을 반환하는 첫 번째 항목만 반환한다.**
+- **참값을 반환하는 항목이 없다면 undefined를 반환한다.**
 
 ```javascript
 const instructors = [
@@ -250,7 +250,7 @@ const profile = images.find(image => image.profile) || {
 - `find()` 메서드의 한 가지 아쉬운 점은 도서관 이름인  *기념 도서관*을 하드 코딩해야 한다는 점이다.
 - 배열 메서드의 콜백 함수는 인수가 하나뿐이라는 문제가 있기 때문에 검사 대상인 항목 하나만 인수로 받을 수 있다.
 - 조건에 일치하는지 확인할 변수가 필요해서 **두 번째 인수를 추가해야 할 때 문제가 발생한다.**
-- 이런 경우에 [**커링**](https://ko.javascript.info/currying-partials)이라는 기법을 확용하면 인수의 수를 하나로 줄일 수 있다.
+- 이런 경우에 [**커링**](https://ko.javascript.info/currying-partials)이라는 기법을 활용하면 인수의 수를 하나로 줄일 수 있다.
 
 ```javascript
 const findByLibrary = library => instructor => {
@@ -333,7 +333,7 @@ const sailors = [
   },
 ];
 ```
-- 위 `sailors`배열을 이용해 활동이 없는 회원을 제외시켜보자.
+- 위 `sailors`배열을 이용해 활동이 없는 회원을 제외해 보자.
 
 ```javascript
 const active = sailors.filter(sailor => sailor.active);
@@ -355,7 +355,7 @@ const emails = active.map(member => member.email || `${member.name}@naver.com`);
 emails.forEach(sailor => sendEmail(sailor));
 ```
 
-- 위의 코드들을 체이닝을 사용하여 중간 단계를 제거하고 번수를 선언하지 않고도 동일한 작업들을 처리할 수 있다.
+- 위의 코드들을 체이닝을 사용하여 중간 단계를 제거하고 변수를 선언하지 않고도 동일한 작업을 처리할 수 있다.
 
 ```javascript
 sailors
@@ -399,7 +399,7 @@ const dogs = [
   { name: '포메리안', color: '흰색' },
 ]
 ```
-- 위 `dogs` 배열을 사용하여 `reduce()`로 고윳값이 담긴 집합을 만들어보자.
+- 위 `dogs` 배열을 사용하여 `reduce()`로 고윳값이 담긴 집합을 만들어 보자.
 
 ```javascript
 const colors = dogs.reduce((colors, dog) => {
@@ -508,7 +508,7 @@ for(let i = 0; i < entries.length; i++){
 return '모든 회사를 사용할 수 있습니다.';
 ```
 
-- 위 `for` 문으로 되어있는 반복문을 `find()` 메서드를 사용해서 세버스를 제공하지 못하는 회사가 있는지 확인할 수 있다.
+- 위 `for` 문으로 되어있는 반복문을 `find()` 메서드를 사용해서 서비스를 제공하지 못하는 회사가 있는지 확인할 수 있다.
 
 ```javascript
 const unavailable = [...firms].find(firm => {
@@ -532,9 +532,9 @@ const message = [...firms].reduce((availability, firm) => {
 },'모든 회사를 사용할 수 있습니다.');
 return message;
 ```
-- 이 방법들은 문제가 되는 부분이 있다. `find()` 메서드를 이용하면 이용할 수 없는 회사가 있는지 확인하고 메시지를 반환하는 두 단계를 거쳐야하고 `reduce()` 메서드를 사용하면 코드를 이해하기 좀 어렵다.
+- 이 방법들은 문제가 되는 부분이 있다. `find()` 메서드를 이용하면 이용할 수 없는 회사가 있는지 확인하고 메시지를 반환하는 두 단계를 거쳐야 하고 `reduce()` 메서드를 사용하면 코드를 이해하기 좀 어렵다.
 - 또한, `find()` 메서드는 이용이 불가능한 회사 중 첫 번째 회사만 찾을 수 있고, `reduce()` 메서드는 마지막 회사만 찾을 수 있다.
-- 맵은 펼침 연산자를 사용할 수 있게 해주는 **맵이터레이터**라는 속성이 존재했는데, 이 속성이 맵을 직접 순회할 수 있게 해준다.
+- 맵은 펼침 연산자를 사용할 수 있게 해주는 **맵 이터레이터**라는 속성이 존재했는데, 이 속성이 맵을 직접 순회할 수 있게 해준다.
 - 그렇기 때문에 `for...of` 문으로 이터레이터를 사용할 수 있다.
 
 ```javascript
@@ -554,7 +554,7 @@ return '모든 회사를 사용할 수 있습니다.';
 - `for...in` 문은 객체에 필요한 작업을 직접 실행하기 때문에 `Object.key()`를 실행해서 **객체의 키를 배열로 변환하는 과정을 생략할 수 없다.** 더 정확히 말하면 **객체의 속성을 순회한다.**
 > - 객체는 프로토타입 체인에 있는 다른 객체에서 속성을 상속받고, 객체에는 열거할 수 없는 속성이 있어 순회에서 제외되기도 한다.
 > - 즉, **객체의 속성은 단순하지 않다.** ([MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/for...in#Description)에서 자체 속성만 반복 참고)
-- 그렇기 때문에 맵을 객체로 변경해준다.
+- 그렇기 때문에 맵을 객체로 변경해 준다.
 ```javascript
 const firms = {
   '10': 'Ivie Group',
@@ -575,5 +575,5 @@ return '모든 회사를 사용할 수 있습니다.';
 - `for...in`문도 마찬가지로 무조건적으로 사용하지 말고 사용이 적절한 경우에만 선택하는 것이 좋다.
 - 키만 필요한 경우에는 배열 메서드를 사용하기 전에 `Object.key()`로 키를 가져오는 것이 더 나을 수도 있다.
 - 값만 필요한 경우도 마찬가지로 `Object.value()`를 사용한다.
-- 여기서 더 주의해야할 사항은 **객체를 순회하면서 객체를 조작하면 안된다.**
+- 여기서 더 주의해야 할 사항은 **객체를 순회하면서 객체를 조작하면 안 된다.**
 - 객체를 조작하는 것은 매우 위험하고, 특히 **반복 중인 속성 외의 다른 속성을 추가하거나 수정하는 경우에는 버그가 빠르게 퍼질 수 있다.**
