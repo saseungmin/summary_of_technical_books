@@ -15,7 +15,7 @@ public void testMultiplication() {
 }
 ```
 
-첫 번째 단언을 `Dollar`와 `Dollar`를 빅하는 것으로 재작성할 수 있다.
+첫 번째 단언을 `Dollar`와 `Dollar`를 비교하는 것으로 재작성할 수 있다.
 
 ```java
 public void testMultiplication() {
