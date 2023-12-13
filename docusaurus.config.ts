@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import type * as Preset from '@docusaurus/preset-classic';
 import { Config } from '@docusaurus/types';
 import { themes } from 'prism-react-renderer';
