@@ -24,7 +24,7 @@ jobs:
       - name: Test Build
         run: |
           if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
+          yarn install --immutable
           elif [ -e package-lock.json ]; then
           npm ci
           else
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: '16.14.2'
+          node-version: '18.17.0'
       - uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
@@ -56,7 +56,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "gh-actions"
           if [ -e yarn.lock ]; then
-          yarn install --frozen-lockfile
+          yarn install --immutable
           elif [ -e package-lock.json ]; then
           npm ci
           else
