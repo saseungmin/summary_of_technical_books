@@ -1,4 +1,3 @@
-import React from 'react';
 import SummaryBooksView from '../SummaryBooksView';
 
 import styles from './index.module.scss';

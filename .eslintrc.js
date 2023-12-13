@@ -1,48 +1,36 @@
 module.exports = {
+  root: true,
   env: {
+    es6: true,
     browser: true,
-    es2021: true,
+    jest: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb',
-    'plugin:@typescript-eslint/recommended',
+  ignorePatterns: [
+    'node_modules/',
+    'public/',
+    'build/',
+    'coverage/',
   ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {
+  extends: ['@nf-team/eslint-config'],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
         project: './tsconfig.json',
       },
     },
-    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    {
+      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
     },
-  },
-  plugins: [
-    'react',
-    '@typescript-eslint',
   ],
   rules: {
-    'import/no-unresolved': 'off',
-    'react/prop-types': 'off',
-    'react/jsx-filename-extension': ['warn', {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    }],
-    'no-use-before-define': 'off',
-    'import/extensions': ['error', 'ignorePackages', {
-      js: 'never',
-      jsx: 'never',
-      ts: 'never',
-      tsx: 'never',
-    }],
+    'import/export': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': 'off',
   },
 };

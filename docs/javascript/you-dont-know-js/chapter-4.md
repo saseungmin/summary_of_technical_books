@@ -4,7 +4,8 @@ sidebar_position: 5
 
 # 🌈 Chapter 4 : 강제변환
 
-<details><summary>Table of Contents</summary>
+<details>
+<summary>Table of Contents</summary>
 
 - 값 변환 [:link:](#-값-변환)
 - 추상 연산 [:link:](#-추상-연산)

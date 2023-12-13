@@ -4,7 +4,8 @@ sidebar_position: 3
 
 # 🌈 Chapter 2 : 값
 
-<details><summary>Table of Contents</summary>
+<details>
+<summary>Table of Contents</summary>
 
 - 배열 [:link:](#-배열)
   - 유사 배열 [:link:](#-유사-배열)

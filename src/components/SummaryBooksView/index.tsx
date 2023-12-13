@@ -1,18 +1,16 @@
-import React from 'react';
-
 import clsx from 'clsx';
-
 import { v4 as uuidv4 } from 'uuid';
 
-import books from '@site/src/data/books';
-import MountainSvg from '../../../static/img/undraw_docusaurus_mountain.svg';
+import books from '../../data/books';
 import RowSummaryBooks from '../RowSummaryBooks';
+
+import MountainSvg from '../../../static/img/undraw_docusaurus_mountain.svg';
 
 import styles from './index.module.scss';
 
 type Props = {
   title: string;
-}
+};
 
 function SummaryBooksView({ title }: Props) {
   return (
