@@ -4,7 +4,8 @@ sidebar_position: 4
 
 # 🌈 Chapter 3 : 네이티브
 
-<details><summary>Table of Contents</summary>
+<details>
+<summary>Table of Contents</summary>
 
 - 내부 `[[Class]]` [:link:](#-내부-class)
 - 래퍼 박싱하기 [:link:](#-래퍼-박싱하기)

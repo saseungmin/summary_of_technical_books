@@ -1,13 +1,11 @@
-import React from 'react';
-
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import clsx from 'clsx';
 
-import useBaseUrl from '@docusaurus/useBaseUrl';
-import { Book } from '@site/src/data/books';
+import { Book } from '../../data/books';
 
 import styles from './index.module.scss';
 
-type Props = Book
+type Props = Book;
 
 function SummaryBookTemplate({ link, bookName, imgName }: Props) {
   const imgSrc = useBaseUrl(`/img/books/${imgName}`);

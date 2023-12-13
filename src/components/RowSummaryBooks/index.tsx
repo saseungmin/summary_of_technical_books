@@ -1,16 +1,14 @@
-import React from 'react';
-
+import clsx from 'clsx';
 import { v4 as uuidv4 } from 'uuid';
 
-import clsx from 'clsx';
-import SummaryBookTemplate from '../SummaryBookTemplate';
 import { Book } from '../../data/books';
+import SummaryBookTemplate from '../SummaryBookTemplate';
 
 import styles from './index.module.scss';
 
 type Props = {
   rowBooks: Book[];
-}
+};
 
 function RowSummaryBooks({ rowBooks }: Props) {
   return (

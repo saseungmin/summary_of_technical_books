@@ -4,7 +4,8 @@ sidebar_position: 2
 
 # 🌈 Chapter 1 : 타입
 
-<details><summary>Table of Contents</summary>
+<details>
+<summary>Table of Contents</summary>
 
 - 타입, 그 실체를 이해하자. [:link:](#-타입-그-실체를-이해하자)
 - 내장 타입 [:link:](#-내장-타입)
