@@ -31,7 +31,6 @@
     "@docusaurus/types": "^3.0.1",
     "@nf-team/eslint-config": "^2.1.0",
     "@svgr/webpack": "^6.5.1",
-    "@tsconfig/docusaurus": "^1.0.7",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/parser": "^6.14.0",
