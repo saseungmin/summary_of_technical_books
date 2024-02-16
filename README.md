@@ -48,7 +48,6 @@
 
 ## 🔥 컨트리뷰션 방법
 
-#### 첫 번째 방법
 1. 책이 정리된 [웹 사이트](https://saseungmin.github.io/reading_books_record_repository/)에 접속한다.
 2. 정리된 책 내용 중 오탈자를 찾는다.
 3. 각 페이지 하단에 아래 사진처럼 **Edit this page**를 클릭한다.
@@ -56,14 +55,6 @@
 ![hacktoberfest-contribution](images/hacktoberfest-contribution.png)
 
 4. 오탈자를 수정 후 PR을 보낸다!
-
-
-#### 두 번째 방법
-1. Github Markdown에 정리된 [폴더](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown)로 이동한다.
-2. 정리된 책 내용 중 오탈자를 찾는다.
-3. 오탈자를 수정 후 PR을 보낸다!
-
-오탈자가 많아서 쉽게 찾으실 수 있을겁니다. 🙏
 
 ## 🔒 LICENSE
 This Project is [MIT licensed](https://github.com/saseungmin/reading_books_record_repository/blob/master/LICENSE).
