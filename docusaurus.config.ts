@@ -5,7 +5,7 @@ import { Config } from '@docusaurus/types';
 import { themes } from 'prism-react-renderer';
 
 const config: Config = {
-  title: 'Summary of Books',
+  title: 'Summary of Technical Books',
   tagline: '책을 읽고 정리한 요약 문서입니다!',
   url: 'https://saseungmin.github.io',
   baseUrl: '/summary_of_technical_books/',
