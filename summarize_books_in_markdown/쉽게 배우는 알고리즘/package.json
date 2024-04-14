@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saseungmin/reading_books_record_repository"
+    "url": "git+https://github.com/saseungmin/summary_of_technical_books"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/saseungmin/reading_books_record_repository/issues"
+    "url": "https://github.com/saseungmin/summary_of_technical_books/issues"
   },
-  "homepage": "https://github.com/saseungmin/reading_books_record_repository#readme",
+  "homepage": "https://github.com/saseungmin/summary_of_technical_books#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "eslint": "^7.28.0",

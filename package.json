@@ -1,5 +1,5 @@
 {
-  "name": "reading_books_record_repository",
+  "name": "summary_of_technical_books",
   "version": "1.0.0",
   "scripts": {
     "docusaurus": "docusaurus",

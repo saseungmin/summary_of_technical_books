@@ -4,7 +4,7 @@
 - [도서 정보](http://www.yes24.com/Product/Goods/67350256)
 - 저: 김창준
 
-### 🤔 [Chapter 1: 자라기](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%201)
+### 🤔 [Chapter 1: 자라기](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%201)
 - 당신은 몇 년 차?
 - 자기계발은 복리로 돌아온다
 - 학습 프레임과 실행 프레임
@@ -17,7 +17,7 @@
 - 뛰어난 선생에 대한 미신
 - 나홀로 전문가에 대한 미신
 
-### 🤔 [Chapter 2: 함께](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%202)
+### 🤔 [Chapter 2: 함께](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%202)
 - 소프트웨어 관리자의 개선 우선순위
 - 협력을 통한 추상화
 - 신뢰를 깎는 공유인가 신뢰를 쌓는 공유인가
@@ -29,7 +29,7 @@
 - 쾌속 학습팀
 - 프로젝트 확률론
 
-### 🤔 [Chapter 3: 애자일](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%203)
+### 🤔 [Chapter 3: 애자일](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/%ED%95%A8%EA%BB%98%20%EC%9E%90%EB%9D%BC%EA%B8%B0/Chapter%203)
 - 애자일의 씨앗
 - 애자일 도입 성공 요인 분석
 - 당신의 조직에 새 방법론이 먹히지 않는 이유

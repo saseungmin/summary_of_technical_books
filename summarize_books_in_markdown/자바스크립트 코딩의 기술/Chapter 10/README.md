@@ -5,7 +5,7 @@
 - 자바스크립트 개발자들은 모듈 시스템을 이용해 프로젝트에서 코드를 쉽게 재사용할 수 있게 되었다. (Require.js, CommonJS)
 - 모듈은 단순회되었고, 이제는 간단한 import 문과 export 문을 사용할 수 있다.
 - 그리고 이 단순한 인터페이스를 이용하면 **프로젝트 내의 파일 간에 코드를 공유**할 수 있을 뿐만 아니라, 거의 동일한 문법을 이용해서 자바스크립트 커뮤니티에 공개된 코드도 사용할 수 있다.
-- 다음 예제는 [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC)에서 살펴봤던 예제 코드를 공유하고 싶다면 간단한 `export` 문만 추가하면 된다.
+- 다음 예제는 [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/summary_of_technical_books/tree/main/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC)에서 살펴봤던 예제 코드를 공유하고 싶다면 간단한 `export` 문만 추가하면 된다.
 
 ```javascript
 const validator = {
@@ -342,7 +342,7 @@ export default function CopyrightStatement() {
 - 컴포넌트를 재사용할 수 있도록 만들어야 한다. 즉, 최대한 하드 코딩하는 설정이 없어야 한다.
 - 클릭할 때 어떤 동작이 필요한지는 명시적으로 작성하지 않는다.
 - **대신 클릭할 때 동작을 컴포넌트에 주입한다.**
-- 동작이나 자원을 컴포넌트에 전달하는 것은 다른 형태의 의존성 주입이다. (의존성 주입은 [TIP 32 테스트하기 쉬운 함수를 작성하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%ED%95%A8%EC%88%98%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%9D%BC) 참고)
+- 동작이나 자원을 컴포넌트에 전달하는 것은 다른 형태의 의존성 주입이다. (의존성 주입은 [TIP 32 테스트하기 쉬운 함수를 작성하라](https://github.com/saseungmin/summary_of_technical_books/tree/main/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%ED%95%A8%EC%88%98%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%98%EB%9D%BC) 참고)
 
 ```jsx
 import React from 'react';
