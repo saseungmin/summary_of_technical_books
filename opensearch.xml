@@ -4,8 +4,8 @@
   <ShortName>Summary of Books</ShortName>
   <Description>Search Summary of Books</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://saseungmin.github.io/reading_books_record_repository/img/favicon.ico</Image>
-  <Url type="text/html" method="get" template="https://saseungmin.github.io/reading_books_record_repository/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://saseungmin.github.io/reading_books_record_repository/opensearch.xml" />
-  <moz:SearchForm>https://saseungmin.github.io/reading_books_record_repository/</moz:SearchForm>
+  <Image width="16" height="16" type="image/x-icon">https://saseungmin.github.io/summary_of_technical_books/img/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://saseungmin.github.io/summary_of_technical_books/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://saseungmin.github.io/summary_of_technical_books/opensearch.xml" />
+  <moz:SearchForm>https://saseungmin.github.io/summary_of_technical_books/</moz:SearchForm>
 </OpenSearchDescription>
