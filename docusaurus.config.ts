@@ -8,7 +8,7 @@ const config: Config = {
   title: 'Summary of Books',
   tagline: '책을 읽고 정리한 요약 문서입니다!',
   url: 'https://saseungmin.github.io',
-  baseUrl: '/reading_books_record_repository/',
+  baseUrl: '/summary_of_technical_books/',
   onBrokenLinks: 'throw',
   i18n: {
     defaultLocale: 'ko',
@@ -18,7 +18,7 @@ const config: Config = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'saseungmin', // Usually your GitHub org/user name.
-  projectName: 'reading_books_record_repository', // Usually your repo name.
+  projectName: 'summary_of_technical_books', // Usually your repo name.
   trailingSlash: false,
   plugins: [
     'docusaurus-plugin-sass',
@@ -72,7 +72,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          href: 'https://github.com/saseungmin/reading_books_record_repository',
+          href: 'https://github.com/saseungmin/summary_of_technical_books',
           label: 'GitHub',
           position: 'right',
         },
@@ -143,12 +143,12 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Github Markdown에서 보기',
-              href: 'https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown',
+              label: 'Github Markdown에서 보기(archived)',
+              href: 'https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown',
             },
             {
               label: 'GitHub Repository',
-              href: 'https://github.com/saseungmin/reading_books_record_repository',
+              href: 'https://github.com/saseungmin/summary_of_technical_books',
             },
           ],
         },
@@ -158,7 +158,7 @@ const config: Config = {
     prism: {
       theme: themes.github,
       darkTheme: themes.dracula,
-      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala', 'csharp'],
+      additionalLanguages: ['java', 'ruby', 'typescript', 'c', 'cpp', 'scala', 'csharp', 'rust'],
     },
     algolia: process.env.ALGOLIA_APP_ID && process.env.ALGOLIA_API_KEY ? {
       appId: process.env.ALGOLIA_APP_ID,
@@ -176,7 +176,7 @@ const config: Config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/saseungmin/reading_books_record_repository/tree/master/',
+            'https://github.com/saseungmin/summary_of_technical_books/tree/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

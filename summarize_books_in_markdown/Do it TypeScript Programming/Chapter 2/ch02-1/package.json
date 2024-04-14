@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saseungmin/reading_books_record_repository.git"
+    "url": "git+https://github.com/saseungmin/summary_of_technical_books.git"
   },
   "author": "seungmin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/saseungmin/reading_books_record_repository/issues"
+    "url": "https://github.com/saseungmin/summary_of_technical_books/issues"
   },
-  "homepage": "https://github.com/saseungmin/reading_books_record_repository#readme",
+  "homepage": "https://github.com/saseungmin/summary_of_technical_books#readme",
   "devDependencies": {
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"

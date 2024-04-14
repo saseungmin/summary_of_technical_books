@@ -464,7 +464,7 @@ const family = new FamilyTree();
 ### 🎯 bind()로 문맥 문제를 해결하라.
 
 - 문맥을 변경하는 것은 혼란을 일으킬 수 있는데, `this` 키워드를 콜백이나 배열 메서드에서 사용할 때 특히 더 문제가 될 수 있다.
-- 이 문제는 클래스를 사용해도 문제가 사라지지 않는다. (첫 번째 해결 방법: [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC))
+- 이 문제는 클래스를 사용해도 문제가 사라지지 않는다. (첫 번째 해결 방법: [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/summary_of_technical_books/tree/main/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC))
 - 여기서 살펴볼 기법들은 객체 리터럴과 클래스에 사용할 수 있지만 클래스 문법과 사용하는 것이 좀 더 일반적이다.
 - 다음은 예제를 살펴보자.
 
@@ -491,7 +491,7 @@ validator.setInvalidMessages('도시');
 // Uncaught TypeError: Cannot read property 'message' of undefined
 ```
 - 문맥 문제는 리액트 커뮤니티에서도 쉽게 찾을 수 있는데 리액트에서 발생하는 문맥 문제를 해결하는 서로 다른 여러 가지 방법 [참고](https://www.freecodecamp.org/news/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56/)
-- 첫 번째 해결책은 [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/reading_books_record_repository/tree/master/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC)에서 제안한 방법과 동일하다. 메서드를 화살표 함수로 바꾸면 화살표 함수는 **새로운 `this` 연결을 생성하지 않기 때문에** 오류가 발생하지 않는다.
+- 첫 번째 해결책은 [화살표 함수로 문맥 혼동을 피하라](https://github.com/saseungmin/summary_of_technical_books/tree/main/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20%EC%BD%94%EB%94%A9%EC%9D%98%20%EA%B8%B0%EC%88%A0/Chapter%207#-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EB%A1%9C-%EB%AC%B8%EB%A7%A5-%ED%98%BC%EB%8F%99%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC)에서 제안한 방법과 동일하다. 메서드를 화살표 함수로 바꾸면 화살표 함수는 **새로운 `this` 연결을 생성하지 않기 때문에** 오류가 발생하지 않는다.
 - 이 방법의 유일한 단점은 클래스 문법을 사용할 때 함수를 메서드가 아니라 속성으로 옮겨야 한다는 것이다.
 
 ```javascript

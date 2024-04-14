@@ -11147,34 +11147,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reading_books_record_repository@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "reading_books_record_repository@workspace:."
-  dependencies:
-    "@docusaurus/core": "npm:^3.1.1"
-    "@docusaurus/module-type-aliases": "npm:^3.1.1"
-    "@docusaurus/preset-classic": "npm:^3.1.1"
-    "@docusaurus/tsconfig": "npm:^3.1.1"
-    "@docusaurus/types": "npm:^3.1.1"
-    "@mdx-js/react": "npm:^3.0.1"
-    "@nf-team/eslint-config": "npm:^2.1.0"
-    "@svgr/webpack": "npm:^6.5.1"
-    "@types/react": "npm:^18.2.45"
-    "@types/react-dom": "npm:^18.2.17"
-    "@typescript-eslint/parser": "npm:^6.14.0"
-    clsx: "npm:^1.2.1"
-    docusaurus-plugin-sass: "npm:^0.2.5"
-    dotenv: "npm:^16.0.3"
-    eslint: "npm:^8.55.0"
-    prism-react-renderer: "npm:^2.3.1"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    sass: "npm:^1.64.2"
-    typescript: "npm:^5.3.3"
-    uuid: "npm:^9.0.0"
-  languageName: unknown
-  linkType: soft
-
 "rechoir@npm:^0.6.2":
   version: 0.6.2
   resolution: "rechoir@npm:0.6.2"
@@ -12384,6 +12356,34 @@ __metadata:
   checksum: 10/bddce1f5a8ba5a129995fc5585fa59fda6c8c580a8b39631955ee03810957eea62d13c7711a61f3a4f3bc2f9a4a9e019846f73b669c4aa0b5c52cd0198824b5c
   languageName: node
   linkType: hard
+
+"summary_of_technical_books@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "summary_of_technical_books@workspace:."
+  dependencies:
+    "@docusaurus/core": "npm:^3.1.1"
+    "@docusaurus/module-type-aliases": "npm:^3.1.1"
+    "@docusaurus/preset-classic": "npm:^3.1.1"
+    "@docusaurus/tsconfig": "npm:^3.1.1"
+    "@docusaurus/types": "npm:^3.1.1"
+    "@mdx-js/react": "npm:^3.0.1"
+    "@nf-team/eslint-config": "npm:^2.1.0"
+    "@svgr/webpack": "npm:^6.5.1"
+    "@types/react": "npm:^18.2.45"
+    "@types/react-dom": "npm:^18.2.17"
+    "@typescript-eslint/parser": "npm:^6.14.0"
+    clsx: "npm:^1.2.1"
+    docusaurus-plugin-sass: "npm:^0.2.5"
+    dotenv: "npm:^16.0.3"
+    eslint: "npm:^8.55.0"
+    prism-react-renderer: "npm:^2.3.1"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    sass: "npm:^1.64.2"
+    typescript: "npm:^5.3.3"
+    uuid: "npm:^9.0.0"
+  languageName: unknown
+  linkType: soft
 
 "supports-color@npm:^5.3.0":
   version: 5.5.0

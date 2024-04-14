@@ -9,6 +9,6 @@
 - [스터디](https://github.com/CodeSoom/The-Nature-of-Software-Development) 후 repository에 정리한다.
 
 
-### 🌈 [PART 1: 가치를 이루는 것들](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/The%20Nature%20of%20Software%20Development/PART%201)
+### 🌈 [PART 1: 가치를 이루는 것들](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/The%20Nature%20of%20Software%20Development/PART%201)
 
-### 🌈 [PART 2: 메모와 에세이](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/The%20Nature%20of%20Software%20Development/PART%202)
+### 🌈 [PART 2: 메모와 에세이](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/The%20Nature%20of%20Software%20Development/PART%202)

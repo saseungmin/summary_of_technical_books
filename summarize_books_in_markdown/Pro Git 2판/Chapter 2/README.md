@@ -202,7 +202,7 @@ Merge: d1644d2 de4b5af
 Author: saseungmin <dbd02169@naver.com>
 Date:   Tue Jan 19 22:04:21 2021 +0900
 
-    Merge branch 'master' of https://github.com/saseungmin/reading_books_record_repository into pro-git-chapter-2
+    Merge branch 'master' of https://github.com/saseungmin/summary_of_technical_books into pro-git-chapter-2
 ```
 
 - `git log`의 `-p` 옵션은 각 커밋의 `diff` 결과를 보여준다.
@@ -231,7 +231,7 @@ Date:   Tue Jan 19 22:04:21 2021 +0900
 // format 옵션은 나만의 포맷으로 결과를 출력하고 싶을 때 사용한다. (다른 프로그램으로 파싱하고자 할 때 유용하다)
 > git log --pretty=format:"%h - %an, %ar : %s"
 5de160e - saseungmin, 25시간 전 : [Update] pro git Chapter 2.2
-2ef879e - saseungmin, 25시간 전 : Merge branch 'master' of https://github.com/saseungmin/reading_books_record_repository into pro-git-chapter-2
+2ef879e - saseungmin, 25시간 전 : Merge branch 'master' of https://github.com/saseungmin/summary_of_technical_books into pro-git-chapter-2
 de4b5af - SeungMin, 26시간 전 : Merge pull request #24 from saseungmin/object-oriented-chapter-7
 ```
 
@@ -309,15 +309,15 @@ origin
 
 ```bash
 ❯ git remote -v
-origin  https://github.com/saseungmin/reading_books_record_repository.git (fetch)
-origin  https://github.com/saseungmin/reading_books_record_repository.git (push)
+origin  https://github.com/saseungmin/summary_of_technical_books.git (fetch)
+origin  https://github.com/saseungmin/summary_of_technical_books.git (push)
 ```
 
 ### 🐣 리모트 저장소 추가하기
 - 새 리모트 저장소는 `git remote add [단축 이름] [URL]` 명령으로 실행한다.
 
 ```bash
-> git remote add seung https://github.com/saseungmin/reading_books_record_repository.git
+> git remote add seung https://github.com/saseungmin/summary_of_technical_books.git
 ```
 
 - 단축 이름을 등록하면 URL 대신에 `seung`라는 이름을 사용할 수 있다.

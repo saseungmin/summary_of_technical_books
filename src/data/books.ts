@@ -1,5 +1,5 @@
-const PREFIX_DOCS_URL = 'https://saseungmin.github.io/reading_books_record_repository/docs';
-const PREFIX_SUMMARIZE_URL = 'https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown';
+const PREFIX_DOCS_URL = 'https://saseungmin.github.io/summary_of_technical_books/docs';
+const PREFIX_SUMMARIZE_URL = 'https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown';
 
 export type Book = {
   link: string;

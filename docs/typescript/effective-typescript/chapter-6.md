@@ -156,7 +156,7 @@ interface Vector3D {
 ## 🥕 아이템 49. 콜백에서 `this`에 대한 타입 제공하기
 P.243 ~ P.248 참고
 
-> 자바스크립트 `this` 내용이라 생략 ([this 내용 참고](https://saseungmin.github.io/reading_books_record_repository/docs/javascript/core-javascript/chapter-3))
+> 자바스크립트 `this` 내용이라 생략 ([this 내용 참고](https://saseungmin.github.io/summary_of_technical_books/docs/javascript/core-javascript/chapter-3))
 
 ### 요약
 - `this` 바인딩이 동작하는 원리를 이해해야 합니다.

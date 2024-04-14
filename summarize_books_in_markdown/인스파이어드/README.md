@@ -4,7 +4,7 @@
 - [도서 정보](http://www.yes24.com/Product/Goods/67512293)
 - 저: 마티 케이건
 
-### 🐣 [Part 1: 최고의 기술 기업에서 배운 것](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C/Part%201)
+### 🐣 [Part 1: 최고의 기술 기업에서 배운 것](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C/Part%201)
 1. 훌륭한 제품을 이끄는 사람
 2. 기술 중심의 제품과 서비스
 3. 스타트업: 제품/시장 궁합 찾기
@@ -15,7 +15,7 @@
 8. 핵심 개념
 
 
-### [🤔 Part 2: 사람](https://github.com/saseungmin/reading_books_record_repository/tree/master/summarize_books_in_markdown/%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C/Part%202)
+### [🤔 Part 2: 사람](https://github.com/saseungmin/summary_of_technical_books/tree/main/summarize_books_in_markdown/%EC%9D%B8%EC%8A%A4%ED%8C%8C%EC%9D%B4%EC%96%B4%EB%93%9C/Part%202)
 9. 강한 제품팀의 원칙
 10. 제품 관리자
 11. 제품 디자이너
