@@ -166,6 +166,10 @@ const config: Config = {
       indexName: 'reading-books-record-repository',
       contextualSearch: true,
       externalUrlRegex: 'external\\.com|domain\\.com',
+      replaceSearchResultPathname: {
+        from: '/reading_books_record_repository/',
+        to: '/summary_of_technical_books/',
+      },
     } : undefined,
   } satisfies Preset.ThemeConfig,
   presets: [
