@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunksummary_of_technical_books=self.webpackChunksummary_of_technical_books||[]).push([[1440],{7085:e=>{e.exports=JSON.parse('{"name":"docusaurus-theme-search-algolia","id":"default"}')}}]);
