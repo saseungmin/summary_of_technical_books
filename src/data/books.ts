@@ -160,6 +160,11 @@ const books: Book[][] = [
       bookName: '이펙티브 타입스크립트',
       imgName: 'effective-typescript.jpeg',
     },
+    {
+      link: 'https://github.com/saseungmin/learning_rust',
+      bookName: '러스트 프로그래밍',
+      imgName: 'rust-programming.jpeg',
+    },
   ],
 ];
 
