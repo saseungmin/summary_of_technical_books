@@ -36,12 +36,13 @@
 |<a href="https://saseungmin.github.io/summary_of_technical_books/docs/etc/pragmatic-programmer/table-of-contents"><img src="images/pragmatic-programmer.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/summary_of_technical_books/docs/etc/inspired/table-of-contents"><img src="images/inspired.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/summary_of_technical_books/docs/test/test-driven-development/table-of-contents"><img src="images/tdd.jpeg" width="400px" height="300px"/></a>|
 |[**단위 테스트**](https://saseungmin.github.io/summary_of_technical_books/docs/test/unit-test/table-of-contents)|[**이펙티브 타입스크립트**](https://saseungmin.github.io/summary_of_technical_books/docs/typescript/effective-typescript/table-of-contents)|**러스트 프로그래밍**|
 |<a href="https://saseungmin.github.io/summary_of_technical_books/docs/test/unit-test/table-of-contents"><img src="images/unit-test.jpeg" width="400px" height="300px"/></a>|<a href="https://saseungmin.github.io/summary_of_technical_books/docs/typescript/effective-typescript/table-of-contents"><img src="images/effective-typescript.jpeg" width="400px" height="300px"/></a>|<a href="https://github.com/saseungmin/learning_rust"><img src="images/rust-programming.jpeg" width="400px" height="300px"/></a>|
+|[**구글 엔지니어는 이렇게 일한다**](#)||
+|<a href="#"><img src="images/software-engineering-at-google.jpeg" width="400px" height="300px"/></a>||
 
 ## 🎯 읽을 책 목록
 - You Don’t Know JS this와 객체 프로토타입, 비동기와 성능
 - 클린 아키텍처 소프트웨어 구조와 설계의 원칙
 - HTTP 완벽 가이드
-- [구글 엔지니어는 이렇게 일한다](http://www.yes24.com/Product/Goods/109182479)
 - [쏙쏙 들어오는 함수형 코딩](http://www.yes24.com/Product/Goods/108748841)
 - [프로그래머의 뇌](http://www.yes24.com/Product/Goods/105911017)
 - [Code Complete 코드 컴플리트 2](http://www.yes24.com/Product/Goods/44130507)
