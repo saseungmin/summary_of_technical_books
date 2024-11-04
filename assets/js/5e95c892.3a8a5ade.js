@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunksummary_of_technical_books=self.webpackChunksummary_of_technical_books||[]).push([[9647],{7121:(e,s,r)=>{r.r(s),r.d(s,{default:()=>l});r(6540);var a=r(4164),c=r(9024),u=r(7559),o=r(2831),n=r(9201),t=r(4848);function l(e){return(0,t.jsx)(c.e3,{className:(0,a.A)(u.G.wrapper.docsPages),children:(0,t.jsx)(n.A,{children:(0,o.v)(e.route.routes)})})}}}]);
