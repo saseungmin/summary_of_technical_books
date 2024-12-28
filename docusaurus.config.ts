@@ -57,11 +57,6 @@ const config: Config = {
           position: 'left',
         },
         {
-          to: '/docs/clean/table-of-contents',
-          label: '클린코드',
-          position: 'left',
-        },
-        {
           to: '/docs/test/table-of-contents',
           label: '테스트',
           position: 'left',
@@ -103,10 +98,6 @@ const config: Config = {
             {
               label: '함수형',
               to: '/docs/functional/table-of-contents',
-            },
-            {
-              label: '클린코드',
-              to: '/docs/clean/table-of-contents',
             },
             {
               label: '테스트',
