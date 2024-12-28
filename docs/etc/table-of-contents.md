@@ -4,6 +4,10 @@ sidebar_position: 1
 
 # 🚀 책 목록
 
+### 👉 [클린 코드: 애자일 소프트웨어 장인 정신](/docs/etc/clean-code/table-of-contents)
+- [도서 정보](http://www.yes24.com/Product/Goods/11681152)
+- 저: 로버트 C. 마틴
+
 ### 👉 [실용주의 프로그래머(20주년 기념판)](/docs/etc/pragmatic-programmer/table-of-contents)
 - [도서 정보](http://www.yes24.com/Product/Goods/107077663)
 - 저: 데이비드 토머스, 앤드류 헌트

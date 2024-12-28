@@ -129,7 +129,7 @@ const books: Book[][] = [
   ],
   [
     {
-      link: `${PREFIX_DOCS_URL}/clean/clean-code/table-of-contents`,
+      link: `${PREFIX_DOCS_URL}/etc/clean-code/table-of-contents`,
       bookName: '클린 코드',
       imgName: 'clean-code.jpeg',
     },
