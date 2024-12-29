@@ -15,8 +15,6 @@ sidebar_position: 1
 
 ## [함수형](/docs/functional/table-of-contents)
 
-## [클린코드](/docs/clean/table-of-contents)
-
 ## [테스트](/docs/test/table-of-contents)
 
 ## [기타](/docs/etc/table-of-contents)
