@@ -9,3 +9,5 @@ sidebar_position: 1
 - 저: 테자스 쿠마르
 
 ### 🎈 [Chapter 1: 입문자를 위한 지식](/docs/etc/fluent-react/chapter-1)
+
+### 🎈 [Chapter 2: JSX](/docs/etc/fluent-react/chapter-2)
