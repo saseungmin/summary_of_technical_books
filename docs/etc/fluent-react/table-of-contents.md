@@ -11,3 +11,5 @@ sidebar_position: 1
 ### 🎈 [Chapter 1: 입문자를 위한 지식](/docs/etc/fluent-react/chapter-1)
 
 ### 🎈 [Chapter 2: JSX](/docs/etc/fluent-react/chapter-2)
+
+### 🎈 [Chapter 3: 가상 DOM](/docs/etc/fluent-react/chapter-3)
