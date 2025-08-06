@@ -13,3 +13,5 @@ sidebar_position: 1
 ### 🎈 [Chapter 2: JSX](/docs/etc/fluent-react/chapter-2)
 
 ### 🎈 [Chapter 3: 가상 DOM](/docs/etc/fluent-react/chapter-3)
+
+### 🎈 [Chapter 4: 재조정](/docs/etc/fluent-react/chapter-4)
