@@ -17,3 +17,5 @@ sidebar_position: 1
 ### 🎈 [Chapter 4: 재조정](/docs/etc/fluent-react/chapter-4)
 
 ### 🎈 [Chapter 6: 서버 사이드 렌더링](/docs/etc/fluent-react/chapter-6)
+
+### 🎈 [Chapter 7: 리액트 동시성](/docs/etc/fluent-react/chapter-7)
