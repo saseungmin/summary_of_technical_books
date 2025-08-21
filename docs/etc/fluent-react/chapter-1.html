@@ -15,7 +15,7 @@
 <link rel="search" type="application/opensearchdescription+xml" title="Summary of Technical Books" href="/summary_of_technical_books/opensearch.xml">
 
 <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script><link rel="stylesheet" href="/summary_of_technical_books/assets/css/styles.bdcea6b7.css">
-<script src="/summary_of_technical_books/assets/js/runtime~main.03001369.js" defer="defer"></script>
+<script src="/summary_of_technical_books/assets/js/runtime~main.2890674e.js" defer="defer"></script>
 <script src="/summary_of_technical_books/assets/js/main.8070e37a.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -23,16 +23,16 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="리액트는-왜-필요한가요">리액트는 왜 필요한가요?<a href="#리액트는-왜-필요한가요" class="hash-link" aria-label="리액트는 왜 필요한가요?에 대한 직접 링크" title="리액트는 왜 필요한가요?에 대한 직접 링크">​</a></h2>
 <p>한마디로 <strong>업데이트</strong> 때문입니다.</p>
 <p>웹의 기능이 늘면서 웹에서 우수한 사용자 경험을 제공하려는 포부도 커졌습니다.<br>
-<!-- -->새 페이지가 렌더링되고 로딩되기까지 기다릴 필요 없이, 즉시 업데이트되어 내용을 바로 확인하고 싶어 했습니다. 웹과 웹 페이지가 &#x27;즉각적인&#x27; 느낌을 주길 원했습니다. 그러나 즉각적인 업데이트를 <strong>대규모</strong>로 수행하기에는 다음과 같은 이윯 상당히 어려웠습니다.</p>
+<!-- -->새 페이지가 렌더링되고 로딩되기까지 기다릴 필요 없이, 즉시 업데이트되어 내용을 바로 확인하고 싶어 했습니다. 웹과 웹 페이지가 &#x27;즉각적인&#x27; 느낌을 주길 원했습니다. 그러나 즉각적인 업데이트를 <strong>대규모</strong>로 수행하기에는 다음과 같은 이유로 상당히 어려웠습니다.</p>
 <ul>
 <li>성능<!-- -->
 <ul>
-<li>웹 페이지를 업데이트하면 보통 브라우저가 페이지의 레이아웃을 다시 계산하고(이를 리플로라고 합니다) 그리는 작업을 수행하기 때문에 성는 병목 현상이 자주 발생했습니다.</li>
+<li>웹 페이지를 업데이트하면 보통 브라우저가 페이지의 레이아웃을 다시 계산하고(이를 리플로우라고 합니다) 그리는 작업을 수행하기 때문에 성능 병목 현상이 자주 발생했습니다.</li>
 </ul>
 </li>
 <li>신뢰성<!-- -->
 <ul>
-<li>풍부한 웹 경험 전반에서 상태를 추적해 일관되기 유지하기가 어려웠습니다. 상태를 여러 곳에서 추적해 모든 곳에서 일관되게 유지해야 했기 때문입니다.</li>
+<li>풍부한 웹 경험 전반에서 상태를 추적해 일관되게 유지하기가 어려웠습니다. 상태를 여러 곳에서 추적해 모든 곳에서 일관되게 유지해야 했기 때문입니다.</li>
 </ul>
 </li>
 <li>보안<!-- -->
@@ -41,7 +41,7 @@
 </ul>
 </li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="리액트-이전의-세계">리액트 이전의 세계<a href="#리액트-이전 의-세계" class="hash-link" aria-label="리액트 이전의 세계에 대한 직접 링크" title="리액트 이전의 세계에 대한 직접 링크">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="리액트-이전의-세계">리액트 이전의 세계<a href="#리액트- 이전의-세계" class="hash-link" aria-label="리액트 이전의 세계에 대한 직접 링크" title="리액트 이전의 세계에 대한 직접 링크">​</a></h2>
 <p>자바스크립트를 사용하면 DOM API에 접근할 수 있습니다.<br>
 <!-- -->시간이 지나 이런 식으로 확장하려는 애플리케이션을 구축할 때 발목을 잡는 요소가 있습니다.</p>
 <ul>
@@ -51,12 +51,12 @@
 </ul>
 <p>jQuery, Backbone.js, Knockout, Angular.js, etc.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="리액트-등장">리액트 등장<a href="#리액트-등장" class="hash-link" aria-label="리액트 등장에 대한 직접 링크" title="리액트 등장에 대한 직접 링크">​</a></h2>
-<p>리액트가 제시한 핵심 아이디어 하나는 컴포넌트 기반 아키텍쳐였습니다.<br>
+<p>리액트가 제시한 핵심 아이디어 하나는 컴포넌트 기반 아키텍처였습니다.<br>
 <!-- -->웹을 비롯한 여러 플랫폼에서 사용자 인터페이스를 작성할 때 재사용 가능한 컴포넌트를 조합하는 것이 가장 최적화된 방법입니다.</p>
 <p>리액트는 단방향 데이터 흐름 패턴을 도입해 개발자가 애플리케이션을 더 잘 제어하고 시간에 따라 데이터가 어떻게 변화하는지 더 쉽게 이해할 수 있게 했습니다.<br>
 <!-- -->리액트는 가상 DOM이라는 개념을 채택해 직접적인 DOM 조작을 최소화함으로써 성능을 향상했습니다.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="리액트의-핵심-가지">리액트의 핵심 가지<a href="#리액트의-핵심-가지" class="hash-link" aria-label="리액트의 핵심 가지에 대한 직접 링크" title="리액트의 핵심 가지에 대한 직접 링크">​</a></h3>
-<h4 class="anchor anchorWithStickyNavbar_LWe7" id="선언적-코드와-명령형-코드">선언적 코드와 명령형 코드<a href="#선언적-코드와-명령형-코드" class="hash-link" aria-label="선언적 코드와 명령형 코드에 대한 직접 링크" title="선언적 코드  와 명령형 코드에 대한 직접 링크">​</a></h4>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="선언적-코드와-명령형-코드">선언적 코드와 명령형 코드<a href="#선언적-코드와-명령형-코드" class="hash-link" aria-label="선언적 코드와 명령형 코드에 대한 직접 링크" title="선언적   코드와 명령형 코드에 대한 직접 링크">​</a></h4>
 <p>리액트는 DOM에 대한 선언적 추상화를 제공합니다.<br>
 <!-- -->기본적으로 리액트는 <strong>우리가 보고자하는 것</strong>을 코드로 표현하는 방법을 제공하고 실제로 <strong>어떻게 할지는</strong> 리액트가 알아서 합니다.</p>
 <p>컴포넌트의 역할은 사용자 인터페이스에서 이 영역이 어떤 모습이어야 하는지에 대해 설명을 반환하는 것뿐이며, 이러한 설명은 의도한 UI 구조를 가볍게 기술하는 가상 DOM을 사용해 이루어집니다. 리액트는 업데이트 발생 전과 후의 가상 DOM을 비교하고, 실제 DOM의 작은 부분만 성능 좋은 방식으로 업데이트해서 변경된 가상 DOM과 일치시킵니다. 리액트는 이러한 방식으로 DOM을 업데이트합니다.</p>
@@ -64,10 +64,10 @@
 <p>가상 DOM은 실제 DOM을 자바스크립트 책체로 표현하는 프로그래밍 개념입니다. 리액트는 가상 DOM을 사용해 컴포넌트의 변경 사항을 추적하고 필요할 때만 컴포넌트를 다시 랜더링합니다.<br>
 <!-- -->리액트에서 가상 DOM은 실제 DOM 트리를 가볍게 표현한 것인데, UI 요소의 구조와 속성을 나타내는 평범한 자바스크립트 객체입니다. 리액트는 실제 DOM 트리와 일치하도록 가상 DOM을 생성하고 업데이트하며, 가상 DOM에서 발생한 모든 변경 사항은 <strong>재조정</strong>(reconciliation)이라는 과정을 통해 실제 DOM에 적용됩니다.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="컴포넌트-모델">컴포넌트 모델<a href="#컴포넌트-모델" class="hash-link" aria-label="컴포넌트 모델에 대한 직접 링크" title="컴포넌트 모델에 대한 직접 링크">​</a></h4>
-<p>리액트는 에플리케이션을 작은 조각으로 나누고 이를 커다란 트리에 추가해 애플리케이션을 구성하는 &#x27;컴포넌트 단위로 생각하기&#x27;를 적극 권장합니다.</p>
+<p>리액트는 애플리케이션을 작은 조각으로 나누고 이를 커다란 트리에 추가해 애플리케이션을 구성하는 &#x27;컴포넌트 단위로 생각하기&#x27;를 적극 권장합니다.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="불변-상태">불변 상태<a href="#불변-상태" class="hash-link" aria-label="불변 상태에 대한 직접 링크" title="불변 상태에 대한 직접 링크">​</a></h4>
 <p>리액트의 설계 철학은 애플리케이션 상태를 불변하는 값의 집합으로 기술하는 패러다임을 강조합니다. 각각의 상태 업데이트는 새로운 독립된 스냅샷과 메모리 참조로 취급합니다.<br>
-<!-- -->리액트는 불변성을 강제합으로써 UI 컴포넌트가 특정 시점의 특정 상태를 반영하도록 보장합니다. 상태가 변경되면 원래 있던 사앹를 직접 변경하는 대신 새로운 상태를 표현하는 새 객체를 반환합니다.</p>
+<!-- -->리액트는 불변성을 강제함으로써 UI 컴포넌트가 특정 시점의 특정 상태를 반영하도록 보장합니다. 상태가 변경되면 원래 있던 상태를 직접 변경하는 대신 새로운 상태를 표현하는 새 객체를 반환합니다.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="플럭스-아키텍처">플럭스 아키텍처<a href="#플럭스-아키텍처" class="hash-link" aria-label="플럭스 아키텍처에 대한 직접 링크" title="플럭스 아키텍처에 대한 직접 링크">​</a></h4>
 <p>플럭스는 클라이언트 측 웹 애플리케이션 구축을 위한 아키텍처 디자인 패턴이며, 페이스북(현재 메타)에서 발표했습니다. 단방향 데이터 흐름을 강조해 애플리케이션 데이터의 흐름을 더욱 예측 가능하게 만듭니다.</p>
 <ul>
@@ -79,7 +79,7 @@
 </ul>
 </li>
 </ul>
-<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 액션 객체 예시</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">type</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;ADD_TODO&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">text</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;플럭스 아키텍쳐 연습&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="클립보드에 코드 복사" title="복사" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// 액션 객체 예시</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">type</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;ADD_TODO&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token literal-property property" style="color:#36acaa">text</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">&#x27;플럭스 아키텍처 연습&#x27;</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="클립보드에 코드 복사" title="복사" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <ul>
 <li>디스패처<!-- -->
 <ul>
@@ -127,7 +127,7 @@
 <li>관심사 분리<!-- -->
 <ul>
 <li>플럭스는 시스템 여러 부분의 관심사 분리가 명확합니다.</li>
-<li>각 부분에는 명확하게 정의된 역할이 있으며, 단방향 데이터 흐름 덕분에 이러한 부분들이 어떻게 상호 작용하는지 분명하게  이해할 수 있습니다.</li>
+<li>각 부분에는 명확하게 정의된 역할이 있으며, 단방향 데이터 흐름 덕분에 이러한 부분들이 어떻게 상호 작용하는지 분명  하게 이해할 수 있습니다.</li>
 </ul>
 </li>
 </ul>
