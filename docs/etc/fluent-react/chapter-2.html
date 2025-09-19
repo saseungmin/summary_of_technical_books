@@ -15,7 +15,7 @@
 <link rel="search" type="application/opensearchdescription+xml" title="Summary of Technical Books" href="/summary_of_technical_books/opensearch.xml">
 
 <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script><link rel="stylesheet" href="/summary_of_technical_books/assets/css/styles.bdcea6b7.css">
-<script src="/summary_of_technical_books/assets/js/runtime~main.2890674e.js" defer="defer"></script>
+<script src="/summary_of_technical_books/assets/js/runtime~main.c39d5eef.js" defer="defer"></script>
 <script src="/summary_of_technical_books/assets/js/main.8070e37a.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -45,7 +45,7 @@
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="jsx의-약점">JSX의 약점<a href="#jsx의-약점" class="hash-link" aria-label="JSX의 약점에 대한 직접 링크" title="JSX의 약점에 대한 직접 링크">​</a></h2>
 <ul>
-<li>학습 곡성 가중</li>
+<li>학습 곡선 가중</li>
 <li>전용 도구 필요<!-- -->
 <ul>
 <li>JSX 코드를 실행하려면 먼저 일반 자바스크립트 코드로 컴파일해야 하기 때문에 이를 위한 개발 도구가 추가되어야 합니다.</li>
@@ -58,19 +58,19 @@
 </li>
 <li>자바스크립트 호환성 부족<!-- -->
 <ul>
-<li>JSX는 인라인 표현식을 지원하지만 인라인 블록은 지원하지 않습니다. (switch, if, for, while, etc.)</li>
+<li>JSX는 인라인 표현식을 지원하지만 인라인 블록 제어문은 지원하지 않습니다. (switch, if, for, while, etc.)</li>
 </ul>
 </li>
 </ul>
 <p>JSX를 사용하면 강력하고 유연한 방식으로 컴포넌트를 만들고 사용자 인터페이스를 작성할 수 있습니다.<br>
-<!-- -->JSX는 브라우저에 전달되기 전에 바닐라 JS가 됩니다.   이 동작이 어떻게 이루어지는지 내부를 들여다보겠습니다.</p>
+<!-- -->JSX는 브라우저에 전달되기 전에 바닐라 JS가 됩니다. 이 동작이 어떻게 이루어지는지 내부를 들여다보겠습니다.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="내부-동작">내부 동작<a href="#내부-동작" class="hash-link" aria-label="내부 동작에 대한 직접 링크" title="내부 동작에 대한 직접 링크">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="코드는-어떻게-작동하나요">코드는 어떻게 작동하나요?<a href="#코드는-어떻게-작동하나요" class="hash-link" aria-label="코드는 어떻게 작동하나요?에 대한 직접 링크" title="코드는 어떻게 작동하나요?에 대한 직접 링크">​</a></h3>
 <p>컴파일러는 특정 규칙에 따라 고급 프로그래밍 언어로 작성된 소스 코드를 구문 트리로 변환하는 소프트웨어입니다. 여기서 구문 트리란 문자 그대로 자바스크립트 객체 같은 트리 자료 구조입니다.<br>
 <!-- -->컴파일러는 (적어도 자바스크립트에서는) 3단계 과정을 거칩니다. 각각 <strong>토큰화</strong>, <strong>구문 분석</strong>, <strong>코드 생성</strong>이라고 하는데 각 단계에 대해 자세히 살펴보겠습니다.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="토큰화">토큰화<a href="#토큰화" class="hash-link" aria-label="토큰화에 대한 직접 링크" title="토큰화에 대한 직접 링크">​</a></h4>
 <p>간단하게 말하자면 문자열을 의미 있는 토큰으로 분해하는 것입니다. 토크나이저가 상태를 가지고 있고, 각 토큰이 자신의 부모나 자식에 관한 상태를 포함하고 있을 때는 토크나이저를 <strong>렉서</strong>라고 부릅니다. 한마디로 렉싱은 상태를 가지는 토큰화입니다.</p>
-<p>렉서는 <strong>렉서 규칙</strong>이 있어서 이 규칙으로 정규 표현식을 사용해 프로그래밍 언어를 나타내는 텍스트 문자열에서 변수 이름, 객체 키 및 값 같은 주요 토큰을 감지합니다. 그런 다음 렉서는 구 현에 따라 이러한 키워드를 열거 가능한 값으로 표현합니다. 가령 <code>const</code>는 0으로, <code>let</code>은 1로, <code>function</code>은 2로 바뀝니다.<br>
+<p>렉서는 <strong>렉서 규칙</strong>이 있어서 이 규칙으로 정규 표현식을 사용해 프로그래밍 언어를 나타내는 텍스트 문자열에서 변수 이름, 객체 키 및 값 같은 주요 토큰을 감지합니다. 그런 다음 렉서는 구현에 따라 이러한 키워드를 열거 가능한 값으로 표현합니다. 가령 <code>const</code>는 0으로, <code>let</code>은 1로, <code>function</code>은 2로 바뀝니다.<br>
 <!-- -->문자열이 토큰화되거나 렉싱되면 다음 단계인 구문 분석으로 넘어갑니다.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="구문-분석">구문 분석<a href="#구문-분석" class="hash-link" aria-label="구문 분석에 대한 직접 링크" title="구문 분석에 대한 직접 링크">​</a></h4>
 <p>토큰을 가져와 구문 트리로 변환하는 과정입니다. 구문 트리는 코드의 구조를 나타내는 자료 구조입니다.</p>
@@ -94,11 +94,11 @@
 </li>
 </ul>
 <p>웹 브라우저를 비롯해 최신 환경에서는 자바스크립트 코드를 효율적으로 실행하기 위해 JIT 컴파일러는 많이 사용합니다.</p>
-<p><strong>런타임</strong>은 일반적으로 엔진과 연동해 특정 환경에 맞는 콘텍스트 헬퍼와 기능을 더 많이 재공합니다. 가장 인기 있는 자바스크립트 런타임은 구글 크롬 같은 일반적인 웹 브라우저입니다.<br>
+<p><strong>런타임</strong>은 일반적으로 엔진과 연동해 특정 환경에 맞는 컨텍스트 헬퍼와 기능을 더 많이 제공합니다. 가장 인기 있는 자바스크립트 런타임은 구글 크롬 같은 일반적인 웹 브라우저입니다.<br>
 <!-- -->크롬 웹 브라우저는 엔진과 연동하는 크로미움 런타임을 제공합니다. 서버 측에서는 V8 엔진을 사용하는 Node.js 런타임을 사용합니다.</p>
-<p>런타임은 자바스크립트 엔진에 브라우저 런타임이 제공되는 <code>window</code> 객체와 <code>document</code> 객체 같은 콘텍스트를 제공합니다.</p>
+<p>런타임은 자바스크립트 엔진에 브라우저 런타임이 제공되는 <code>window</code> 객체와 <code>document</code> 객체 같은 컨텍스트를 제공합니다.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="jsx로-자바스크립트-구문-확장하기">JSX로 자바스크립트 구문 확장하기<a href="#jsx로-자바스크립트-구문-확장하기" class="hash-link" aria-label="JSX로 자바스크립트 구문 확장하기에 대한 직접 링크" title="JSX로 자바스크립트 구문 확장하기에 대한 직접 링크">​</a></h3>
-<p>자바스크립트 구문을 확장하려면 새로운 구문을 이해하는 다른 엔진이 필요하거나, 엔진보다 앞서 새로운 구문을 처리해야 합니다. 자바스크립트 엔진은 매우 다양한 곳에서 사용되므로 제작과 유지 보스에 많은 고민이 필요합니다. 따라서 JSX만을 위한 새로운 엔진을 만든다는 건 거의 불가능합니다.</p>
+<p>자바스크립트 구문을 확장하려면 새로운 구문을 이해하는 다른 엔진이 필요하거나, 엔진보다 앞서 새로운 구문을 처리해야 합니다. 자바스크립트 엔진은 매우 다양한 곳에서 사용되므로 제작과 유지 보수에 많은 고민이 필요합니다. 따라서 JSX만을 위한 새로운 엔진을 만든다는 건 거의 불가능합니다.</p>
 <p>기존 엔진보다 앞서 새로운 구문을 처리하도록 하는 게 당연히 더 쉽습니다. 새 구문이 엔진에 도달하기 전에 처리하는 과정을 살펴봅시다. 이를 위해서는 확장 언어를 이해하는, 다시 말해 확장 언어로 작성된 코드 문자열을 이해할 수 있는 렉서와 구문 분석기를 만들어야 합니다. 종래의 방식에서는 다음 단계로 기계어를 생성했지만, 여기서는 구문 트리를 사용해 기존의 모든 자바스크립트 엔진이 이해할 수 있는 일반적인 바닐라 JS를 생성합니다. 이것이 바로 자바스크립트 생태계에서 <strong>바벨</strong>(babel)이 하는 일이고, 타입스크립트, 트레이서, SWC 같은 도구가 하는 일입니다.</p>
 <p>이 때문에 JSX는 브라우저에서 직접 사용할 수 없고, 특수한 구문 분석기를 통해 구문 트리로 컴파일하는 &#x27;빌드 단계&#x27;가 필요합니다. 이 코드는 이러한 과정을 거쳐 바닐라 JS로 변환되어 최종 배포용 번들에 포함됩니다. 이 과정을 가리켜 <strong>트랜스파일한다</strong>고 하는데, 달리 표현하면 코드를 변환한 후 컴파일한다는 말입니다.</p>
 <p>트랜스파일은 한 언어로 작성된 소스 코드를 추상화 수준이 비슷한 다른 언어로 변환하는 과정입니다. 그래서 소스 대 소스 컴파일이라고도 합니다.</p>
